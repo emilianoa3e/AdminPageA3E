@@ -1,24 +1,22 @@
+import { useState } from 'react';
 import logo from './logo.svg';
-import './App.css';
+import { DndContext, closestCenter } from '@dnd-kit/core';
 
 function App() {
+  const [person, setPerson] = useState([
+    {name: "emiliano", id:1}, {name: "joksan", id:2}
+  ]) 
+
+  const handleDragEnd =()=>{}
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <div>
+
+        </div>
+
+      </DndContext>
+    </>
   );
 }
 
