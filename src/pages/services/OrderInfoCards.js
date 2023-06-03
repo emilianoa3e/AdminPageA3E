@@ -44,7 +44,7 @@ function OrderInfoCards() {
       person.sort((a, b) => a.position - b.position);
     
       return (
-        <Container className='d-flex justify-content-center align-items-center'>
+        <Container className='bg-success d-flex justify-content-center align-items-center'>
           <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
             <SortableContext items={person} strategy={verticalListSortingStrategy}>
               <Row>
