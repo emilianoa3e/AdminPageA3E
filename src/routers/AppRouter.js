@@ -6,6 +6,7 @@ import OrderInfoCards from '../pages/services/OrderInfoCards';
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
 import App from '../App';
+import EditorWys from '../components/shared/EditorWys';
 
 
 const AppRouter = () => {
@@ -42,8 +43,10 @@ const AppRouter = () => {
         // </BrowserRouter>
         <Router>
             <Routes>
-                <Route exact path="/" element={<Loader/>} />
+                {/* cambar por ruta Home */}
+                <Route exact path="/" element={<Loader/>} /> 
                 <Route path="/service" element={<OrderInfoCards/>} />
+                <Route path="/editor" element={<EditorWys/>}/>
             </Routes>
         </Router>
     );
