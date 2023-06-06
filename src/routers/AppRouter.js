@@ -8,21 +8,25 @@ import EditorWys from '../components/shared/EditorWys';
 import Home from '../pages/Home';
 import 'bootstrap/dist/css/bootstrap.css';
 import Login from '../pages/Auth/Login';
+import Loader from '../components/shared/Loader';
+import { AuthContext } from '../context/auth/AuthContext';
 
 
 
 const AppRouter = () => {
-    // const { state, renewAuthToken } = useContext(AuthContext);
-    // const { isLogged, isLoading } = useState(true);
+     const { state, renewAuthToken } = useContext(AuthContext);
+     const { isLogged, isLoading } = state;
 
     // useEffect(() => {
     //     renewAuthToken();
     // }, [renewAuthToken]);
 
     // if (isLoading) {
-    //     return <Loader />;
+    //     return <EditorWys/>;
     // }
-    const { isLogged } = false;
+
+    //estatic
+    //const { isLogged } = false;
 
     return (
         //  colocar !isLogged para mostrar privadas
@@ -42,7 +46,7 @@ const AppRouter = () => {
                         </Route>
                         <Route exact path='/*' element={<Navigate to='/' />} />
                     </Routes>
-                </Layout>
+                </Layout> 
             ) : (
 
                     <Routes>

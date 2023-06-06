@@ -18,7 +18,7 @@ function Login() {
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
-  console.log(login)
+  //console.log(login)
   const handleOnSubmit = (values, resetForm) => {
      login(values.email, values.password);
   };
