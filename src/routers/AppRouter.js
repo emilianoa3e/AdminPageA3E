@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Layout from '../components/shared/Layout'; // Importa tu propio componente Layout
-import { BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import OrderInfoCards from '../pages/services/OrderInfoCards';
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
 import EditorWys from '../components/shared/EditorWys';
-import Home from '../pages/services/Home';
+import Home from '../pages/Home';
 import 'bootstrap/dist/css/bootstrap.css';
-import Login from '../pages/Login';
+import Login from '../pages/Auth/Login';
 
 
 
@@ -22,11 +22,12 @@ const AppRouter = () => {
     // if (isLoading) {
     //     return <Loader />;
     // }
-    const { isLogged } = true;
+    const { isLogged } = false;
 
     return (
+        //  colocar !isLogged para mostrar privadas
         <BrowserRouter>
-            {!isLogged ? (
+            {isLogged ? (
                 <Layout>
                     {/* Aquí colocar Rutas protegidas*/}
                     <Routes>
@@ -43,18 +44,19 @@ const AppRouter = () => {
                     </Routes>
                 </Layout>
             ) : (
-                <Layout>
+
                     <Routes>
                         <Route exact path='/login' element={<PublicRoute />}>
-                            <Route exact path='/login' element={<Login />} />
+                            <Route exact path='/login' element={<Login/>} />
                         </Route>
+                        <Route
+                            exact
+                            path='/*'
+                            element={<Navigate to='/login' replace />}
+                        />
                     </Routes>
-                    <Route
-						exact
-						path='/*'
-						element={<Navigate to='/login' replace />}
-					/>
-                </Layout>
+
+                
             )
             }
         </BrowserRouter>

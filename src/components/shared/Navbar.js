@@ -15,7 +15,7 @@ function CustomNavbar() {
         >
             <Container >
                 <NavbarBt.Brand href='/home'>
-                    <img src={logo} width={70} ></img>
+                    <img src={logo} width={80} ></img>
                    
                 </NavbarBt.Brand>
                 <NavbarBt.Toggle aria-controls='basic-navbar-nav' />

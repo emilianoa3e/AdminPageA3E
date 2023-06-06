@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from '../../components/shared/Navbar'
+import Navbar from '../components/shared/Navbar'
 
 function Home() {
     return (
