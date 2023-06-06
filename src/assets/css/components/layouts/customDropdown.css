@@ -1,0 +1,65 @@
+.dropdown__content {
+	margin-right: 40px;
+	margin-left: -25px;
+}
+
+.custom-dropdown button {
+	background-color: transparent;
+	border-color: transparent;
+}
+
+.custom-dropdown button:hover,
+.custom-dropdown button:active,
+.custom-dropdown button:focus,
+.custom-dropdown .show > .btn-primary.dropdown-toggle,
+.btn-check:active + .btn-primary,
+.btn-check:checked + .btn-primary,
+.btn-primary.active,
+.btn-primary:active,
+.show > .btn-primary.dropdown-toggle {
+	background-color: transparent !important;
+	border-color: transparent !important;
+	box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+}
+
+.custom-dropdown a.dropdown-item:active,
+.custom-dropdown a.dropdown-item.active {
+	color: #ccc;
+	background-color: #efefef !important;
+}
+
+.custom-dropdown .title {
+	font-size: 12px;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.custom-dropdown .dropdown-link .profile-pic {
+	-webkit-box-flex: 0;
+	-ms-flex: 0 0 50px;
+	flex: 0 0 50px;
+}
+.custom-dropdown .dropdown-link .profile-pic img {
+	width: 50px;
+	border-radius: 50%;
+}
+
+.custom-dropdown .dropdown-link .profile-info ,
+.custom-dropdown .dropdown-link .profile-info span {
+	color: #ccc;
+	margin: 0;
+	padding: 0;
+}
+
+.custom-dropdown .dropdown-link .profile-info h3 {
+	font-size: 16px;
+}
+
+.custom-dropdown .dropdown-link .profile-info span {
+	display: block;
+	font-size: 13px;
+}
+.custom-dropdown .dropdown-toggle::after {
+	display: none;
+}

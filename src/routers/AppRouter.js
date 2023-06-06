@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Loader from '../components/shared/Loader'; // Importa tu propio componente Loader
 import Layout from '../components/shared/Layout'; // Importa tu propio componente Layout
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
 import OrderInfoCards from '../pages/services/OrderInfoCards';
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
 import EditorWys from '../components/shared/EditorWys';
 import Home from '../pages/services/Home';
 import 'bootstrap/dist/css/bootstrap.css';
+import Login from '../pages/Login';
 
 
 
@@ -22,32 +22,42 @@ const AppRouter = () => {
     // if (isLoading) {
     //     return <Loader />;
     // }
+    const { isLogged } = true;
 
     return (
         <BrowserRouter>
-            <Layout>
-                {/* Aquí colocar Rutas protegidas*/}
-                <Routes>
-                    <Route exact path='/home' element={<PrivateRoute />}>
-                        <Route exact path='/home' element={<Home/>} />
-                    </Route>
-                    <Route exact path='/service' element={<PrivateRoute />}>
-                        <Route exact path='/service' element={<OrderInfoCards />} />
-                    </Route>
-                    <Route exact path='/editor' element={<PrivateRoute />}>
-                        <Route exact path='/editor' element={<EditorWys />} />
-                    </Route>
-                </Routes>
-            </Layout>
+            {!isLogged ? (
+                <Layout>
+                    {/* Aquí colocar Rutas protegidas*/}
+                    <Routes>
+                        <Route exact path='/' element={<PrivateRoute />}>
+                            <Route exact path='/' element={<Home />} />
+                        </Route>
+                        <Route exact path='/service' element={<PrivateRoute />}>
+                            <Route exact path='/service' element={<OrderInfoCards />} />
+                        </Route>
+                        <Route exact path='/editor' element={<PrivateRoute />}>
+                            <Route exact path='/editor' element={<EditorWys />} />
+                        </Route>
+                        <Route exact path='/*' element={<Navigate to='/' />} />
+                    </Routes>
+                </Layout>
+            ) : (
+                <Layout>
+                    <Routes>
+                        <Route exact path='/login' element={<PublicRoute />}>
+                            <Route exact path='/login' element={<Login />} />
+                        </Route>
+                    </Routes>
+                    <Route
+						exact
+						path='/*'
+						element={<Navigate to='/login' replace />}
+					/>
+                </Layout>
+            )
+            }
         </BrowserRouter>
-        // <Router>
-        //     <Routes>
-        //         {/* cambar por ruta Home */}
-        //         <Route exact path="/" element={<Home/>} /> 
-        //         <Route path="/service" element={<OrderInfoCards/>} />
-        //         <Route path="/editor" element={<EditorWys/>}/>
-        //     </Routes>
-        // </Router>
     );
 };
 

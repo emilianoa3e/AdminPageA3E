@@ -1,28 +1,22 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 import { Container, Nav, Navbar as NavbarBt, NavDropdown } from 'react-bootstrap';
-import { MdAssignmentTurnedIn, MdBook, MdHome, MdLabel } from 'react-icons/md';
-
+import { MdAssignmentTurnedIn, MdBook, MdHome, MdLabel} from 'react-icons/md';
+import CustomDropdown from './CustomDropdown';
+import '../../assets/css/components/layouts/navbar.css'
+import logo from '../../assets/img/Logo_Blanco.png'
 function CustomNavbar() {
     return (
         <NavbarBt
-            bg='dark'
             variant='dark'
-            className='custom-navbar'
+            className='custom-navbar '
             expand='lg'
             sticky='top'
         >
-            <Container>
+            <Container >
                 <NavbarBt.Brand href='/home'>
-
-                    {/* <img
-                    alt=''
-                    src={logo}
-                    width='45'
-                    height='auto'
-                    className='d-inline-block align-top'
-                />{' '} */}
-                    A3E
+                    <img src={logo} width={70} ></img>
+                   
                 </NavbarBt.Brand>
                 <NavbarBt.Toggle aria-controls='basic-navbar-nav' />
                 <NavbarBt.Collapse id='basic-navbar-nav'>
@@ -35,8 +29,7 @@ function CustomNavbar() {
                             Inicio
                         </NavLink>
 
-                        <NavDropdown title={<span><MdBook className="me-1" /> Dropdown</span>} className=' align-items-center me-3' id="basic-nav-dropdown" >
-                            <NavDropdown.Item >Action</NavDropdown.Item>
+                        <NavDropdown title={<span><MdBook className="me-1" /> Nosotros</span>} className=' align-items-center me-3' id="basic-nav-dropdown" >                        
                             <NavDropdown.Item >
                                 Filosofia
                             </NavDropdown.Item>
@@ -70,18 +63,21 @@ function CustomNavbar() {
                             Noticias
                         </NavLink>
                         <NavLink
-                            to='/sismediart'
+                            to='/news'
                             className='d-flex align-items-center me-3 nav-link'
                         >
                             <MdAssignmentTurnedIn className='me-1' />
-                            SISMEDIA-RT
-                        </NavLink>
+                            Sismedia-RT
+                        </NavLink>                
                     </Nav>
-
+                    <Nav>
+                        <CustomDropdown />
+                    </Nav>
                 </NavbarBt.Collapse>
             </Container>
         </NavbarBt>
     )
 }
+//
 
 export default CustomNavbar
