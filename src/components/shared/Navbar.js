@@ -1,9 +1,9 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
-import { Container, Nav, Navbar as NavbarBt } from 'react-bootstrap';
+import { Container, Nav, Navbar as NavbarBt, NavDropdown } from 'react-bootstrap';
 import { MdAssignmentTurnedIn, MdBook, MdHome, MdLabel } from 'react-icons/md';
 
-function Navbar() {
+function CustomNavbar() {
     return (
         <NavbarBt
             bg='dark'
@@ -13,7 +13,7 @@ function Navbar() {
             sticky='top'
         >
             <Container>
-                <NavbarBt.Brand href='/'>
+                <NavbarBt.Brand href='/home'>
 
                     {/* <img
                     alt=''
@@ -35,35 +35,53 @@ function Navbar() {
                             Inicio
                         </NavLink>
 
-                        <NavLink
-                            to='/courses'
-                            className='d-flex align-items-center me-3 nav-link'
-                        >
-                            <MdBook className='me-1' />
-                            Cursos
-                        </NavLink>
+                        <NavDropdown title={<span><MdBook className="me-1" /> Dropdown</span>} className=' align-items-center me-3' id="basic-nav-dropdown" >
+                            <NavDropdown.Item >Action</NavDropdown.Item>
+                            <NavDropdown.Item >
+                                Filosofia
+                            </NavDropdown.Item>
+                            <NavDropdown.Item >
+                                Politica de calidad
+                            </NavDropdown.Item>
+                            <NavDropdown.Item >
+                                Certificado y licencias
+                            </NavDropdown.Item>
+                            <NavDropdown.Item >
+                                Clientes
+                            </NavDropdown.Item>
+                            <NavDropdown.Item >
+                                Equipo A3E
+                            </NavDropdown.Item>
+                        </NavDropdown>
 
                         <NavLink
-                            to='/categories'
+                            to='/services'
                             className='d-flex align-items-center me-3 nav-link'
                         >
                             <MdLabel className='me-1' />
-                            Categorías
+                            Servicios
                         </NavLink>
 
                         <NavLink
-                            to='/surveys'
+                            to='/news'
                             className='d-flex align-items-center me-3 nav-link'
                         >
                             <MdAssignmentTurnedIn className='me-1' />
-                            Encuestas
+                            Noticias
+                        </NavLink>
+                        <NavLink
+                            to='/sismediart'
+                            className='d-flex align-items-center me-3 nav-link'
+                        >
+                            <MdAssignmentTurnedIn className='me-1' />
+                            SISMEDIA-RT
                         </NavLink>
                     </Nav>
-                
+
                 </NavbarBt.Collapse>
             </Container>
         </NavbarBt>
     )
 }
 
-export default Navbar
+export default CustomNavbar

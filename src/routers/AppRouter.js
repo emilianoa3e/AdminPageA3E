@@ -28,11 +28,14 @@ const AppRouter = () => {
             <Layout>
                 {/* Aquí colocar Rutas protegidas*/}
                 <Routes>
-                    <Route exact path='/' element={<PrivateRoute />}>
-                        <Route exact path='/' element={<Home/>} />
+                    <Route exact path='/home' element={<PrivateRoute />}>
+                        <Route exact path='/home' element={<Home/>} />
                     </Route>
                     <Route exact path='/service' element={<PrivateRoute />}>
                         <Route exact path='/service' element={<OrderInfoCards />} />
+                    </Route>
+                    <Route exact path='/editor' element={<PrivateRoute />}>
+                        <Route exact path='/editor' element={<EditorWys />} />
                     </Route>
                 </Routes>
             </Layout>

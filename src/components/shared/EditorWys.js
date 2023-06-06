@@ -8,7 +8,7 @@ import Prueba from '../getWysInfo';
 //Functional JSON
 const example =
 {
-    nameSection: "pruebira",
+    nameSection: "presss",
     topics: [
         {
             nameTopic: "Vision",
@@ -56,13 +56,13 @@ function EditorWys() {
 
     return (
 
-        // <div>
-        //     <ReactQuill value={content} onChange={handleChange} />
-        //     <Button as="input" type="submit" value="Submit" onClick={handleOnSubmit}/>
-        // </div>
         <div>
-            <Prueba/>
+            <ReactQuill value={content} onChange={handleChange} />
+            <Button as="input" type="submit" value="Submit" onClick={handleOnSubmit}/>
         </div>
+        // <div>
+        //     <Prueba/>
+        // </div>
     )
 }
 

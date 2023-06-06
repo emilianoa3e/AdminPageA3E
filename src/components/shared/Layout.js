@@ -1,12 +1,12 @@
 import React from 'react'
 import { Container } from 'react-bootstrap';
-import Navbar from './Navbar';
 import  '../../assets/css/components/layouts/layout.css'
+import CustomNavbar from './Navbar';
 
 function Layout({children}) {
     return (
         <>
-            <Navbar/> 
+            <CustomNavbar/> 
             <Container className='mt-4 px-4'>{children}</Container>
         </>
     )
