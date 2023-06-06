@@ -7,19 +7,19 @@ import { authReducer } from "./context/auth/AuthReducer";
 import { AuthContext } from "./context/auth/AuthContext";
 import Loader from "./components/shared/Loader";
 import { loginPost } from "./utils/AuthFunctions";
+
 function App() {
 
   {
     const [isLoading, setIsLoading] = useState(false);
     const [authState, setAuthState] = useState({});
-
+    console.log(authState)
+    
     //cambiar isLogged para moverte
     const [state, dispatch] = useReducer(authReducer, {
       isLogged: false,
-      id: '',
-      fullName: '',
       isLoading: false,
-      role: '',
+      email: ''
     });
 
     // const renewAuthToken = useCallback(() => {
@@ -28,16 +28,11 @@ function App() {
     //   setIsLoading(false);
     // }, []);
 
-    useEffect(() => {
-    	//renewToken(dispatch);
-    	setIsLoading(false);
-    }, []);
 
     const updateUserData = (data) => {
       dispatch({
         type: 'UPDATE_USER_DATA',
         payload: {
-          fullName: data.fullName,
           email: data.email,
         },
       });
@@ -50,18 +45,14 @@ function App() {
       });
       try {
         const data = await loginPost(email, password);
-        const token = data.token;
-          //console.log('mami perdon')
+        const token = data?.token;
         if (token) {
           localStorage.setItem('token', token);
 
           dispatch({
             type: 'LOGIN',
             payload: {
-              fullName: data.fullName,
-              id: data.id,
-              email: data.email,
-              role: data.role,
+              email: data.email,             
             },
           });
         } else {
@@ -70,11 +61,6 @@ function App() {
           });
         }
       } catch (error) {
-        // showSimpleAlert(
-        //   'Error',
-        //   'Error del servidor. Intente más tarde',
-        //   'error'
-        // );
         console.log('error del servidor')
       }
 
@@ -102,13 +88,10 @@ function App() {
       });
     };
 
-    useEffect(() => {
-      setAuthState(state);
-    }, [state]);
+    // useEffect(() => {
+    //   setAuthState(state);
+    // }, [state]);
 
-
-    //
-    //console.log(isLoading)
     if (isLoading) {
       return <Loader />;
     }
@@ -124,11 +107,7 @@ function App() {
          // renewAuthToken,
         }}
       >
-        {/* <AppProvider>
-          <AppRouter />
-        </AppProvider> */}
-        <AppRouter/>
-        {/* <ToastContainer limit={1} /> */}
+        <AppRouter/> 
       </AuthContext.Provider>
     );
   }

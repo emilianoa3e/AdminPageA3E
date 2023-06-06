@@ -3,26 +3,19 @@ export const authReducer = (state, action) => {
 		case 'LOGIN':
 			return {
 				...state,
-				isLogged: true,
-				fullName: action.payload.fullName,
-				id: action.payload.id,
+				isLogged: true,				
 				email: action.payload.email,
-				role: action.payload.role,
 			};
 
 		case 'LOGOUT':
 			return {
-				isLogged: false,
-				id: '',
-				fullName: '',
-				email: '',
-				role: '',
+				isLogged: false,			
+				email: ''
 			};
 
 		case 'UPDATE_USER_DATA':
 			return {
 				...state,
-				fullName: action.payload.fullName,
 				email: action.payload.email,
 			};
 

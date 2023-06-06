@@ -20,13 +20,10 @@ const AppRouter = () => {
     // useEffect(() => {
     //     renewAuthToken();
     // }, [renewAuthToken]);
-
-    // if (isLoading) {
-    //     return <EditorWys/>;
-    // }
-
-    //estatic
-    //const { isLogged } = false;
+    console.log('approuter '+isLogged)
+    if (isLoading) {
+        return <Loader/>;
+    }
 
     return (
         //  colocar !isLogged para mostrar privadas

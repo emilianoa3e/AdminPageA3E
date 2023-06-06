@@ -9,7 +9,7 @@ const PublicRoute = ({
 }) => {
    const { state } = useContext(AuthContext);
    const { isLogged } = state;
-  
+    console.log('public'+isLogged)
   return isLogged ? <Navigate to="/" /> : <Outlet />;
 };
 

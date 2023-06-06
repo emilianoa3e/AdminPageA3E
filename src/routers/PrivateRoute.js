@@ -8,10 +8,11 @@ const PrivateRoute = ({
 	...rest
 }) => {
   const { state } = useContext(AuthContext);
-  const { isLogged, isLoading } = state;
+	const { isLogged } = state;
+
   //static
   //const isLogged  = true;
-
+  console.log('private'+isLogged)
   return isLogged ? <Outlet /> : <Navigate to="/" />;
 };
 
