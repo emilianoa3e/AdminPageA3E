@@ -8,6 +8,7 @@ import EditorWys from '../components/shared/EditorWys';
 import Home from '../pages/Home';
 import 'bootstrap/dist/css/bootstrap.css';
 import Login from '../pages/Auth/Login';
+import { AuthContext } from '../context/auth/AuthContext';
 
 
 
@@ -22,14 +23,14 @@ const AppRouter = () => {
     // if (isLoading) {
     //     return <Loader />;
     // }
-    const { isLogged } = false;
 
+    const {isLogged} = useContext(AuthContext);
+    
     return (
         //  colocar !isLogged para mostrar privadas
         <BrowserRouter>
             {isLogged ? (
                 <Layout>
-                    {/* Aquí colocar Rutas protegidas*/}
                     <Routes>
                         <Route exact path='/' element={<PrivateRoute />}>
                             <Route exact path='/' element={<Home />} />

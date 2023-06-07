@@ -8,17 +8,6 @@ import '../../assets/css/components/layouts/customDropdown.css'
 
 function CustomDropdown() {
     const navigate = useNavigate();
-    const { logout, authState } = useContext(AuthContext);
-
-    const handleLogout = () => {
-        // showConfirmDialog(
-        //     'Cerrar sesión',
-        //     '¿Estás seguro que deseas cerrar sesión?',
-        //     'Confirmar',
-        //     'Cancelar',
-        //     logout
-        // );
-    };
 
     const handleProfile = () => {
         navigate('/profile');
@@ -48,7 +37,7 @@ function CustomDropdown() {
                                 </Dropdown.Item>
                                 <Dropdown.Item
                                     className='dropdown-item'
-                                    onClick={handleLogout}
+                                    // onClick={handleLogout}
                                 >
                                     <MdLogout className='me-1' />
                                     Cerrar sesión

@@ -4,7 +4,8 @@ import { AuthContext } from '../context/auth/AuthContext'; // Importa tu propio 
 
 const PrivateRoute = () => {
   //const { state } = useContext(AuthContext);
-  const isLogged  = true;
+    const {isLogged} = useContext(AuthContext);
+   
 
   return isLogged ? <Outlet /> : <Navigate to="/" />;
 };
