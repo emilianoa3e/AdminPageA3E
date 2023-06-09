@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext} from 'react';
 import { AuthContext } from '../../context/auth/AuthContext';
 import {Row, Col, Container, Dropdown, } from 'react-bootstrap'
 import { MdAccountCircle, MdArrowDropDown, MdLogout } from 'react-icons/md';
@@ -8,6 +8,11 @@ import '../../assets/css/components/layouts/customDropdown.css'
 
 function CustomDropdown() {
     const navigate = useNavigate();
+    const {logout, authState} = useContext(AuthContext)
+
+    const handleLogout = ()=>{
+        logout()
+    }
 
     const handleProfile = () => {
         navigate('/profile');
@@ -37,7 +42,7 @@ function CustomDropdown() {
                                 </Dropdown.Item>
                                 <Dropdown.Item
                                     className='dropdown-item'
-                                    // onClick={handleLogout}
+                                     onClick={handleLogout}
                                 >
                                     <MdLogout className='me-1' />
                                     Cerrar sesión

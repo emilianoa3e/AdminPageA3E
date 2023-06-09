@@ -2,7 +2,7 @@ import { Form, Formik } from 'formik'
 import React, { useContext, useState } from 'react'
 import styles from '../../assets/css/pages/Login.module.css'
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
-import AuthContext  from '../../context/auth/AuthContext'
+import {AuthContext} from '../../context/auth/AuthContext'
 import { Link } from 'react-router-dom';
 import { Form as FormBt } from 'react-bootstrap';
 import * as yup from 'yup';
@@ -14,28 +14,15 @@ import { loginPost } from '../../utils/AuthFunctions';
 
 function Login() {
 
-
+  const { login } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
   //código provisional, no proporciona estado ni contexto
-  const handleOnSubmit = async (values, resetForm) => {
-    //login(values.email, values.password);
-    try {
-			const data = await loginPost(values.email, values.password);
-      console.log(data)
-      const token = data?.token;
-
-			if (token) {
-				localStorage.setItem('token', token);
-			} else {
-				console.log('no hay token')
-			}
-		} catch (error) {
-			console.log(error)
-		}
+  const handleOnSubmit = (values, resetForm) => {
+    login(values.email, values.password);
   };
 
   const objectSchema = yup.object({

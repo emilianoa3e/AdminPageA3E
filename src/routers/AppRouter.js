@@ -9,23 +9,23 @@ import Home from '../pages/Home';
 import 'bootstrap/dist/css/bootstrap.css';
 import Login from '../pages/Auth/Login';
 import { AuthContext } from '../context/auth/AuthContext';
+import Loader from '../components/shared/Loader';
 
 
 
 const AppRouter = () => {
-    // const { state, renewAuthToken } = useContext(AuthContext);
-    // const { isLogged, isLoading } = useState(true);
+    const { state, renewAuthToken } = useContext(AuthContext);
+    const { isLogged, isLoading } = state
 
-    // useEffect(() => {
-    //     renewAuthToken();
-    // }, [renewAuthToken]);
+    useEffect(() => {
+        renewAuthToken();
+    }, [renewAuthToken]);
 
-    // if (isLoading) {
-    //     return <Loader />;
-    // }
-
-    const {isLogged} = useContext(AuthContext);
+    if (isLoading) {
+        return <Loader/>;
+    }
     
+   console.log(state)
     return (
         //  colocar !isLogged para mostrar privadas
         <BrowserRouter>
