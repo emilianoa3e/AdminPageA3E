@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Login from '../pages/Auth/Login';
 import { AuthContext } from '../context/auth/AuthContext';
 import Loader from '../components/shared/Loader';
+import Services from '../pages/services/Services';
 
 
 
@@ -17,6 +18,7 @@ const AppRouter = () => {
     const { state, renewAuthToken } = useContext(AuthContext);
     const { isLogged, isLoading } = state
 
+    //hace una llamada al método para preguntar por el token, almacenado en LocalStorage
     useEffect(() => {
         renewAuthToken();
     }, [renewAuthToken]);
@@ -25,9 +27,8 @@ const AppRouter = () => {
         return <Loader/>;
     }
     
-   console.log(state)
     return (
-        //  colocar !isLogged para mostrar privadas
+        
         <BrowserRouter>
             {isLogged ? (
                 <Layout>
@@ -35,8 +36,8 @@ const AppRouter = () => {
                         <Route exact path='/' element={<PrivateRoute />}>
                             <Route exact path='/' element={<Home />} />
                         </Route>
-                        <Route exact path='/service' element={<PrivateRoute />}>
-                            <Route exact path='/service' element={<OrderInfoCards />} />
+                        <Route exact path='/services' element={<PrivateRoute />}>
+                            <Route exact path='/services' element={<Services />} />
                         </Route>
                         <Route exact path='/editor' element={<PrivateRoute />}>
                             <Route exact path='/editor' element={<EditorWys />} />

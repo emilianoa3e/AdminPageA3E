@@ -2,7 +2,7 @@ import React from "react";
 import { Card } from 'react-bootstrap';
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from '@dnd-kit/utilities';
-
+//en desuso
 const InfoCard = ({ item }) => {
   const {
     attributes,

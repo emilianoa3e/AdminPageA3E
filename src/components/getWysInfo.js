@@ -2,56 +2,34 @@ import React from 'react'
 import ReactQuill from 'react-quill';
 import instance from '../shared/Axios';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 function Prueba() {
 
-    const [exampleData, setExampleData] = useState(null);
 
-    useEffect(() => {
-        getExampleData();
-    }, []);
+    const [responseData, setResponseData] = useState(null);
 
-    const getExampleData = async () => {
-        try {
-            const response = await instance.get('/topic/getAll-topics'); // Actualiza con la ruta específica de tu API
-
-            if (response.error) {
-                console.log(response.error);
-            } else {
-                console.log(response); // Aquí puedes acceder a los datos devueltos por la API
-            }
-
-            setExampleData(response)
-
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    if (!exampleData) {
-        return <div>Cargando...</div>; // Mostrar un mensaje de carga mientras se obtienen los datos
-      }
-
-    const htmlContent =exampleData.topics[0].topics[0].description || 'vacio';
-    console.log(htmlContent);
-
+    const getData = async () =>{
+        try{
+            const data = await axios.get('http://localhost:3000/api/tiny/getById/648397460276d263a2269241')
+            console.log(data.data.tiny.content)
+            setResponseData(data.data.tiny.content)
+         }catch(error){
+             console.log(error)
+         }
+    }
+   
+   getData()
 
     return (
-        <div>
-            {exampleData ? (
+        <>
+            {responseData && (
                 <div>
-                    {/* Aquí puedes acceder a las propiedades del ejemploData y mostrarlas */}
-
-                    <div>
-                        {/* <ReactQuill value={htmlContent} readOnly={true} /> */} 
-                        <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
-                    </div>
-
-                    {/* ... */}
+                    <h2>Datos obtenidos:</h2>
+                    <div dangerouslySetInnerHTML={{ __html: responseData }}></div>
                 </div>
-            ) : (
-                <p>Cargando...</p>
             )}
-        </div>
+        </>
+
     )
 }
 

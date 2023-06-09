@@ -1,20 +1,35 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import instance from '../../shared/Axios';
 import { Button } from 'react-bootstrap';
 import Prueba from '../getWysInfo';
 import { Editor } from '@tinymce/tinymce-react';
-
+import axios from 'axios';
 
 
 
 function EditorWys() {
 
   const editorRef = useRef(null);
+  const [content, setContent] = useState(null)
+
   const log = () => {
-    if (editorRef.current) {
-      console.log(editorRef.current.getContent());
+    if (editorRef) {
+      console.log(content);
+  
+      // Realizar la llamada a través de Axios
+      axios.post('http://localhost:3000/api/tiny/save', { content })
+        .then(response => {
+          // Manejar la respuesta del servidor
+          console.log(response.data);
+        })
+        .catch(error => {
+          // Manejar los errores
+          console.error(error);
+        });
+    } else {
+      console.log('hola');
     }
   };
 
@@ -23,18 +38,17 @@ function EditorWys() {
     <>
       <Editor
         apiKey="mx8xfbfszwym72a4mhwdhb2czmco4whjp4bls89y26ov210t"
-        initialValue="<p>Escribe aquí...</p>"
+        initialValue=""
         init={{
           height: 500,
           menubar: true,
           plugins: [
-            'advlist', 'anchor', 'autolink', 'autoresize', 'autosave',
+            'advlist', 'anchor', 'autolink', 'autoresize', 
             'charmap', 'code', 'codesample', 'directionality',
-            'emoticons', 'fullscreen', 'help', 'hr', 'image', 'imagetools', 'importcss',
-            'insertdatetime', 'link', 'lists', 'media', 'nonbreaking',
-            'noneditable', 'pagebreak', 'paste', 'preview', 'print', 'quickbars', 'save',
-            'searchreplace', 'tabfocus', 'table',
-            'textpattern', 'toc', 'visualblocks', 'visualchars', 'wordcount'
+            'emoticons', 'fullscreen', 'help',  'image', 'importcss',
+            'insertdatetime', 'link', 'lists', 'media', 'nonbreaking', 'pagebreak',  'preview',  'quickbars', 'save',
+            'searchreplace',  'table',
+            'visualblocks', 'visualchars', 'wordcount'
           ],
           toolbar: 'undo redo | formatselect | ' +
             'bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | ' +
@@ -43,10 +57,13 @@ function EditorWys() {
             'forecolor backcolor | removeformat | code | fullscreen | help',
         }}
         onEditorChange={(content, editor) => {
-          console.log(content);
+          setContent(content)
         }}
       />
-      
+      <button onClick={log}>  
+        Enviar
+      </button>
+      {/* <Prueba></Prueba> */}
     </>
   );
 }

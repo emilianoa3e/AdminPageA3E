@@ -12,11 +12,12 @@ export const loginPost = async (email, password) => {
 			 'http://localhost:3000/api/auth/signin',
 			dataJson
 		);
+		
 		return data.data;
 	} catch (error) {
-		const { data } = error.response;
-
-		// console.log(data);
+		const { data } = error;
+		console.log(error.response)
+		
 
 		if (data.message === messages.login.errorCrendentials) {
 			console.log('error', data.message)
