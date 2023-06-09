@@ -48,6 +48,12 @@
 	text-align: center;
 }
 
+.subtitle{
+	font-size: 25px;
+	font-weight: bold;
+	text-align: center;
+}
+
 .imgContainer {
 	display: grid;
 	place-items: center;

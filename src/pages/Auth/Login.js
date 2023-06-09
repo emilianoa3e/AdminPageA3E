@@ -51,9 +51,12 @@ function Login() {
       <div className='container mt-5'>
         <div className='row'>
           <div className='col-12 col-md-6'>
-            <h1 className={`${styles.title} mb-4`}>
+            <h1 className={`${styles.title} mb-2`}>
               Iniciar sesión
             </h1>
+            <h3 className={`${styles.subtitle} mb-4`}>
+              Sistema de Gestión de Páginas web de A3E Ingenieros
+            </h3>
             <Formik
               initialValues={{
                 email: '',
