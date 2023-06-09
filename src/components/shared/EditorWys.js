@@ -25,7 +25,7 @@ function EditorWys() {
 
     return (
       <>
-
+          <div>Holi</div>
       </>
     )
 }

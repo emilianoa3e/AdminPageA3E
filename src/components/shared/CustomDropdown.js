@@ -1,13 +1,18 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { AuthContext } from "../../context/auth/AuthContext";
-import { Row, Col, Container, Dropdown } from "react-bootstrap";
-import { MdAccountCircle, MdArrowDropDown, MdLogout } from "react-icons/md";
-import "../../assets/css/components/layouts/customDropdown.css";
+import React from 'react'
+import { useNavigate } from 'react-router-dom';
+import { useContext} from 'react';
+import { AuthContext } from '../../context/auth/AuthContext';
+import {Row, Col, Container, Dropdown, } from 'react-bootstrap'
+import { MdAccountCircle, MdArrowDropDown, MdLogout } from 'react-icons/md';
+import '../../assets/css/components/layouts/customDropdown.css'
 
 function CustomDropdown() {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
+    const {logout, authState} = useContext(AuthContext)
+
+    const handleLogout = ()=>{
+        logout()
+    }
 
   const handleProfile = () => {
     navigate("/profile");

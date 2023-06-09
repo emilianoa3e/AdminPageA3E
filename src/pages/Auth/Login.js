@@ -2,7 +2,7 @@ import { Form, Formik } from "formik";
 import React, { useContext, useState } from "react";
 import styles from "../../assets/css/pages/Login.module.css";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
-import AuthContext from "../../context/auth/AuthContext";
+import { AuthContext } from "../../context/auth/AuthContext";
 import { Link } from "react-router-dom";
 import { Form as FormBt } from "react-bootstrap";
 import * as yup from "yup";
@@ -12,6 +12,7 @@ import { TextInput } from "../../components/shared/TextInput";
 import { loginPost } from "../../utils/AuthFunctions";
 
 function Login() {
+  const { login } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -33,6 +34,9 @@ function Login() {
     } catch (error) {
       console.log(error);
     }
+    const handleOnSubmit = (values, resetForm) => {
+      login(values.email, values.password);
+    };
   };
 
   const objectSchema = yup.object({
