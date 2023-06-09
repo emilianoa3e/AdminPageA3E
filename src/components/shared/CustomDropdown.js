@@ -41,7 +41,7 @@ function CustomDropdown() {
                 </Dropdown.Item>
                 <Dropdown.Item
                   className="dropdown-item"
-                  // onClick={handleLogout}
+                   onClick={handleLogout}
                 >
                   <MdLogout className="me-1" size={25} />
                   Cerrar sesión

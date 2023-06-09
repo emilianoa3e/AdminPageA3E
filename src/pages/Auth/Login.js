@@ -19,25 +19,10 @@ function Login() {
   };
 
   //código provisional, no proporciona estado ni contexto
-  const handleOnSubmit = async (values, resetForm) => {
-    //login(values.email, values.password);
-    try {
-      const data = await loginPost(values.email, values.password);
-      console.log(data);
-      const token = data?.token;
-
-      if (token) {
-        localStorage.setItem("token", token);
-      } else {
-        console.log("no hay token");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-    const handleOnSubmit = (values, resetForm) => {
-      login(values.email, values.password);
-    };
+  const handleOnSubmit = (values, resetForm) => {
+    login(values.email, values.password);
   };
+
 
   const objectSchema = yup.object({
     email: yup
