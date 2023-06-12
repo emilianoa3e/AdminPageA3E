@@ -4,13 +4,13 @@ import instance from '../shared/Axios';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 function Prueba() {
-
+//todo el codigo es orueba, no usar como componente
 
     const [responseData, setResponseData] = useState(null);
 
     const getData = async () =>{
         try{
-            const data = await axios.get('http://localhost:3000/api/tiny/getById/648397460276d263a2269241')
+            const data = await axios.get('http://localhost:8080/api/tiny/getById/64874426e6c42543d92be8e7')
             console.log(data.data.tiny.content)
             setResponseData(data.data.tiny.content)
          }catch(error){

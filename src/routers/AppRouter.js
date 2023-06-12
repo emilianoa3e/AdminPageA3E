@@ -11,7 +11,11 @@ import Login from '../pages/Auth/Login';
 import { AuthContext } from '../context/auth/AuthContext';
 import Loader from '../components/shared/Loader';
 import Services from '../pages/services/Services';
-
+import Us from '../pages/us/OurCompany.js';
+import News from '../pages/news/CompanyNews';
+import OurCompany from '../pages/us/OurCompany.js';
+import CompanyNews from '../pages/news/CompanyNews';
+import FormService from '../pages/services/FormService';
 
 
 const AppRouter = () => {
@@ -39,8 +43,17 @@ const AppRouter = () => {
                         <Route exact path='/services' element={<PrivateRoute />}>
                             <Route exact path='/services' element={<Services />} />
                         </Route>
+                        <Route exact path='/us' element={<PrivateRoute />}>
+                            <Route exact path='/us' element={<OurCompany />} />
+                        </Route>
+                        <Route exact path='/news' element={<PrivateRoute />}>
+                            <Route exact path='/news' element={<CompanyNews />} />
+                        </Route>
+                        <Route exact path='/profile' element={<PrivateRoute />}>
+                            <Route exact path='/profile' element={<CompanyNews />} />
+                        </Route>
                         <Route exact path='/editor' element={<PrivateRoute />}>
-                            <Route exact path='/editor' element={<EditorWys />} />
+                            <Route exact path='/editor' element={<FormService />} />
                         </Route>
                         <Route exact path='/*' element={<Navigate to='/' />} />
                     </Routes>

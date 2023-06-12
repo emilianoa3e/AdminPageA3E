@@ -9,7 +9,7 @@ export const loginPost = async (email, password) => {
 
 	try {
 		const data = await axios.post(
-			 'http://localhost:3000/api/auth/signin',
+			 'http://localhost:8080/api/auth/signin',
 			dataJson
 		);
 		
