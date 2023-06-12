@@ -7,7 +7,7 @@ function Layout({children}) {
     return (
         <>
             <CustomNavbar/> 
-            <Container className='mt-4 px-4'>{children}</Container>
+            <Container fluid className='mt-4'>{children}</Container>
         </>
     )
 }

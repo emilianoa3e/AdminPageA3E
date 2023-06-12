@@ -1,13 +1,12 @@
-import axios from 'axios';
+import axios from "axios";
 
 const instance = axios.create({
-   baseURL: 'http://localhost:3000/api',
- 
+  baseURL: "http://localhost:3000/api",
 });
 
 const requestHandler = (request) => {
-  request.headers['Accept'] = 'application/json';
-  request.headers['Content-Type'] = 'application/json';
+  request.headers["Accept"] = "application/json";
+  request.headers["Content-Type"] = "application/json";
 
   return request;
 };
