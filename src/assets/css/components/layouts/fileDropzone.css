@@ -1,0 +1,30 @@
+.dropzone {
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: border 0.3s ease;
+    margin-bottom: 10px;
+  }
+  
+  .dropzone.accept {
+    border-color: #00e676;
+  }
+  
+  .dropzone.reject {
+    border-color: #ff1744;
+  }
+  
+  .dropzone.active {
+    border-color: #2979ff;
+  }
+  
+  .dropzone p {
+    margin: 0;
+  }
+  
+  .dropzone p:not(:last-child) {
+    margin-bottom: 10px;
+  }
+  

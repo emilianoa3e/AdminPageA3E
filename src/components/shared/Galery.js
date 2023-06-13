@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { MdCopyAll } from "react-icons/md";
+import {
+  MdCopyAll,
+  MdInsertPhoto,
+  MdMovie,
+  MdReorder,
+  MdDeleteForever,
+} from "react-icons/md";
 import { Row, Col, Container, Card } from "react-bootstrap";
 import CustomButton from "./CustomButton";
-import axios from "axios";
-import instance from "../../shared/Axios";
+import { getAllMedia, deleteMultimedia } from "../../utils/galeryFunctions";
+import FileDropzone from "./Dropzone";
 
 function Galery() {
   const [mediaList, setMediaList] = useState([
@@ -16,14 +22,22 @@ function Galery() {
 
   useEffect(() => {
     const getMedia = async () => {
-      const response = await axios.get(
-        instance.defaults.baseURL + "/galery/getAll-galery"
-      );
-      setMediaList(response.data.multimedia);
+      const data = await getAllMedia();
+      setMediaList(data);
     };
 
     getMedia();
   }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteMultimedia(id);
+      const updatedMediaList = await getAllMedia();
+      setMediaList(updatedMediaList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const copyToClipboard = (content) => {
     navigator.clipboard.writeText(content);
@@ -41,8 +55,18 @@ function Galery() {
     }
   });
 
+  const handleFileUpload = (files) => {
+    // Aquí puedes manejar los archivos subidos, por ejemplo, enviarlos al servidor
+    console.log(files);
+  };
+
   return (
-    <Container>
+    <Container className="fluid">
+      <Row>
+        <Col>
+          <FileDropzone onFileUpload={handleFileUpload}/>
+        </Col>
+      </Row>
       <Card>
         <Card.Header>
           <Row>
@@ -72,8 +96,8 @@ function Galery() {
         <Card.Body style={{ overflowY: "auto", maxHeight: "490px" }}>
           <Row>
             {filteredMediaList.map((media) => (
-              <Col className="col-lg-6 col-md-12" key={media._id}>
-                <Card style={{ marginBottom: "15px" }}>
+              <Col xs={6}>
+                <Card style={{ marginBottom: "15px" }} key={media._id}>
                   {media.type === "image" ? (
                     <img
                       src={media.multimedia}
@@ -91,10 +115,25 @@ function Galery() {
                     />
                   )}
                   <Card.Footer style={{ textAlign: "center" }}>
-                    <MdCopyAll
-                      onClick={() => copyToClipboard(media.multimedia)}
-                      style={{ cursor: "pointer", fontSize: "1.5rem" }}
-                    />
+                    <Col className="d-flex">
+                      <MdCopyAll
+                        onClick={() => copyToClipboard(media.multimedia)}
+                        style={{
+                          cursor: "pointer",
+                          fontSize: "1.5rem",
+                          flex: 0.5,
+                        }}
+                      />
+                      <MdDeleteForever
+                        onClick={() => handleDelete(media._id)}
+                        style={{
+                          cursor: "pointer",
+                          fontSize: "1.5rem",
+                          color: "#F5462F",
+                          flex: 0.5,
+                        }}
+                      />
+                    </Col>
                   </Card.Footer>
                 </Card>
               </Col>
