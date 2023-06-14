@@ -1,19 +1,16 @@
 import axios from "axios";
-import { messages } from "./messages";
+import { messages } from "../utils/messages";
 import instance from "../shared/Axios";
 
-export const uploadMultimedia = async (file) => {
+export const saveService = async (title, content) => {
   try {
-    const formData = new FormData();
-    formData.append("multimedia", file);
-
+    console.log("title", title);
+    console.log("content", content);
     const response = await axios.post(
-      instance.defaults.baseURL + "/galery/save",
-      formData,
+      instance.defaults.baseURL + "/service/create-service",
       {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+        title,
+        content,
       }
     );
 
@@ -37,13 +34,12 @@ export const uploadMultimedia = async (file) => {
   }
 };
 
-export const getAllMedia = async () => {
+export const getAllServices = async () => {
   try {
     const response = await axios.get(
-      instance.defaults.baseURL + "/galery/getAll-galery"
+      instance.defaults.baseURL + "/service/getAll-services"
     );
-
-    return response.data.multimedia;
+    return response.data;
   } catch (error) {
     const { data } = error;
 
@@ -63,13 +59,13 @@ export const getAllMedia = async () => {
   }
 };
 
-export const deleteMultimedia = async (id) => {
+export const getServiceById = async (id) => {
   try {
-    const response = await axios.delete(
-      instance.defaults.baseURL + `/galery/delete/${id}`
+    console.log("id del function", id);
+    const response = await axios.get(
+      instance.defaults.baseURL + `/service/getById-service/${id}`
     );
-
-    return response.data.message;
+    return response.data;
   } catch (error) {
     const { data } = error;
 

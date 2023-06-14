@@ -9,7 +9,6 @@ import * as yup from "yup";
 import logo from "../../assets/img/logo.jpeg";
 import CustomButton from "../../components/shared/CustomButton";
 import { TextInput } from "../../components/shared/TextInput";
-import { loginPost } from "../../utils/AuthFunctions";
 
 function Login() {
   const { login } = useContext(AuthContext);

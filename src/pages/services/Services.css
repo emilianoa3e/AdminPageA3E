@@ -1,0 +1,25 @@
+.service-card {
+  border: none;
+  background-color: #f7f7f7;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.service-card:hover {
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.service-title {
+  text-align: center;
+  font-size: 22px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.service-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}

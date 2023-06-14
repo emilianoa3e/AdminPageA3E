@@ -2,7 +2,7 @@ import React from 'react'
 
 function CompanyNews() {
   return (
-    <div>News</div>
+    <>News</>
   )
 }
 

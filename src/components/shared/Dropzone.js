@@ -4,14 +4,16 @@ import { MdCloudUpload } from "react-icons/md";
 import CustomButton from "./CustomButton";
 import "../../assets/css/components/layouts/fileDropzone.css";
 
-const FileDropzone = ({ onFileUpload }) => {
-  const [uploadedFile, setUploadedFile] = useState(null);
-
+const FileDropzone = ({
+  onFileUpload,
+  uploadedFile,
+  setUploadedFile,
+  isLoading,
+}) => {
   const onDrop = useCallback(
     (acceptedFiles) => {
       if (acceptedFiles.length === 1) {
         const file = acceptedFiles[0];
-        onFileUpload(file);
         setUploadedFile(file);
       }
     },
@@ -26,8 +28,23 @@ const FileDropzone = ({ onFileUpload }) => {
     isDragReject,
   } = useDropzone({
     onDrop,
-    accept: ".jpg, .jpeg, .png, .mp4",
+    accept: "image/*, video/*",
     multiple: false,
+    // Agrega una función de validación personalizada para rechazar otros tipos de archivo
+    validator: (file) => {
+      // Lista de tipos MIME y extensiones de archivo permitidos
+      const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/jpg",
+        "video/mp4",
+      ];
+      // Verificar si el tipo de archivo está permitido
+      if (!allowedTypes.includes(file.type)) {
+        return "Solo se permiten imágenes y videos.";
+      }
+      return null; // El archivo es válido
+    },
   });
 
   const getDropzoneClass = () => {
@@ -43,21 +60,12 @@ const FileDropzone = ({ onFileUpload }) => {
     return "dropzone";
   };
 
-  const handleUpload = () => {
-    if (uploadedFile) {
-      // Realizar la acción de subir el archivo
-      // Aquí puedes llamar a la función para subir el archivo a través de Axios u otra librería
-      console.log("Subiendo archivo:", uploadedFile);
-      setUploadedFile(null);
-    }
-  };
-
   return (
     <>
       <div className={getDropzoneClass()} {...getRootProps()}>
-        {!uploadedFile && <MdCloudUpload size={60} color="#3B97D3" />}
+        {!uploadedFile && <MdCloudUpload size={50} color="#3B97D3" />}
         <input {...getInputProps()} />
-        {isDragAccept && <p> Suelta el archivo aquí...</p>}
+        {isDragAccept && <p>Suelta el archivo aquí...</p>}
         {isDragReject && <p>Formato de archivo no válido.</p>}
         {!isDragActive && !uploadedFile && (
           <p>
@@ -75,11 +83,15 @@ const FileDropzone = ({ onFileUpload }) => {
           className="container"
           style={{ textAlign: "center", marginBottom: "10px" }}
         >
-          <CustomButton
-            text="Subir multimedia"
-            type="button"
-            onClick={handleUpload}
-          />
+          {isLoading ? (
+            <div className="spinner-border text-primary" />
+          ) : (
+            <CustomButton
+              text="Subir multimedia"
+              type="button"
+              onClick={() => onFileUpload(uploadedFile)}
+            />
+          )}
         </div>
       )}
     </>

@@ -1,7 +1,7 @@
 .dropzone {
-    border: 2px dashed #ccc;
-    border-radius: 4px;
-    padding: 40px;
+    border: 2.5px dashed #ccc;
+    border-radius: 10px;
+    padding: 20px;
     text-align: center;
     cursor: pointer;
     transition: border 0.3s ease;
