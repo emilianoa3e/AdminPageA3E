@@ -1,5 +1,4 @@
 import axios from "axios";
-import { messages } from "./messages";
 import instance from "../shared/Axios";
 
 export const uploadMultimedia = async (file) => {
@@ -19,21 +18,7 @@ export const uploadMultimedia = async (file) => {
 
     return response.data;
   } catch (error) {
-    const { data } = error;
-
-    if (data.message === messages.login.errorCrendentials) {
-      console.log("error", data.message);
-      return null;
-    }
-
-    if (data.message === messages.login.errorServer) {
-      console.log("error", data.message);
-      return null;
-    }
-
-    console.log("error", data.message);
-
-    return null;
+    console.log("error", error);
   }
 };
 
@@ -45,21 +30,7 @@ export const getAllMedia = async () => {
 
     return response.data.multimedia;
   } catch (error) {
-    const { data } = error;
-
-    if (data.message === messages.login.errorCrendentials) {
-      console.log("error", data.message);
-      return null;
-    }
-
-    if (data.message === messages.login.errorServer) {
-      console.log("error", data.message);
-      return null;
-    }
-
-    console.log("error", data.message);
-
-    return null;
+    console.log("error", error);
   }
 };
 
@@ -69,22 +40,8 @@ export const deleteMultimedia = async (id) => {
       instance.defaults.baseURL + `/galery/delete/${id}`
     );
 
-    return response.data.message;
+    return response.data;
   } catch (error) {
-    const { data } = error;
-
-    if (data.message === messages.login.errorCrendentials) {
-      console.log("error", data.message);
-      return null;
-    }
-
-    if (data.message === messages.login.errorServer) {
-      console.log("error", data.message);
-      return null;
-    }
-
-    console.log("error", data.message);
-
-    return null;
+    console.log("error", error);
   }
 };

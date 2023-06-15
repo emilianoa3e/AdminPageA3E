@@ -1,5 +1,4 @@
 import React from "react";
-import MdIcon  from "react-icons/md";
 import "../../assets/css/components/layouts/CustomButton.css";
 function CustomButton({
   text,

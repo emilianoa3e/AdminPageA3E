@@ -4,12 +4,7 @@ import { MdCloudUpload } from "react-icons/md";
 import CustomButton from "./CustomButton";
 import "../../assets/css/components/layouts/fileDropzone.css";
 
-const FileDropzone = ({
-  onFileUpload,
-  uploadedFile,
-  setUploadedFile,
-  isLoading,
-}) => {
+const FileDropzone = ({ onFileUpload, uploadedFile, setUploadedFile }) => {
   const onDrop = useCallback(
     (acceptedFiles) => {
       if (acceptedFiles.length === 1) {
@@ -83,15 +78,11 @@ const FileDropzone = ({
           className="container"
           style={{ textAlign: "center", marginBottom: "10px" }}
         >
-          {isLoading ? (
-            <div className="spinner-border text-primary" />
-          ) : (
-            <CustomButton
-              text="Subir multimedia"
-              type="button"
-              onClick={() => onFileUpload(uploadedFile)}
-            />
-          )}
+          <CustomButton
+            text="Subir multimedia"
+            type="button"
+            onClick={() => onFileUpload(uploadedFile)}
+          />
         </div>
       )}
     </>

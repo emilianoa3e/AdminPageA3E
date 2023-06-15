@@ -1,11 +1,8 @@
 import axios from "axios";
-import { messages } from "../utils/messages";
 import instance from "../shared/Axios";
 
 export const saveService = async (title, content) => {
   try {
-    console.log("title", title);
-    console.log("content", content);
     const response = await axios.post(
       instance.defaults.baseURL + "/service/create-service",
       {
@@ -14,23 +11,11 @@ export const saveService = async (title, content) => {
       }
     );
 
+    console.log("response", response);
     return response.data;
   } catch (error) {
-    const { data } = error;
-
-    if (data.message === messages.login.errorCrendentials) {
-      console.log("error", data.message);
-      return null;
-    }
-
-    if (data.message === messages.login.errorServer) {
-      console.log("error", data.message);
-      return null;
-    }
-
-    console.log("error", data.message);
-
-    return null;
+    console.log("error", error.response.data);
+    return error.response.data;
   }
 };
 
@@ -41,46 +26,44 @@ export const getAllServices = async () => {
     );
     return response.data;
   } catch (error) {
-    const { data } = error;
-
-    if (data.message === messages.login.errorCrendentials) {
-      console.log("error", data.message);
-      return null;
-    }
-
-    if (data.message === messages.login.errorServer) {
-      console.log("error", data.message);
-      return null;
-    }
-
-    console.log("error", data.message);
-
-    return null;
+    console.log("error", error);
   }
 };
 
 export const getServiceById = async (id) => {
   try {
-    console.log("id del function", id);
     const response = await axios.get(
       instance.defaults.baseURL + `/service/getById-service/${id}`
     );
     return response.data;
   } catch (error) {
-    const { data } = error;
+    console.log("error", error);
+  }
+};
 
-    if (data.message === messages.login.errorCrendentials) {
-      console.log("error", data.message);
-      return null;
-    }
+export const updateService = async (id, title, content) => {
+  try {
+    const response = await axios.put(
+      instance.defaults.baseURL + `/service/updateById-service/${id}`,
+      {
+        title,
+        content,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log("error", error.response.data);
+    return error.response.data;
+  }
+};
 
-    if (data.message === messages.login.errorServer) {
-      console.log("error", data.message);
-      return null;
-    }
-
-    console.log("error", data.message);
-
-    return null;
+export const deleteService = async (id) => {
+  try {
+    const response = await axios.delete(
+      instance.defaults.baseURL + `/service/deleteById-service/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log("error", error);
   }
 };

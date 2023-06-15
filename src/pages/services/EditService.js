@@ -5,11 +5,12 @@ import { Formik, Form } from "formik";
 import * as yup from "yup";
 import { useNavigate, useParams } from "react-router-dom";
 import { TextInput } from "../../components/shared/TextInput";
-// import { saveService } from "../../utils/serviceFunctions";
+import { updateService } from "../../utils/serviceFunctions";
 import CustomButton from "../../components/shared/CustomButton";
 import Galery from "../../components/shared/Galery";
 import EditorWys from "../../components/shared/EditorWys";
 import { getServiceById } from "../../utils/serviceFunctions";
+import { Toast, showConfirmDialog } from "../../shared/plugins/alert";
 
 function EditService() {
   const { id } = useParams();
@@ -20,7 +21,7 @@ function EditService() {
     content: "",
   });
 
-  const edit=true
+  const edit = true;
 
   useEffect(() => {
     const getService = async () => {
@@ -32,13 +33,29 @@ function EditService() {
 
   const title = service.title;
 
-  console.log("el serviceee", service);
-  console.log("el title", title);
-
   const handleSubmit = async (values, content) => {
-    // const data = await saveService(values.title, content);
-    // console.log(data);
-    navigate("/services");
+    showConfirmDialog(
+      "¿Estás seguro de editar este servicio?",
+      "Se editará el servicio",
+      "Si, editar servicio",
+      "Cancelar",
+      () => {
+        updateService(id, values.title, content).then((data) => {
+          if (data.msg === "Service updated") {
+            Toast.fire({
+              icon: "success",
+              title: "Servicio editado con éxito 😄",
+            });
+            navigate("/services");
+          } else if (data.msg === "Service already exists") {
+            Toast.fire({
+              icon: "error",
+              title: "Ya existe un servicio con ese título 😢",
+            });
+          }
+        });
+      }
+    );
   };
 
   const objectSchema = yup.object().shape({
@@ -81,7 +98,10 @@ function EditService() {
                     />
                   </FormBt.Group>
                   <FormBt.Group className="mb-3">
-                    <EditorWys setContentEditor={setContent} initialContent={service.content}/>
+                    <EditorWys
+                      setContentEditor={setContent}
+                      initialContent={service.content}
+                    />
                   </FormBt.Group>
                 </Form>
               )}

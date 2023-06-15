@@ -12,19 +12,20 @@ import {
   getAllMedia,
   deleteMultimedia,
 } from "../../utils/galeryFunctions";
+import { showLoadingAlert, Toast } from "../../shared/plugins/alert";
 import FileDropzone from "./Dropzone";
 
 function Galery() {
   const [maxHeight, setMaxHeight] = useState(380);
   const [mediaList, setMediaList] = useState([
     {
+      _id: "",
       url: "",
       type: "",
     },
   ]);
   const [filter, setFilter] = useState("all");
   const [uploadedFile, setUploadedFile] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -44,7 +45,6 @@ function Galery() {
   useEffect(() => {
     const getMedia = async () => {
       const data = await getAllMedia();
-      console.log("data galery", data);
       setMediaList(data);
     };
 
@@ -53,12 +53,23 @@ function Galery() {
 
   const handleFileUpload = async (files) => {
     try {
-      setIsLoading(true);
+      showLoadingAlert(
+        "Cargando",
+        "Por favor espera mientras se carga el multimedia..."
+      );
+
       const response = await uploadMultimedia(files);
+
+      if (response.msg === "Multimedia saved") {
+        Toast.fire({
+          icon: "success",
+          title: "Multimedia cargado con éxito 😄",
+        });
+      }
+
       const updatedMediaList = await getAllMedia();
       setMediaList(updatedMediaList);
       setUploadedFile(null);
-      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -66,11 +77,22 @@ function Galery() {
 
   const handleDelete = async (id) => {
     try {
-      setIsLoading(true);
-      await deleteMultimedia(id);
+      showLoadingAlert(
+        "Eliminando",
+        "Por favor espera mientras se elimina el multimedia..."
+      );
+
+      const response = await deleteMultimedia(id);
+
+      if (response.msg === "Multimedia deleted") {
+        Toast.fire({
+          icon: "success",
+          title: "Multimedia eliminado con éxito 😄",
+        });
+      }
+
       const updatedMediaList = await getAllMedia();
       setMediaList(updatedMediaList);
-      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -100,7 +122,6 @@ function Galery() {
             onFileUpload={handleFileUpload}
             uploadedFile={uploadedFile}
             setUploadedFile={setUploadedFile}
-            isLoading={isLoading}
           />
         </Col>
       </Row>
@@ -145,7 +166,7 @@ function Galery() {
         <Card.Body style={{ overflowY: "auto", maxHeight: `${maxHeight}px` }}>
           <Row>
             {filteredMediaList.map((media) => (
-              <Card style={{ marginBottom: "15px" }} key={media.id}>
+              <Card style={{ marginBottom: "15px" }} key={media._id}>
                 {media.type === "image" ? (
                   <img
                     src={media.multimedia}
