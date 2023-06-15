@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { MdCloudUpload } from "react-icons/md";
 import CustomButton from "./CustomButton";
-import "../../assets/css/components/layouts/fileDropzone.css";
+import "../../assets/css/components/layouts/fileDropzoneGalery.css";
 
 const FileDropzone = ({ onFileUpload, uploadedFile, setUploadedFile }) => {
   const onDrop = useCallback(
@@ -25,20 +25,19 @@ const FileDropzone = ({ onFileUpload, uploadedFile, setUploadedFile }) => {
     onDrop,
     accept: "image/*, video/*",
     multiple: false,
-    // Agrega una función de validación personalizada para rechazar otros tipos de archivo
+
     validator: (file) => {
-      // Lista de tipos MIME y extensiones de archivo permitidos
       const allowedTypes = [
         "image/jpeg",
         "image/png",
         "image/jpg",
         "video/mp4",
       ];
-      // Verificar si el tipo de archivo está permitido
+
       if (!allowedTypes.includes(file.type)) {
         return "Solo se permiten imágenes y videos.";
       }
-      return null; // El archivo es válido
+      return null;
     },
   });
 
@@ -75,14 +74,27 @@ const FileDropzone = ({ onFileUpload, uploadedFile, setUploadedFile }) => {
       </div>
       {uploadedFile && (
         <div
-          className="container"
+          className="row"
           style={{ textAlign: "center", marginBottom: "10px" }}
         >
-          <CustomButton
-            text="Subir multimedia"
-            type="button"
-            onClick={() => onFileUpload(uploadedFile)}
-          />
+          <div className="col">
+            <CustomButton
+              text="Guardar"
+              type="button"
+              color="primary"
+              size="medium"
+              onClick={() => onFileUpload(uploadedFile)}
+            />
+          </div>
+          <div className="col">
+            <CustomButton
+              text="Cancelar"
+              type="button"
+              color="danger"
+              size="medium"
+              onClick={() => setUploadedFile(null)}
+            />
+          </div>
         </div>
       )}
     </>

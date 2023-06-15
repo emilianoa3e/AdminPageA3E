@@ -167,28 +167,30 @@ function Galery() {
           <Row>
             {filteredMediaList.map((media) => (
               <Card style={{ marginBottom: "15px" }} key={media._id}>
-                {media.type === "image" ? (
-                  <img
-                    src={media.multimedia}
-                    alt="..."
-                    style={{ width: "100%", height: "auto" }}
-                  />
-                ) : (
-                  <video
-                    src={media.multimedia}
-                    alt="..."
-                    controls
-                    style={{ width: "100%", height: "auto" }}
-                  />
-                )}
+                <Card.Body style={{ padding: "0px" }}>
+                  {media.type === "image" ? (
+                    <img
+                      src={media.multimedia}
+                      alt="..."
+                      style={{ width: "100%", height: "auto" }}
+                    />
+                  ) : (
+                    <video
+                      src={media.multimedia}
+                      alt="..."
+                      controls
+                      style={{ width: "100%", height: "auto" }}
+                    />
+                  )}
+                </Card.Body>
                 <Card.Footer style={{ textAlign: "center" }}>
-                  <Col className="d-flex">
+                  <Col style={{ alignItems: "center" }}>
                     <MdCopyAll
                       onClick={() => copyToClipboard(media.multimedia)}
                       style={{
                         cursor: "pointer",
                         fontSize: "1.5rem",
-                        flex: 0.5,
+                        marginRight: "80px",
                       }}
                     />
                     <MdDeleteForever
@@ -197,7 +199,6 @@ function Galery() {
                         cursor: "pointer",
                         fontSize: "1.5rem",
                         color: "#F5462F",
-                        flex: 0.5,
                       }}
                     />
                   </Col>

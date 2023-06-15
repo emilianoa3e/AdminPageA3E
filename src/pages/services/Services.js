@@ -4,10 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { getAllServices, deleteService } from "../../utils/serviceFunctions";
 import CustomButton from "../../components/shared/CustomButton";
 import { Toast, showConfirmDialog } from "../../shared/plugins/alert";
+import SplashScreen from "../utils/SplashScreen";
+import { MdCancel } from "react-icons/md";
 import "./Services.css";
 
 function Services() {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
   const [servicesList, setServicesList] = useState([
     {
       _id: "",
@@ -22,6 +25,10 @@ function Services() {
       setServicesList(data.services);
     };
     getServices();
+
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
   }, []);
 
   const handleDelete = (id) => {
@@ -37,7 +44,9 @@ function Services() {
               icon: "success",
               title: "Servicio eliminado con éxito 😄",
             });
-            const newList = servicesList.filter((service) => service._id !== id);
+            const newList = servicesList.filter(
+              (service) => service._id !== id
+            );
             setServicesList(newList);
           }
         });
@@ -45,8 +54,12 @@ function Services() {
     );
   };
 
+  if (isLoading) {
+    return <SplashScreen isLoading={isLoading} />;
+  }
+
   return (
-    <Container>
+    <div>
       <Row className="mb-4">
         <Col xs={12} md={10}>
           <h1>Servicios</h1>
@@ -54,6 +67,8 @@ function Services() {
         <Col xs={12} md={2} className="d-flex justify-content-end">
           <CustomButton
             text="Crear servicio"
+            color="primary"
+            size="large"
             onClick={() => navigate("/create-service")}
           />
         </Col>
@@ -87,9 +102,28 @@ function Services() {
           ))}
         </Row>
       ) : (
-        <p className="no-services-message">No hay servicios</p>
+        <Container>
+          <Row>
+            <Col xs={12} className="d-flex justify-content-center">
+              <Col>
+                <Row>
+                  <MdCancel
+                    className="no-services-icon"
+                    size={150}
+                    opacity={0.5}
+                  />
+                </Row>
+                <Row>
+                  <h3 className="text-center" style={{ opacity: 0.5 }}>
+                    No hay servicios registrados
+                  </h3>
+                </Row>
+              </Col>
+            </Col>
+          </Row>
+        </Container>
       )}
-    </Container>
+    </div>
   );
 }
 

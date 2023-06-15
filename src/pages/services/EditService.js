@@ -11,10 +11,12 @@ import Galery from "../../components/shared/Galery";
 import EditorWys from "../../components/shared/EditorWys";
 import { getServiceById } from "../../utils/serviceFunctions";
 import { Toast, showConfirmDialog } from "../../shared/plugins/alert";
+import SplashScreen from "../utils/SplashScreen";
 
 function EditService() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
   const [content, setContent] = useState("");
   const [service, setService] = useState({
     title: "",
@@ -29,6 +31,10 @@ function EditService() {
       setService(data.service);
     };
     getService();
+
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
   }, []);
 
   const title = service.title;
@@ -37,7 +43,7 @@ function EditService() {
     showConfirmDialog(
       "¿Estás seguro de editar este servicio?",
       "Se editará el servicio",
-      "Si, editar servicio",
+      "Guardar cambios",
       "Cancelar",
       () => {
         updateService(id, values.title, content).then((data) => {
@@ -62,6 +68,10 @@ function EditService() {
     title: yup.string().required("El título es requerido"),
   });
 
+  if (isLoading) {
+    return <SplashScreen isLoading={isLoading} />;
+  }
+
   return (
     <>
       <div>
@@ -81,11 +91,26 @@ function EditService() {
               {({ errors, values, touched }) => (
                 <Form>
                   <Container style={{ textAlign: "right" }}>
-                    <CustomButton
-                      type="submit"
-                      text="Guardar"
-                      disabled={!values.title || !content || !!errors.title}
-                    />
+                    <Row>
+                      <Col lg={10}>
+                        <CustomButton
+                          type="button"
+                          text="Cancelar"
+                          color="danger"
+                          size="medium"
+                          onClick={() => navigate("/services")}
+                        />
+                      </Col>
+                      <Col lg={1}>
+                        <CustomButton
+                          type="submit"
+                          text="Guardar"
+                          color="primary"
+                          size="medium"
+                          disabled={!values.title || !content || !!errors.title}
+                        />
+                      </Col>
+                    </Row>
                   </Container>
                   <FormBt.Group className="mb-3">
                     <TextInput

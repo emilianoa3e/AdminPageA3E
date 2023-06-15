@@ -65,11 +65,26 @@ function CreateService() {
               {({ errors, values, touched }) => (
                 <Form>
                   <Container style={{ textAlign: "right" }}>
-                    <CustomButton
-                      type="submit"
-                      text="Guardar"
-                      disabled={!values.title || !content || !!errors.title}
-                    />
+                    <Row>
+                      <Col lg={10}>
+                        <CustomButton
+                          type="button"
+                          text="Cancelar"
+                          color="danger"
+                          size="medium"
+                          onClick={() => navigate("/services")}
+                        />
+                      </Col>
+                      <Col lg={1}>
+                        <CustomButton
+                          type="submit"
+                          text="Guardar"
+                          color="primary"
+                          size="medium"
+                          disabled={!values.title || !content || !!errors.title}
+                        />
+                      </Col>
+                    </Row>
                   </Container>
                   <FormBt.Group className="mb-3">
                     <TextInput

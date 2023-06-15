@@ -15,6 +15,7 @@ import OurCompany from "../pages/us/OurCompany.js";
 import CompanyNews from "../pages/news/CompanyNews";
 import CreateService from "../pages/services/CreateService";
 import EditService from "../pages/services/EditService";
+import BannerMain from "../pages/banners/BannersMain";
 
 const AppRouter = () => {
   const { state, renewAuthToken } = useContext(AuthContext);
@@ -36,6 +37,9 @@ const AppRouter = () => {
           <Routes>
             <Route exact path="/" element={<PrivateRoute />}>
               <Route exact path="/" element={<Home />} />
+            </Route>
+            <Route exact path="/banners" element={<PrivateRoute />}>
+              <Route exact path="/banners" element={<BannerMain />} />
             </Route>
             <Route exact path="/services" element={<PrivateRoute />}>
               <Route exact path="/services" element={<Services />} />
