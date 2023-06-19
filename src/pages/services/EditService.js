@@ -16,7 +16,7 @@ import SplashScreen from "../utils/SplashScreen";
 function EditService() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [content, setContent] = useState("");
   const [service, setService] = useState({
     title: "",
@@ -26,15 +26,13 @@ function EditService() {
   const edit = true;
 
   useEffect(() => {
+    setIsLoading(true);
     const getService = async () => {
       const data = await getServiceById(id);
       setService(data.service);
+      setIsLoading(false);
     };
     getService();
-
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
   }, []);
 
   const title = service.title;

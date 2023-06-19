@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Card } from "react-bootstrap";
 import { getAllBanners } from "../../utils/bannersFunctions";
 import SplashScreen from "../utils/SplashScreen";
@@ -6,7 +7,8 @@ import CustomButton from "../../components/shared/CustomButton";
 import { MdCancel } from "react-icons/md";
 
 function BannerMain() {
-  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [bannerList, setBannerList] = useState([
     {
       _id: "",
@@ -19,16 +21,13 @@ function BannerMain() {
   ]);
 
   useEffect(() => {
+    setIsLoading(true);
     const getBanners = async () => {
       const data = await getAllBanners();
       setBannerList(data.banners);
-    };
-
-    getBanners();
-
-    setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    };
+    getBanners();
   }, []);
 
   if (isLoading) {
@@ -46,7 +45,9 @@ function BannerMain() {
             text="Crear banner"
             color="primary"
             size="large"
-            onClick={() => {}}
+            onClick={() => {
+              navigate("/create-banner");
+            }}
           />
         </Col>
       </Row>
@@ -55,11 +56,11 @@ function BannerMain() {
           <Row>
             {bannerList.map((banner) => (
               <Row key={banner._id}>
-                <Col xs={8} sm={8} md={8} lg={8}>
+                <Col lg={9}>
                   <Card style={{ marginBottom: "20px" }}>
                     <div
                       className="align-items-center d-flex"
-                      style={{ maxHeight: "240px", overflow: "hidden" }}
+                      style={{ maxHeight: "200px", overflow: "hidden" }}
                     >
                       <Card.Img variant="top" src={banner.image} />
                     </div>
@@ -76,35 +77,60 @@ function BannerMain() {
                       >
                         {banner.description}
                       </Card.Text>
+                      <Card.Text
+                        className="text-center"
+                        style={{ fontSize: "1.2rem" }}
+                      >
+                        {banner.link}
+                      </Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
-                <Col className="d-flex align-items-center justify-content-center mt-3">
-                  <Row>
-                    <Col>
+                <Col
+                  lg={3}
+                  className="d-flex align-items-center justify-content-center mt-3"
+                >
+                  <Row
+                    className="justify-content-between"
+                    style={{ marginLeft: "10px" }}
+                  >
+                    <Col
+                      className="text-center"
+                      style={{ marginBottom: "10px" }}
+                    >
                       <CustomButton
-                        type="button"
                         text="Editar"
-                        size="large"
                         color="primary"
-                        onClick={() => {}}
-                      />
-                    </Col>
-                    <Col>
-                      <CustomButton
-                        type="button"
-                        text="Desactivar"
                         size="large"
-                        color="secondary"
                         onClick={() => {}}
                       />
                     </Col>
-                    <Col>
+                    <Col className="text-center">
                       <CustomButton
-                        type="button"
                         text="Eliminar"
-                        size="large"
                         color="danger"
+                        size="large"
+                        onClick={() => {}}
+                      />
+                    </Col>
+                  </Row>
+                  <Row className="justify-content-between">
+                    <Col
+                      className="text-center"
+                      style={{ marginBottom: "10px" }}
+                    >
+                      <CustomButton
+                        text="Desactivar"
+                        color="secondary"
+                        size="large"
+                        onClick={() => {}}
+                      />
+                    </Col>
+                    <Col className="text-center">
+                      <CustomButton
+                        text="Preview"
+                        color="primary"
+                        size="large"
                         onClick={() => {}}
                       />
                     </Col>

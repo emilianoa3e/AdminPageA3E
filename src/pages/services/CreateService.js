@@ -16,8 +16,6 @@ function CreateService() {
   const navigate = useNavigate();
   const [content, setContent] = useState("");
 
-  console.log("content", content);
-
   const handleSubmit = async (values, content) => {
     showConfirmDialog(
       "¿Estás seguro de crear este servicio?",

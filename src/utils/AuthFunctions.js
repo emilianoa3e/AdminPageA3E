@@ -1,4 +1,5 @@
 import axios from "axios";
+import instance from "../shared/Axios";
 
 export const loginPost = async (email, password) => {
   const dataJson = {
@@ -8,7 +9,7 @@ export const loginPost = async (email, password) => {
 
   try {
     const data = await axios.post(
-      "http://localhost:8080/api/auth/signin",
+      instance.defaults.baseURL + "/auth/signin",
       dataJson
     );
 

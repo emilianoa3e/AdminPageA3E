@@ -5,6 +5,7 @@ import {
   MdMovie,
   MdPermMedia,
   MdDeleteForever,
+  MdCancel,
 } from "react-icons/md";
 import { Row, Col, Container, Card } from "react-bootstrap";
 import {
@@ -14,6 +15,7 @@ import {
 } from "../../utils/galeryFunctions";
 import { showLoadingAlert, Toast } from "../../shared/plugins/alert";
 import FileDropzone from "./Dropzone";
+import SplashScreen from "../../pages/utils/SplashScreen";
 
 function Galery() {
   const [maxHeight, setMaxHeight] = useState(380);
@@ -25,6 +27,7 @@ function Galery() {
     },
   ]);
   const [filter, setFilter] = useState("all");
+  const [isLoading, setIsLoading] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
 
   useEffect(() => {
@@ -43,9 +46,11 @@ function Galery() {
   }, []);
 
   useEffect(() => {
+    setIsLoading(true);
     const getMedia = async () => {
       const data = await getAllMedia();
       setMediaList(data);
+      setIsLoading(false);
     };
 
     getMedia();
@@ -54,8 +59,8 @@ function Galery() {
   const handleFileUpload = async (files) => {
     try {
       showLoadingAlert(
-        "Cargando",
-        "Por favor espera mientras se carga el multimedia..."
+        "Cargando...",
+        "Por favor espera mientras se carga el multimedia"
       );
 
       const response = await uploadMultimedia(files);
@@ -122,6 +127,7 @@ function Galery() {
             onFileUpload={handleFileUpload}
             uploadedFile={uploadedFile}
             setUploadedFile={setUploadedFile}
+            onContext="multimedia"
           />
         </Col>
       </Row>
@@ -165,46 +171,63 @@ function Galery() {
         </Card.Header>
         <Card.Body style={{ overflowY: "auto", maxHeight: `${maxHeight}px` }}>
           <Row>
-            {filteredMediaList.map((media) => (
-              <Card style={{ marginBottom: "15px" }} key={media._id}>
-                <Card.Body style={{ padding: "0px" }}>
-                  {media.type === "image" ? (
-                    <img
-                      src={media.multimedia}
-                      alt="..."
-                      style={{ width: "100%", height: "auto" }}
-                    />
-                  ) : (
-                    <video
-                      src={media.multimedia}
-                      alt="..."
-                      controls
-                      style={{ width: "100%", height: "auto" }}
-                    />
-                  )}
-                </Card.Body>
-                <Card.Footer style={{ textAlign: "center" }}>
-                  <Col style={{ alignItems: "center" }}>
-                    <MdCopyAll
-                      onClick={() => copyToClipboard(media.multimedia)}
-                      style={{
-                        cursor: "pointer",
-                        fontSize: "1.5rem",
-                        marginRight: "80px",
-                      }}
-                    />
-                    <MdDeleteForever
-                      onClick={() => handleDelete(media._id)}
-                      style={{
-                        cursor: "pointer",
-                        fontSize: "1.5rem",
-                        color: "#F5462F",
-                      }}
-                    />
-                  </Col>
-                </Card.Footer>
-              </Card>
-            ))}
+            {isLoading ? (
+              <SplashScreen isLoading={isLoading} />
+            ) : (
+              <div>
+                {filteredMediaList.length === 0 ? (
+                  <div style={{ textAlign: "center" }}>
+                    <MdCancel size={150} opacity={0.5} />
+                    <h3 className="text-center" style={{ opacity: 0.5 }}>
+                      No se encontro multimedia
+                    </h3>
+                  </div>
+                ) : (
+                  <div>
+                    {filteredMediaList.map((media) => (
+                      <Card style={{ marginBottom: "15px" }} key={media._id}>
+                        <Card.Body style={{ padding: "0px" }}>
+                          {media.type === "image" ? (
+                            <img
+                              src={media.multimedia}
+                              alt="..."
+                              style={{ width: "100%", height: "auto" }}
+                            />
+                          ) : (
+                            <video
+                              src={media.multimedia}
+                              alt="..."
+                              controls
+                              style={{ width: "100%", height: "auto" }}
+                            />
+                          )}
+                        </Card.Body>
+                        <Card.Footer style={{ textAlign: "center" }}>
+                          <Col style={{ alignItems: "center" }}>
+                            <MdCopyAll
+                              onClick={() => copyToClipboard(media.multimedia)}
+                              style={{
+                                cursor: "pointer",
+                                fontSize: "1.5rem",
+                                marginRight: "80px",
+                              }}
+                            />
+                            <MdDeleteForever
+                              onClick={() => handleDelete(media._id)}
+                              style={{
+                                cursor: "pointer",
+                                fontSize: "1.5rem",
+                                color: "#F5462F",
+                              }}
+                            />
+                          </Col>
+                        </Card.Footer>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </Row>
         </Card.Body>
       </Card>

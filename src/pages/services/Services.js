@@ -10,7 +10,7 @@ import "./Services.css";
 
 function Services() {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [servicesList, setServicesList] = useState([
     {
       _id: "",
@@ -20,15 +20,13 @@ function Services() {
   ]);
 
   useEffect(() => {
+    setIsLoading(true);
     const getServices = async () => {
       const data = await getAllServices();
       setServicesList(data.services);
+      setIsLoading(false);
     };
     getServices();
-
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
   }, []);
 
   const handleDelete = (id) => {
@@ -108,7 +106,6 @@ function Services() {
               <Col>
                 <Row>
                   <MdCancel
-                    className="no-services-icon"
                     size={150}
                     opacity={0.5}
                   />
