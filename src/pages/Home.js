@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import BannerPreview from "./utils/BannerPreview";
+import BannerHome from "./home/BannerHome";
 
 function Home() {
   return (
     <div>
-      <BannerPreview />
+      <BannerHome />
     </div>
   );
 }

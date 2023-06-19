@@ -37,3 +37,27 @@ export const getAllBanners = async () => {
     console.log("error", error);
   }
 };
+
+export const updateStatus = async (id) => {
+  try {
+    const response = await axios.patch(
+      instance.defaults.baseURL + `/banner/updateStatus-banner/${id}`
+    );
+
+    return response.data;
+  } catch (error) {
+    console.log("error", error);
+  }
+}
+
+export const deleteBanner = async (id) => {
+  try {
+    const response = await axios.delete(
+      instance.defaults.baseURL + `/banner/deleteById-banner/${id}`
+    );
+
+    return response.data;
+  } catch (error) {
+    console.log("error", error);
+  }
+}

@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Card } from "react-bootstrap";
-import { getAllBanners } from "../../utils/bannersFunctions";
+import {
+  getAllBanners,
+  updateStatus,
+  deleteBanner,
+} from "../../utils/bannersFunctions";
+import {
+  Toast,
+  showConfirmDialog,
+  showLoadingAlert,
+} from "../../shared/plugins/alert";
 import SplashScreen from "../utils/SplashScreen";
 import CustomButton from "../../components/shared/CustomButton";
 import { MdCancel } from "react-icons/md";
@@ -30,6 +39,64 @@ function BannerMain() {
     getBanners();
   }, []);
 
+  const handleStatus = (id) => {
+    showConfirmDialog(
+      "¿Estás seguro de cambiar el status del banner?",
+      "Se cambiará el status del banner",
+      "Si, cambiar status",
+      "Cancelar",
+      () => {
+        updateStatus(id).then((data) => {
+          if (data.msg === "Banner status updated") {
+            Toast.fire({
+              icon: "success",
+              title: "Status cambiado con éxito 😄",
+            });
+            getAllBanners().then((updatedList) => {
+              setBannerList(updatedList.banners);
+            });
+          } else {
+            Toast.fire({
+              icon: "error",
+              title: "Error al cambiar el status 😞",
+            });
+          }
+        });
+      }
+    );
+  };
+
+  const handleDelete = (id) => {
+    showConfirmDialog(
+      "¿Estás seguro de eliminar el banner?",
+      "Se eliminará el banner",
+      "Si, eliminar banner",
+      "Cancelar",
+      () => {
+        deleteBanner(id).then((data) => {
+          showLoadingAlert(
+            "Eliminando banner...",
+            "Se está eliminando el banner, por favor espere."
+          );
+          if (data.msg === "Banner deleted") {
+            Toast.fire({
+              icon: "success",
+              title: "Banner eliminado con éxito 😄",
+            });
+            getAllBanners().then((updatedList) => {
+              setBannerList(updatedList.banners);
+            });
+          } else {
+            Toast.fire({
+              icon: "error",
+              title: "Error al eliminar el banner 😞",
+            });
+          }
+        });
+      }
+    );
+  };
+
   if (isLoading) {
     return <SplashScreen isLoading={isLoading} />;
   }
@@ -44,7 +111,7 @@ function BannerMain() {
           <CustomButton
             text="Crear banner"
             color="primary"
-            size="large"
+            size="medium"
             onClick={() => {
               navigate("/create-banner");
             }}
@@ -57,83 +124,80 @@ function BannerMain() {
             {bannerList.map((banner) => (
               <Row key={banner._id}>
                 <Col lg={9}>
-                  <Card style={{ marginBottom: "20px" }}>
+                  <Card
+                    style={{
+                      marginBottom: "20px",
+                      borderColor: "#00743B",
+                      borderStyle: "solid",
+                      borderWidth: "1px",
+                    }}
+                  >
                     <div
                       className="align-items-center d-flex"
-                      style={{ maxHeight: "200px", overflow: "hidden" }}
+                      style={{ maxHeight: "180px", overflow: "hidden" }}
                     >
                       <Card.Img variant="top" src={banner.image} />
                     </div>
                     <Card.Body>
                       <Card.Title
                         className="text-center"
-                        style={{ fontWeight: "bold", fontSize: "2rem" }}
+                        style={{ fontWeight: "bold", fontSize: "1.2rem" }}
                       >
                         {banner.title}
                       </Card.Title>
                       <Card.Text
                         className="text-center"
-                        style={{ fontSize: "1.2rem" }}
+                        style={{ fontSize: "1rem" }}
                       >
                         {banner.description}
                       </Card.Text>
                       <Card.Text
                         className="text-center"
-                        style={{ fontSize: "1.2rem" }}
+                        style={{ fontSize: "1rem" }}
                       >
-                        {banner.link}
+                        <a href={banner.link} target="_blank">
+                          {banner.link}
+                        </a>
                       </Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
                 <Col
                   lg={3}
-                  className="d-flex align-items-center justify-content-center mt-3"
+                  className="d-flex align-items-center justify-content-center"
                 >
-                  <Row
-                    className="justify-content-between"
-                    style={{ marginLeft: "10px" }}
-                  >
-                    <Col
-                      className="text-center"
-                      style={{ marginBottom: "10px" }}
-                    >
-                      <CustomButton
-                        text="Editar"
-                        color="primary"
-                        size="large"
-                        onClick={() => {}}
-                      />
-                    </Col>
-                    <Col className="text-center">
-                      <CustomButton
-                        text="Eliminar"
-                        color="danger"
-                        size="large"
-                        onClick={() => {}}
-                      />
-                    </Col>
-                  </Row>
-                  <Row className="justify-content-between">
-                    <Col
-                      className="text-center"
-                      style={{ marginBottom: "10px" }}
-                    >
+                  <Row className="justify-content-center">
+                    <CustomButton
+                      text="Editar"
+                      color="primary"
+                      size="medium"
+                      onClick={() => {}}
+                      className="mb-2 col-8"
+                    />
+                    <CustomButton
+                      text="Eliminar"
+                      color="danger"
+                      size="medium"
+                      onClick={() => handleDelete(banner._id)}
+                      className="mb-2 col-8"
+                    />
+                    {banner.status ? (
                       <CustomButton
                         text="Desactivar"
                         color="secondary"
-                        size="large"
-                        onClick={() => {}}
+                        size="medium"
+                        onClick={() => handleStatus(banner._id)}
+                        className="mb-2 col-8"
                       />
-                    </Col>
-                    <Col className="text-center">
+                    ) : (
                       <CustomButton
-                        text="Preview"
-                        color="primary"
-                        size="large"
-                        onClick={() => {}}
+                        text="Activar"
+                        color="success"
+                        size="medium"
+                        onClick={() => handleStatus(banner._id)}
+                        className="mb-2 col-8"
                       />
-                    </Col>
+                    )}
                   </Row>
                 </Col>
               </Row>

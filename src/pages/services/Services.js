@@ -6,7 +6,7 @@ import CustomButton from "../../components/shared/CustomButton";
 import { Toast, showConfirmDialog } from "../../shared/plugins/alert";
 import SplashScreen from "../utils/SplashScreen";
 import { MdCancel } from "react-icons/md";
-import "./Services.css";
+import "../../assets/css/pages/Services.css";
 
 function Services() {
   const navigate = useNavigate();
