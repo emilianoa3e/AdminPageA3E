@@ -19,6 +19,7 @@ import BannerMain from "../pages/banners/BannersMain";
 import CreateBanner from "../pages/banners/CreateBanner";
 import EditBanner from "../pages/banners/EditBanner";
 import ClientsMain from "../pages/clients/ClientsMain";
+import RenewToken from "./RenewToken";
 
 const AppRouter = () => {
   const { state, renewAuthToken } = useContext(AuthContext);
@@ -37,6 +38,7 @@ const AppRouter = () => {
     <BrowserRouter>
       {isLogged ? (
         <Layout>
+          <RenewToken/>
           <Routes>
             <Route exact path="/" element={<PrivateRoute />}>
               <Route exact path="/" element={<Home />} />
