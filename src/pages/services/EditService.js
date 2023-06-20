@@ -5,11 +5,10 @@ import { Formik, Form } from "formik";
 import * as yup from "yup";
 import { useNavigate, useParams } from "react-router-dom";
 import { TextInput } from "../../components/shared/TextInput";
-import { updateService } from "../../utils/serviceFunctions";
+import { updateService, getServiceById } from "../../utils/serviceFunctions";
 import CustomButton from "../../components/shared/CustomButton";
 import Galery from "../../components/shared/Galery";
 import EditorWys from "../../components/shared/EditorWys";
-import { getServiceById } from "../../utils/serviceFunctions";
 import { Toast, showConfirmDialog } from "../../shared/plugins/alert";
 import SplashScreen from "../utils/SplashScreen";
 
@@ -23,8 +22,6 @@ function EditService() {
     content: "",
   });
 
-  const edit = true;
-
   useEffect(() => {
     setIsLoading(true);
     const getService = async () => {
@@ -34,8 +31,6 @@ function EditService() {
     };
     getService();
   }, []);
-
-  const title = service.title;
 
   const handleSubmit = async (values, content) => {
     showConfirmDialog(
@@ -80,7 +75,7 @@ function EditService() {
           <Col lg={9}>
             <Formik
               initialValues={{
-                title: title || "",
+                title: service.title || "",
               }}
               enableReinitialize={true}
               validationSchema={objectSchema}
@@ -117,7 +112,6 @@ function EditService() {
                       icon={MdTitle}
                       placeholder="Título"
                       isInvalid={!!errors.title && touched.title}
-                      disabled={!edit}
                     />
                   </FormBt.Group>
                   <FormBt.Group className="mb-3">

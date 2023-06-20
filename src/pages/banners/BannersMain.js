@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Col, Row, Card } from "react-bootstrap";
+import { Container, Col, Row } from "react-bootstrap";
 import {
   getAllBanners,
   updateStatus,
@@ -13,6 +13,7 @@ import {
 } from "../../shared/plugins/alert";
 import SplashScreen from "../utils/SplashScreen";
 import CustomButton from "../../components/shared/CustomButton";
+import BannerPreview from "../utils/BannerPreview";
 import { MdCancel } from "react-icons/md";
 
 function BannerMain() {
@@ -122,48 +123,18 @@ function BannerMain() {
         {bannerList.length !== 0 ? (
           <Row>
             {bannerList.map((banner) => (
-              <Row key={banner._id}>
-                <Col lg={9}>
-                  <Card
-                    style={{
-                      marginBottom: "20px",
-                      borderColor: "#00743B",
-                      borderStyle: "solid",
-                      borderWidth: "1px",
-                    }}
-                  >
-                    <div
-                      className="align-items-center d-flex"
-                      style={{ maxHeight: "180px", overflow: "hidden" }}
-                    >
-                      <Card.Img variant="top" src={banner.image} />
-                    </div>
-                    <Card.Body>
-                      <Card.Title
-                        className="text-center"
-                        style={{ fontWeight: "bold", fontSize: "1.2rem" }}
-                      >
-                        {banner.title}
-                      </Card.Title>
-                      <Card.Text
-                        className="text-center"
-                        style={{ fontSize: "1rem" }}
-                      >
-                        {banner.description}
-                      </Card.Text>
-                      <Card.Text
-                        className="text-center"
-                        style={{ fontSize: "1rem" }}
-                      >
-                        <a href={banner.link} target="_blank">
-                          {banner.link}
-                        </a>
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
+              <Row key={banner._id} className="mb-4">
+                <Col lg={10}>
+                  <BannerPreview
+                    title={banner.title}
+                    description={banner.description}
+                    image={banner.image}
+                    link={banner.link}
+                    onContext="bannersMain"
+                  />
                 </Col>
                 <Col
-                  lg={3}
+                  lg={2}
                   className="d-flex align-items-center justify-content-center"
                 >
                   <Row className="justify-content-center">
@@ -171,7 +142,7 @@ function BannerMain() {
                       text="Editar"
                       color="primary"
                       size="medium"
-                      onClick={() => {}}
+                      onClick={() => navigate(`/banners/${banner._id}`)}
                       className="mb-2 col-8"
                     />
                     <CustomButton

@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import { Form, Formik } from "formik";
 import { Form as FormBt } from "react-bootstrap";
 import * as yup from "yup";
 import { TextInput } from "../../components/shared/TextInput";
 import { MdTitle, MdOutlineDescription, MdOutlineLink } from "react-icons/md";
-import { saveBanner } from "../../utils/bannersFunctions";
+import { getBannerById, updateBanner } from "../../utils/bannersFunctions";
 import {
   showConfirmDialog,
   showLoadingAlert,
@@ -15,34 +15,56 @@ import {
 import FileDropzone from "../../components/shared/Dropzone";
 import CustomButton from "../../components/shared/CustomButton";
 import BannerPreview from "../utils/BannerPreview";
+import SplashScreen from "../utils/SplashScreen";
 
-function CreateBanner() {
+function EditBanner() {
+  const { id } = useParams();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [banner, setBanner] = useState({
+    title: "",
+    description: "",
+    image: "",
+    link: "",
+    status: "",
+  });
   const [uploadedFile, setUploadedFile] = useState(null);
   const imagePreview = uploadedFile ? URL.createObjectURL(uploadedFile) : null;
 
+  useEffect(() => {
+    setIsLoading(true);
+    const getBanner = async () => {
+      const data = await getBannerById(id);
+      setBanner(data.banner);
+      setIsLoading(false);
+    };
+
+    getBanner();
+  }, []);
+
   const handleSubmit = async (values, uploadedFile) => {
     showConfirmDialog(
-      "¿Estás seguro de crear este banner?",
-      "Se creará un nuevo banner",
-      "Si, crear banner",
+      "¿Estás seguro de actualizar el banner?",
+      "Se actualizará el banner",
+      "Si, actualizar banner",
       "Cancelar",
       () => {
         showLoadingAlert(
-          "Creando banner...",
-          "Se está creando el banner, espera un momento."
+          "Actualizando banner...",
+          "Se está actualizando el banner, espera un momento."
         );
-        saveBanner(
+        updateBanner(
+          id,
           values.title,
           values.description,
           uploadedFile,
           values.link
         ).then((data) => {
           console.log("data", data);
-          if (data.msg === "Banner saved") {
+          if (data.msg === "Banner updated") {
             Toast.fire({
               icon: "success",
-              title: "Banner creado con éxito 😄",
+              title: "Banner actualizado con éxito 😄",
             });
             navigate("/banners");
           } else if (data.msg === "Banner already exists") {
@@ -53,13 +75,17 @@ function CreateBanner() {
           }
         });
       }
-    );
+    )
   };
 
   const objectSchema = yup.object().shape({
     title: yup.string().required("El título es requerido"),
     link: yup.string().url("Ingrese un enlace válido"),
   });
+
+  if (isLoading) {
+    <SplashScreen isLoading={isLoading} />;
+  }
 
   return (
     <>
@@ -68,10 +94,11 @@ function CreateBanner() {
           <Col lg={12}>
             <Formik
               initialValues={{
-                title: "",
-                description: "",
-                link: "",
+                title: banner.title,
+                description: banner.description,
+                link: banner.link,
               }}
+              enableReinitialize={true}
               validationSchema={objectSchema}
               onSubmit={(values) => handleSubmit(values, uploadedFile)}
             >
@@ -97,7 +124,6 @@ function CreateBanner() {
                           disabled={
                             !values.title ||
                             !!errors.title ||
-                            !uploadedFile ||
                             !!errors.link
                           }
                         />
@@ -169,13 +195,23 @@ function CreateBanner() {
                     <Container fluid className="p-0 m-0">
                       <p className="text-center">Vista previa</p>
                     </Container>
-                    <BannerPreview
-                      title={values.title}
-                      description={values.description}
-                      image={imagePreview}
-                      link={values.link}
-                      onContext="bannerPreview"
-                    />
+                    {uploadedFile ? (
+                      <BannerPreview
+                        title={values.title}
+                        description={values.description}
+                        image={imagePreview}
+                        link={values.link}
+                        onContext="bannerPreview"
+                      />
+                    ) : (
+                      <BannerPreview
+                        title={values.title}
+                        description={values.description}
+                        image={banner.image}
+                        link={values.link}
+                        onContext="bannerPreview"
+                      />
+                    )}
                   </Row>
                 </Form>
               )}
@@ -187,4 +223,4 @@ function CreateBanner() {
   );
 }
 
-export default CreateBanner;
+export default EditBanner;
