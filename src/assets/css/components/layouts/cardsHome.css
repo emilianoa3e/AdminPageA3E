@@ -1,10 +1,10 @@
-.banner-card {
+.card-main {
   border-radius: 20px;
   cursor: pointer;
   position: relative;
 }
 
-.banner-overlay {
+.card-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -24,6 +24,6 @@
   transition: background-color 0.3s ease-in-out;
 }
 
-.banner-overlay:hover {
+.card-overlay:hover {
   background-color: rgba(255, 255, 255, 0.384);
 }

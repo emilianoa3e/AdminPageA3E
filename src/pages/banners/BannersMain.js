@@ -14,7 +14,7 @@ import {
 import SplashScreen from "../utils/SplashScreen";
 import CustomButton from "../../components/shared/CustomButton";
 import BannerPreview from "../utils/BannerPreview";
-import { MdCancel } from "react-icons/md";
+import NotFound from "../../components/shared/NotFound";
 
 function BannerMain() {
   const navigate = useNavigate();
@@ -175,26 +175,11 @@ function BannerMain() {
             ))}
           </Row>
         ) : (
-          <Container>
-            <Row>
-              <Col xs={12} className="d-flex justify-content-center">
-                <Col>
-                  <Row>
-                    <MdCancel
-                      className="no-services-icon"
-                      size={150}
-                      opacity={0.5}
-                    />
-                  </Row>
-                  <Row>
-                    <h3 className="text-center" style={{ opacity: 0.5 }}>
-                      No hay banners registrados
-                    </h3>
-                  </Row>
-                </Col>
-              </Col>
-            </Row>
-          </Container>
+          <NotFound
+            text="No hay banners registrados"
+            textSize={30}
+            iconSize={150}
+          />
         )}
       </Col>
     </div>

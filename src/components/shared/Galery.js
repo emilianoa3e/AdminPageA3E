@@ -16,6 +16,7 @@ import {
 import { showLoadingAlert, Toast } from "../../shared/plugins/alert";
 import FileDropzone from "./Dropzone";
 import SplashScreen from "../../pages/utils/SplashScreen";
+import NotFound from "./NotFound";
 
 function Galery() {
   const [maxHeight, setMaxHeight] = useState(380);
@@ -176,12 +177,11 @@ function Galery() {
             ) : (
               <div>
                 {filteredMediaList.length === 0 ? (
-                  <div style={{ textAlign: "center" }}>
-                    <MdCancel size={150} opacity={0.5} />
-                    <h3 className="text-center" style={{ opacity: 0.5 }}>
-                      No se encontro multimedia
-                    </h3>
-                  </div>
+                  <NotFound
+                    text="No hay multimedia disponible"
+                    textSize={20}
+                    iconSize={80}
+                  />
                 ) : (
                   <div>
                     {filteredMediaList.map((media) => (

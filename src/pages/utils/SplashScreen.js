@@ -4,8 +4,8 @@ import { FallingLines } from "react-loader-spinner";
 const SplashScreen = ({ isLoading }) => {
   return (
     <div
-      className="container-fluid d-flex align-items-center justify-content-center"
-      style={{ height: "600px" }}
+      className="d-flex align-items-center justify-content-center"
+      style={{ height: "400px" }}
     >
       <div>
         <FallingLines

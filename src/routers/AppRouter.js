@@ -18,6 +18,7 @@ import EditService from "../pages/services/EditService";
 import BannerMain from "../pages/banners/BannersMain";
 import CreateBanner from "../pages/banners/CreateBanner";
 import EditBanner from "../pages/banners/EditBanner";
+import ClientsMain from "../pages/clients/ClientsMain";
 
 const AppRouter = () => {
   const { state, renewAuthToken } = useContext(AuthContext);
@@ -48,6 +49,9 @@ const AppRouter = () => {
             </Route>
             <Route exact path="/banners/:id" element={<PrivateRoute />}>
               <Route exact path="/banners/:id" element={<EditBanner />} />
+            </Route>
+            <Route exact path="/clients" element={<PrivateRoute />}>
+              <Route exact path="/clients" element={<ClientsMain />} />
             </Route>
             <Route exact path="/services" element={<PrivateRoute />}>
               <Route exact path="/services" element={<Services />} />

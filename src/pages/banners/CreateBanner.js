@@ -129,7 +129,7 @@ function CreateBanner() {
                       <Row>
                         <FormBt.Group className="mb-3">
                           <TextInput
-                            maxLength="80"
+                            maxLength="60"
                             label="Título"
                             name="title"
                             icon={MdTitle}
@@ -141,7 +141,7 @@ function CreateBanner() {
                       <Row>
                         <FormBt.Group className="mb-3">
                           <TextInput
-                            maxLength="80"
+                            maxLength="100"
                             as="textarea"
                             label="Descripción"
                             name="description"

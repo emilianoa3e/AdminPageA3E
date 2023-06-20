@@ -15,11 +15,11 @@ function BannerHome() {
             className="card-main"
             style={{ borderRadius: "20px" }}
             onClick={() => {
-              navigate("/banners");
+              navigate("/clients");
             }}
           >
             <Card.Img
-              src="https://res.cloudinary.com/a3e-media/image/upload/v1687278597/del%20home/banner_hiv8le.png"
+              src="https://res.cloudinary.com/a3e-media/image/upload/v1687278954/del%20home/71316_b3vemx.png"
               alt="Banner"
               style={{ borderRadius: "20px", objectFit: "cover" }}
               height={170}
@@ -35,7 +35,7 @@ function BannerHome() {
                     marginLeft: "20px",
                   }}
                 >
-                  Banners
+                  Clientes
                 </Card.Title>
                 <MdChevronRight
                   size={100}

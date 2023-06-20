@@ -86,6 +86,7 @@ function CreateService() {
                   </Container>
                   <FormBt.Group className="mb-3">
                     <TextInput
+                      maxLength="80"
                       label="Título"
                       name="title"
                       icon={MdTitle}
