@@ -6,11 +6,7 @@ import {
   updateStatus,
   deleteBanner,
 } from "../../utils/bannersFunctions";
-import {
-  Toast,
-  showConfirmDialog,
-  showLoadingAlert,
-} from "../../shared/plugins/alert";
+import { showConfirmDialog } from "../../shared/plugins/alert";
 import SplashScreen from "../utils/SplashScreen";
 import CustomButton from "../../components/shared/CustomButton";
 import BannerPreview from "../utils/BannerPreview";
@@ -30,13 +26,14 @@ function BannerMain() {
     },
   ]);
 
-  useEffect(() => {
+  const getBanners = async () => {
     setIsLoading(true);
-    const getBanners = async () => {
-      const data = await getAllBanners();
-      setBannerList(data.banners);
-      setIsLoading(false);
-    };
+    const data = await getAllBanners();
+    setBannerList(data.banners);
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
     getBanners();
   }, []);
 
@@ -47,21 +44,10 @@ function BannerMain() {
       "Si, cambiar status",
       "Cancelar",
       () => {
-        updateStatus(id).then((data) => {
-          if (data.msg === "Banner status updated") {
-            Toast.fire({
-              icon: "success",
-              title: "Status cambiado con éxito 😄",
-            });
-            getAllBanners().then((updatedList) => {
-              setBannerList(updatedList.banners);
-            });
-          } else {
-            Toast.fire({
-              icon: "error",
-              title: "Error al cambiar el status 😞",
-            });
-          }
+        updateStatus(id).then(() => {
+          getAllBanners().then((updatedList) => {
+            setBannerList(updatedList.banners);
+          });
         });
       }
     );
@@ -74,36 +60,21 @@ function BannerMain() {
       "Si, eliminar banner",
       "Cancelar",
       () => {
-        deleteBanner(id).then((data) => {
-          showLoadingAlert(
-            "Eliminando banner...",
-            "Se está eliminando el banner, por favor espere."
-          );
-          if (data.msg === "Banner deleted") {
-            Toast.fire({
-              icon: "success",
-              title: "Banner eliminado con éxito 😄",
-            });
-            getAllBanners().then((updatedList) => {
-              setBannerList(updatedList.banners);
-            });
-          } else {
-            Toast.fire({
-              icon: "error",
-              title: "Error al eliminar el banner 😞",
-            });
-          }
+        deleteBanner(id).then(() => {
+          getAllBanners().then((updatedList) => {
+            setBannerList(updatedList.banners);
+          });
         });
       }
     );
   };
 
   if (isLoading) {
-    return <SplashScreen isLoading={isLoading} />;
+    return <SplashScreen />;
   }
 
   return (
-    <div className="container-fluid">
+    <Container fluid>
       <Row className="mb-4">
         <Col xs={12} md={10}>
           <h1>Banners</h1>
@@ -182,7 +153,7 @@ function BannerMain() {
           />
         )}
       </Col>
-    </div>
+    </Container>
   );
 }
 

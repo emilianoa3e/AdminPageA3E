@@ -3,7 +3,7 @@ import { Col, Row, Card, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { getAllServices, deleteService } from "../../utils/serviceFunctions";
 import CustomButton from "../../components/shared/CustomButton";
-import { Toast, showConfirmDialog } from "../../shared/plugins/alert";
+import { showConfirmDialog } from "../../shared/plugins/alert";
 import SplashScreen from "../utils/SplashScreen";
 import NotFound from "../../components/shared/NotFound";
 import "../../assets/css/pages/Services.css";
@@ -19,14 +19,14 @@ function Services() {
     },
   ]);
 
-  useEffect(() => {
+  const getServices = async () => {
     setIsLoading(true);
-    const getServices = async () => {
-      const data = await getAllServices();
-      setServicesList(data.services);
-      setIsLoading(false);
-    };
+    const data = await getAllServices();
+    setServicesList(data.services);
+    setIsLoading(false);
+  };
 
+  useEffect(() => {
     getServices();
   }, []);
 
@@ -37,24 +37,17 @@ function Services() {
       "Si, eliminar servicio",
       "Cancelar",
       () => {
-        deleteService(id).then((data) => {
-          if (data.msg === "Service deleted") {
-            Toast.fire({
-              icon: "success",
-              title: "Servicio eliminado con éxito 😄",
-            });
-            const newList = servicesList.filter(
-              (service) => service._id !== id
-            );
-            setServicesList(newList);
-          }
+        deleteService(id).then(() => {
+          getAllServices().then((updatedList) => {
+            setServicesList(updatedList.services);
+          });
         });
       }
     );
   };
 
   if (isLoading) {
-    return <SplashScreen isLoading={isLoading} />;
+    return <SplashScreen />;
   }
 
   return (

@@ -5,7 +5,6 @@ import {
   MdMovie,
   MdPermMedia,
   MdDeleteForever,
-  MdCancel,
 } from "react-icons/md";
 import { Row, Col, Container, Card } from "react-bootstrap";
 import {
@@ -13,7 +12,7 @@ import {
   getAllMedia,
   deleteMultimedia,
 } from "../../utils/galeryFunctions";
-import { showLoadingAlert, Toast } from "../../shared/plugins/alert";
+import { showConfirmDialog } from "../../shared/plugins/alert";
 import FileDropzone from "./Dropzone";
 import SplashScreen from "../../pages/utils/SplashScreen";
 import NotFound from "./NotFound";
@@ -46,66 +45,44 @@ function Galery() {
     };
   }, []);
 
-  useEffect(() => {
+  const getMedia = async () => {
     setIsLoading(true);
-    const getMedia = async () => {
-      const data = await getAllMedia();
-      setMediaList(data);
-      setIsLoading(false);
-    };
+    const data = await getAllMedia();
+    setMediaList(data.multimedia);
+    setIsLoading(false);
+  };
 
+  useEffect(() => {
     getMedia();
   }, []);
 
-  const handleFileUpload = async (files) => {
-    try {
-      showLoadingAlert(
-        "Cargando...",
-        "Por favor espera mientras se carga el multimedia"
-      );
-
-      const response = await uploadMultimedia(files);
-
-      if (response.msg === "Multimedia saved") {
-        Toast.fire({
-          icon: "success",
-          title: "Multimedia cargado con éxito 😄",
-        });
-      }
-
-      const updatedMediaList = await getAllMedia();
-      setMediaList(updatedMediaList);
+  const handleFileUpload = (file) => {
+    uploadMultimedia(file).then(() => {
+      getAllMedia().then((updatedMediaList) => {
+        setMediaList(updatedMediaList.multimedia);
+      });
       setUploadedFile(null);
-    } catch (error) {
-      console.log(error);
-    }
+    });
   };
 
-  const handleDelete = async (id) => {
-    try {
-      showLoadingAlert(
-        "Eliminando",
-        "Por favor espera mientras se elimina el multimedia..."
-      );
-
-      const response = await deleteMultimedia(id);
-
-      if (response.msg === "Multimedia deleted") {
-        Toast.fire({
-          icon: "success",
-          title: "Multimedia eliminado con éxito 😄",
+  const handleDelete = (id) => {
+    showConfirmDialog(
+      "¿Estás seguro de eliminar este archivo?",
+      "Se eliminará el archivo",
+      "Si, eliminar",
+      "Cancelar",
+      () => {
+        deleteMultimedia(id).then(() => {
+          getAllMedia().then((updatedMediaList) => {
+            setMediaList(updatedMediaList.multimedia);
+          });
         });
       }
-
-      const updatedMediaList = await getAllMedia();
-      setMediaList(updatedMediaList);
-    } catch (error) {
-      console.log(error);
-    }
+    );
   };
 
-  const copyToClipboard = (content) => {
-    navigator.clipboard.writeText(content);
+  const copyToClipboard = (link) => {
+    navigator.clipboard.writeText(link);
   };
 
   const handleFilterChange = (type) => {

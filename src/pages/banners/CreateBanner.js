@@ -7,11 +7,7 @@ import * as yup from "yup";
 import { TextInput } from "../../components/shared/TextInput";
 import { MdTitle, MdOutlineDescription, MdOutlineLink } from "react-icons/md";
 import { saveBanner } from "../../utils/bannersFunctions";
-import {
-  showConfirmDialog,
-  showLoadingAlert,
-  Toast,
-} from "../../shared/plugins/alert";
+import { showConfirmDialog } from "../../shared/plugins/alert";
 import FileDropzone from "../../components/shared/Dropzone";
 import CustomButton from "../../components/shared/CustomButton";
 import BannerPreview from "../utils/BannerPreview";
@@ -21,37 +17,14 @@ function CreateBanner() {
   const [uploadedFile, setUploadedFile] = useState(null);
   const imagePreview = uploadedFile ? URL.createObjectURL(uploadedFile) : null;
 
-  const handleSubmit = async (values, uploadedFile) => {
+  const handleSubmit = (values, uploadedFile) => {
     showConfirmDialog(
       "¿Estás seguro de crear este banner?",
       "Se creará un nuevo banner",
       "Si, crear banner",
       "Cancelar",
       () => {
-        showLoadingAlert(
-          "Creando banner...",
-          "Se está creando el banner, espera un momento."
-        );
-        saveBanner(
-          values.title,
-          values.description,
-          uploadedFile,
-          values.link
-        ).then((data) => {
-          console.log("data", data);
-          if (data.msg === "Banner saved") {
-            Toast.fire({
-              icon: "success",
-              title: "Banner creado con éxito 😄",
-            });
-            navigate("/banners");
-          } else if (data.msg === "Banner already exists") {
-            Toast.fire({
-              icon: "error",
-              title: "Ya existe un banner con ese título 😢",
-            });
-          }
-        });
+        saveBanner(values, uploadedFile, navigate);
       }
     );
   };

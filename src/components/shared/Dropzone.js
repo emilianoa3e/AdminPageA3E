@@ -72,68 +72,6 @@ const FileDropzone = ({
     return "dropzone";
   };
 
-  // return (
-  //   <>
-  // <div className={getDropzoneClass()} {...getRootProps()}>
-  //   {!uploadedFile && <MdCloudUpload size={50} color="#3B97D3" />}
-  //   <input {...getInputProps()} />
-  //   {isDragAccept && <p>Suelta el archivo aquí...</p>}
-  //   {isDragReject && <p>Formato de archivo no válido.</p>}
-  //   {!isDragActive && !uploadedFile && (
-  //     <p>
-  //       Arrastra y suelta el archivo aquí, o haz clic para seleccionarlo.
-  //     </p>
-  //   )}
-  //   {uploadedFile && (
-  //     <>
-  //       <p>{uploadedFile.name}</p>
-  //     </>
-  //   )}
-  // </div>
-  // {uploadedFile && onContext === "multimedia" && (
-  //   <div
-  //     className="row"
-  //     style={{ textAlign: "center", marginBottom: "10px" }}
-  //   >
-  //     <div className="col">
-  //       <CustomButton
-  //         text="Guardar"
-  //         type="button"
-  //         color="primary"
-  //         size="medium"
-  //         onClick={() => onFileUpload(uploadedFile)}
-  //       />
-  //     </div>
-  //     <div className="col">
-  //       <CustomButton
-  //         text="Cancelar"
-  //         type="button"
-  //         color="danger"
-  //         size="medium"
-  //         onClick={() => setUploadedFile(null)}
-  //       />
-  //     </div>
-  //   </div>
-  // )}
-  //     {uploadedFile && onContext === "banner" && (
-  //       <div
-  //         className="row"
-  //         style={{ textAlign: "center", marginBottom: "10px" }}
-  //       >
-  //         <div className="col">
-  //           <CustomButton
-  //             text="Cancelar"
-  //             type="button"
-  //             color="danger"
-  //             size="medium"
-  //             onClick={() => setUploadedFile(null)}
-  //           />
-  //         </div>
-  //       </div>
-  //     )}
-  //   </>
-  // );
-
   if (onContext === "multimedia") {
     return (
       <>

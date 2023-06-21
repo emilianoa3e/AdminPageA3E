@@ -1,14 +1,17 @@
 import axios from "axios";
 import instance from "../shared/Axios";
+import { showLoadingAlert, Toast } from "../shared/plugins/alert";
 
-export const saveBanner = async (title, description, image, link) => {
+export const saveBanner = async (values, file, navigate) => {
+  const formData = new FormData();
+  formData.append("title", values.title);
+  formData.append("description", values.description);
+  formData.append("image", file);
+  formData.append("link", values.link);
+
+  showLoadingAlert("Creando banner...", "Espere un momento por favor.");
+
   try {
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("description", description);
-    formData.append("image", image);
-    formData.append("link", link);
-
     const response = await axios.post(
       instance.defaults.baseURL + "/banner/create-banner",
       formData,
@@ -19,10 +22,28 @@ export const saveBanner = async (title, description, image, link) => {
       }
     );
 
-    return response.data;
+    if (response.data.msg === "Banner saved") {
+      Toast.fire({
+        icon: "success",
+        title: "Banner creado exitosamente 😄",
+      });
+
+      navigate("/banners");
+    }
   } catch (error) {
     console.log("error", error);
-    return error.response.data;
+
+    if (error.response.data.msg === "Banner already exists") {
+      Toast.fire({
+        icon: "error",
+        title: "Ya existe un banner con ese título 😞",
+      });
+    } else {
+      Toast.fire({
+        icon: "error",
+        title: "Error del servidor 😞",
+      });
+    }
   }
 };
 
@@ -50,14 +71,16 @@ export const getBannerById = async (id) => {
   }
 };
 
-export const updateBanner = async (id, title, description, image, link) => {
-  try {
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("description", description);
-    formData.append("image", image);
-    formData.append("link", link);
+export const updateBanner = async (id, values, file, navigate) => {
+  const formData = new FormData();
+  formData.append("title", values.title);
+  formData.append("description", values.description);
+  formData.append("image", file);
+  formData.append("link", values.link);
 
+  showLoadingAlert("Actualizando banner...", "Espere un momento por favor.");
+
+  try {
     const response = await axios.put(
       instance.defaults.baseURL + `/banner/updateById-banner/${id}`,
       formData,
@@ -68,33 +91,75 @@ export const updateBanner = async (id, title, description, image, link) => {
       }
     );
 
-    return response.data;
+    if (response.data.msg === "Banner updated") {
+      Toast.fire({
+        icon: "success",
+        title: "Banner actualizado exitosamente 😄",
+      });
+
+      navigate("/banners");
+    }
   } catch (error) {
     console.log("error", error);
-    return error.response.data;
+
+    if (error.response.data.msg === "Banner already exists") {
+      Toast.fire({
+        icon: "error",
+        title: "Ya existe un banner con ese título 😞",
+      });
+    } else {
+      Toast.fire({
+        icon: "error",
+        title: "Error del servidor 😞",
+      });
+    }
   }
 };
 
 export const updateStatus = async (id) => {
+  showLoadingAlert("Actualizando status...", "Espere un momento por favor.");
+
   try {
     const response = await axios.patch(
       instance.defaults.baseURL + `/banner/updateStatus-banner/${id}`
     );
 
-    return response.data;
+    if (response.data.msg === "Banner status updated") {
+      Toast.fire({
+        icon: "success",
+        title: "Status cambiado con éxito 😄",
+      });
+    }
   } catch (error) {
     console.log("error", error);
+
+    Toast.fire({
+      icon: "error",
+      title: "Error al cambiar el status 😞",
+    });
   }
 };
 
 export const deleteBanner = async (id) => {
+  showLoadingAlert("Eliminando banner...", "Espere un momento por favor.");
+
   try {
     const response = await axios.delete(
       instance.defaults.baseURL + `/banner/deleteById-banner/${id}`
     );
 
-    return response.data;
+    if (response.data.msg === "Banner deleted") {
+      Toast.fire({
+        icon: "success",
+        title: "Banner eliminado con éxito 😄",
+      });
+    }
   } catch (error) {
     console.log("error", error);
+
+    Toast.fire({
+      icon: "error",
+      title: "Error al eliminar banner 😞",
+    });
   }
 };

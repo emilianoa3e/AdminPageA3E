@@ -9,7 +9,7 @@ import { updateService, getServiceById } from "../../utils/serviceFunctions";
 import CustomButton from "../../components/shared/CustomButton";
 import Galery from "../../components/shared/Galery";
 import EditorWys from "../../components/shared/EditorWys";
-import { Toast, showConfirmDialog } from "../../shared/plugins/alert";
+import { showConfirmDialog } from "../../shared/plugins/alert";
 import SplashScreen from "../utils/SplashScreen";
 
 function EditService() {
@@ -29,6 +29,7 @@ function EditService() {
       setService(data.service);
       setIsLoading(false);
     };
+
     getService();
   }, []);
 
@@ -39,20 +40,7 @@ function EditService() {
       "Guardar cambios",
       "Cancelar",
       () => {
-        updateService(id, values.title, content).then((data) => {
-          if (data.msg === "Service updated") {
-            Toast.fire({
-              icon: "success",
-              title: "Servicio editado con éxito 😄",
-            });
-            navigate("/services");
-          } else if (data.msg === "Service already exists") {
-            Toast.fire({
-              icon: "error",
-              title: "Ya existe un servicio con ese título 😢",
-            });
-          }
-        });
+        updateService(id, values, content, navigate);
       }
     );
   };

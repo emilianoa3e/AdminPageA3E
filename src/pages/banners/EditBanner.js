@@ -7,11 +7,7 @@ import * as yup from "yup";
 import { TextInput } from "../../components/shared/TextInput";
 import { MdTitle, MdOutlineDescription, MdOutlineLink } from "react-icons/md";
 import { getBannerById, updateBanner } from "../../utils/bannersFunctions";
-import {
-  showConfirmDialog,
-  showLoadingAlert,
-  Toast,
-} from "../../shared/plugins/alert";
+import { showConfirmDialog } from "../../shared/plugins/alert";
 import FileDropzone from "../../components/shared/Dropzone";
 import CustomButton from "../../components/shared/CustomButton";
 import BannerPreview from "../utils/BannerPreview";
@@ -42,40 +38,16 @@ function EditBanner() {
     getBanner();
   }, []);
 
-  const handleSubmit = async (values, uploadedFile) => {
+  const handleSubmit = (values, uploadedFile) => {
     showConfirmDialog(
       "¿Estás seguro de actualizar el banner?",
       "Se actualizará el banner",
       "Si, actualizar banner",
       "Cancelar",
       () => {
-        showLoadingAlert(
-          "Actualizando banner...",
-          "Se está actualizando el banner, espera un momento."
-        );
-        updateBanner(
-          id,
-          values.title,
-          values.description,
-          uploadedFile,
-          values.link
-        ).then((data) => {
-          console.log("data", data);
-          if (data.msg === "Banner updated") {
-            Toast.fire({
-              icon: "success",
-              title: "Banner actualizado con éxito 😄",
-            });
-            navigate("/banners");
-          } else if (data.msg === "Banner already exists") {
-            Toast.fire({
-              icon: "error",
-              title: "Ya existe un banner con ese título 😢",
-            });
-          }
-        });
+        updateBanner(id, values, uploadedFile, navigate);
       }
-    )
+    );
   };
 
   const objectSchema = yup.object().shape({
@@ -84,7 +56,7 @@ function EditBanner() {
   });
 
   if (isLoading) {
-    <SplashScreen isLoading={isLoading} />;
+    <SplashScreen />;
   }
 
   return (
@@ -122,9 +94,7 @@ function EditBanner() {
                           color="primary"
                           size="medium"
                           disabled={
-                            !values.title ||
-                            !!errors.title ||
-                            !!errors.link
+                            !values.title || !!errors.title || !!errors.link
                           }
                         />
                       </Col>
