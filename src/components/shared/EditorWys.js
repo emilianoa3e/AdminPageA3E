@@ -1,17 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Container } from "react-bootstrap";
+import { getAllMedia } from "../../utils/galeryFunctions";
 import "react-quill/dist/quill.snow.css";
 import Prueba from "../getWysInfo";
 import { Editor } from "@tinymce/tinymce-react";
-
 
 function EditorWys({ setContentEditor, initialContent }) {
   return (
     <>
       <Container>
-        {/* <Col style={{ marginBottom: "15px", textAlign: "right" }}>
-          <CustomButton text="Guardar" onClick={handleSubmit} />
-        </Col> */}
         <Col>
           <Editor
             apiKey="mx8xfbfszwym72a4mhwdhb2czmco4whjp4bls89y26ov210t"
@@ -20,7 +17,6 @@ function EditorWys({ setContentEditor, initialContent }) {
               menubar: true,
               plugins: [
                 "advlist",
-                "anchor",
                 "autolink",
                 "autoresize",
                 "charmap",
@@ -47,18 +43,17 @@ function EditorWys({ setContentEditor, initialContent }) {
                 "wordcount",
               ],
               toolbar:
-                "undo redo | formatselect | " +
-                "bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | " +
-                "outdent indent | numlist bullist | " +
-                "link unlink image | media | table | " +
-                "forecolor backcolor | removeformat | code | fullscreen | help",
+                "undo redo fullscreen | formatselect |" +
+                "bold italic underline strikethrough forecolor backcolor fontsize fontfamily |" +
+                "alignleft aligncenter alignright alignjustify lineheight | " +
+                "blocks | numlist bullist | " +
+                "removeformat | ltr rtl |",
             }}
             onEditorChange={(content, editor) => {
               setContentEditor(content);
             }}
           />
         </Col>
-        {/* <Prueba></Prueba> */}
       </Container>
     </>
   );

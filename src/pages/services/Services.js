@@ -72,7 +72,7 @@ function Services() {
               <Card className="service-card">
                 <Card.Body>
                   <Card.Title
-                    className="service-title p-2"
+                    className="service-title p-1"
                     style={{
                       display: "-webkit-box",
                       WebkitLineClamp: 3,

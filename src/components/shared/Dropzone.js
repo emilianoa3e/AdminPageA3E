@@ -24,7 +24,7 @@ const FileDropzone = ({
     if (onContext === "multimedia") {
       return ["image/jpeg", "image/png", "image/jpg", "video/mp4"];
     }
-    if (onContext === "banner") {
+    if (onContext === "banner" || onContext === "client") {
       return ["image/jpeg", "image/png", "image/jpg"];
     }
     return "";
@@ -120,7 +120,7 @@ const FileDropzone = ({
     );
   }
 
-  if (onContext === "banner") {
+  if (onContext === "banner" || onContext === "client") {
     return (
       <>
         <div className={getDropzoneClass()} {...getRootProps()}>

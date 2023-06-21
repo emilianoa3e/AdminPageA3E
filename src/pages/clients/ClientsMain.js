@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Col, Row, Card, Container } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { getAllClients } from "../../utils/clientsFunctions";
-import { Toast, showConfirmDialog } from "../../shared/plugins/alert";
+import { getAllClients, deleteClient } from "../../utils/clientsFunctions";
+import { ModalCreateClient } from "../../components/client/ModalCreateClient";
+import { showConfirmDialog } from "../../shared/plugins/alert";
 import CustomButton from "../../components/shared/CustomButton";
 import SplashScreen from "../utils/SplashScreen";
 import NotFound from "../../components/shared/NotFound";
 import "../../assets/css/pages/Clients.css";
 
 function ClientsMain() {
-  const navigate = useNavigate();
+  const [show, setShow] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [clientsList, setClientsList] = useState([
     {
@@ -19,26 +19,43 @@ function ClientsMain() {
     },
   ]);
 
-  useEffect(() => {
-    setIsLoading(true);
-    const getClients = async () => {
-      const data = await getAllClients();
-      setClientsList(data.clients);
-      setIsLoading(false);
-    };
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
+  const getClients = async () => {
+    setIsLoading(true);
+    const data = await getAllClients();
+    setClientsList(data.clients);
+    setIsLoading(false);
+  };
+
+  const handleDelete = (id) => {
+    showConfirmDialog(
+      "¿Estás seguro de eliminar el cliente?",
+      "Se eliminará el cliente",
+      "Si, eliminar",
+      "Cancelar",
+      () => {
+        deleteClient(id).then(() => {
+          getAllClients().then((updatedList) => {
+            setClientsList(updatedList.clients);
+          });
+        });
+      }
+    );
+  };
+
+  useEffect(() => {
     getClients();
   }, []);
 
-  console.log(clientsList);
-
   if (isLoading) {
-    return <SplashScreen isLoading={isLoading} />;
+    return <SplashScreen />;
   }
 
   return (
     <Container fluid>
-      <Row className="mb-2">
+      <Row className="mb-4">
         <Col xs={12} md={10}>
           <h1>Clientes</h1>
         </Col>
@@ -47,7 +64,7 @@ function ClientsMain() {
             text="Registrar cliente"
             color="primary"
             size="medium"
-            onClick={() => {}}
+            onClick={handleShow}
           />
         </Col>
       </Row>
@@ -75,17 +92,10 @@ function ClientsMain() {
                   </Card.Title>
                   <div className="d-flex justify-content-center mb-2">
                     <CustomButton
-                      text="Editar"
-                      color="primary"
-                      size="small"
-                      onClick={() => {}}
-                      className="me-2 col-4"
-                    />
-                    <CustomButton
                       text="Eliminar"
                       color="danger"
                       size="small"
-                      onClick={() => {}}
+                      onClick={() => handleDelete(client._id)}
                       className="me-2 col-4"
                     />
                   </div>
@@ -101,6 +111,11 @@ function ClientsMain() {
           iconSize={150}
         />
       )}
+      <ModalCreateClient
+        show={show}
+        handleClose={handleClose}
+        getClients={getClients}
+      />
     </Container>
   );
 }

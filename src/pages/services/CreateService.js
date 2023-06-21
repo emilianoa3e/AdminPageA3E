@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
-import { MdTitle } from "react-icons/md";
+import { MdTitle, MdOutlineFullscreen } from "react-icons/md";
 import { Form, Formik } from "formik";
 import { Form as FormBt } from "react-bootstrap";
 import * as yup from "yup";
@@ -81,6 +81,18 @@ function CreateService() {
                       isInvalid={!!errors.title && touched.title}
                     />
                   </FormBt.Group>
+                  <p
+                    className="text-center align-items-center"
+                    style={{
+                      color: "grey",
+                      fontSize: 14.5,
+                      fontStyle: "italic",
+                    }}
+                  >
+                    Para una mejor experiencia del editor trabaje en pantalla
+                    completa
+                    <MdOutlineFullscreen size={23} className="ms-1" />
+                  </p>
                   <FormBt.Group className="mb-3">
                     <EditorWys setContentEditor={setContent} />
                   </FormBt.Group>
