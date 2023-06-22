@@ -69,7 +69,7 @@ function Services() {
         <Row>
           {servicesList.map((service) => (
             <Col key={service._id} xs={12} sm={6} md={4} lg={3}>
-              <Card className="service-card">
+              <Card className="service-card mt-2">
                 <Card.Body>
                   <Card.Title
                     className="service-title p-1"

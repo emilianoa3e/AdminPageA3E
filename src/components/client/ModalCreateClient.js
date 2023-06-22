@@ -41,7 +41,9 @@ export const ModalCreateClient = ({ props, show, handleClose, getClients }) => {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title style={{ textAlign: "center" }}>Crear cliente</Modal.Title>
+        <Modal.Title style={{ textAlign: "center" }}>
+          Registrar cliente
+        </Modal.Title>
       </Modal.Header>
       <Formik
         initialValues={{

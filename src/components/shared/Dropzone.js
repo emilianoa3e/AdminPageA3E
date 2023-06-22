@@ -34,7 +34,7 @@ const FileDropzone = ({
     if (onContext === "multimedia") {
       return "image/*, video/*";
     }
-    if (onContext === "banner") {
+    if (onContext === "banner" || onContext === "client") {
       return "image/*";
     }
   };

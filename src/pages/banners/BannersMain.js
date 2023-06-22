@@ -108,7 +108,7 @@ function BannerMain() {
                   lg={2}
                   className="d-flex align-items-center justify-content-center"
                 >
-                  <Row className="justify-content-center">
+                  <Row className="justify-content-center mt-2">
                     <CustomButton
                       text="Editar"
                       color="primary"

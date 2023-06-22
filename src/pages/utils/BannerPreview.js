@@ -49,7 +49,7 @@ function BannerPreview({ title, description, image, link, onContext }) {
 
   if (onContext === "bannersMain") {
     return (
-      <Carousel style={{ margin: 0, padding: 0 }}>
+      <Carousel controls={false} style={{ margin: 0, padding: 0 }}>
         <Carousel.Item>
           <img
             className="d-block w-100"
