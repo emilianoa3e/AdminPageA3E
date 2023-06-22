@@ -86,16 +86,16 @@ function Services() {
                     <CustomButton
                       text="Editar"
                       onClick={() => navigate(`/services/${service._id}`)}
-                      size="medium"
+                      size="small"
                       color="primary"
-                      className="me-2 col-6"
+                      className="me-2 col-5"
                     />
                     <CustomButton
                       text="Eliminar"
                       onClick={() => handleDelete(service._id)}
-                      size="medium"
+                      size="small"
                       color="danger"
-                      className="me-2 col-6"
+                      className="me-2 col-5"
                     />
                   </div>
                 </Card.Body>

@@ -1,5 +1,6 @@
 import axios from "axios";
 import instance from "../shared/Axios";
+import { Toast, showLoadingAlert } from "../shared/plugins/alert";
 
 export const loginPost = async (email, password) => {
   const dataJson = {
@@ -7,15 +8,39 @@ export const loginPost = async (email, password) => {
     password,
   };
 
+  showLoadingAlert("Iniciando sesión...", "Por favor, espere un momento.");
+
   try {
-    const data = await axios.post(
+    const response = await axios.post(
       instance.defaults.baseURL + "/auth/signin",
       dataJson
     );
 
-    return data.data;
+    if (response.data.msg === "User logged") {
+      Toast.fire({
+        icon: "success",
+        title: "Bienvenido de nuevo 😄",
+      });
+    }
+
+    return response.data.token;
   } catch (error) {
     console.log("error", error);
+
+    if (
+      error.response.data.msg === "User not found" ||
+      error.response.data.msg === "Invalid password"
+    ) {
+      Toast.fire({
+        icon: "error",
+        title: "Correo y/o contraseña incorrectos 😞",
+      });
+    } else {
+      Toast.fire({
+        icon: "error",
+        title: "Error en el servidor 😞",
+      });
+    }
   }
 };
 

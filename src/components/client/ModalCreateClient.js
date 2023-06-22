@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Modal } from "react-bootstrap";
+import { Modal, Form as FormBt } from "react-bootstrap";
 import { Form, Formik } from "formik";
-import { Form as FormBt } from "react-bootstrap";
 import { TextInput } from "../shared/TextInput";
 import { MdTitle } from "react-icons/md";
 import { showConfirmDialog } from "../../shared/plugins/alert";

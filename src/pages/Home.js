@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import BannerHome from "./home/BannerHome";
 import ClientHome from "./home/ClientHome";
 import { Col, Container, Row } from "react-bootstrap";
 
 function Home() {
   return (
-    <Container fluid>
+    <Container>
       <Col lg={12}>
         <Row className="mb-4">
           <BannerHome />

@@ -20,6 +20,8 @@ import CreateBanner from "../pages/banners/CreateBanner";
 import EditBanner from "../pages/banners/EditBanner";
 import ClientsMain from "../pages/clients/ClientsMain";
 import RenewToken from "./RenewToken";
+import ContactsScreen from "../pages/contacts/ContactsScreen";
+import ContactsMain from "../pages/contacts/contact/ContactMain";
 
 const AppRouter = () => {
   const { state, renewAuthToken } = useContext(AuthContext);
@@ -70,8 +72,14 @@ const AppRouter = () => {
             <Route exact path="/news" element={<PrivateRoute />}>
               <Route exact path="/news" element={<CompanyNews />} />
             </Route>
-            <Route exact path="/profile" element={<PrivateRoute />}>
+            {/* <Route exact path="/profile" element={<PrivateRoute />}>
               <Route exact path="/profile" element={<CompanyNews />} />
+            </Route> */}
+            <Route exact path="/contacts-screen" element={<PrivateRoute />}>
+              <Route exact path="/contacts-screen" element={<ContactsScreen />} />
+            </Route>
+            <Route exact path="/contacts" element={<PrivateRoute />}>
+              <Route exact path="/contacts" element={<ContactsMain />} />
             </Route>
             <Route exact path="/*" element={<Navigate to="/" />} />
           </Routes>

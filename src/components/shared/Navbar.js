@@ -4,7 +4,6 @@ import {
   Container,
   Nav,
   Navbar as NavbarBt,
-  NavDropdown,
 } from "react-bootstrap";
 import {
   MdAssignmentTurnedIn,
@@ -44,7 +43,7 @@ function CustomNavbar() {
               <MdNewspaper className="me-1" size={25} />
               <span className="nav-link-text">Noticias</span>
             </NavLink>
-            <NavLink to="/contacts" className="nav-link">
+            <NavLink to="/contacts-screen" className="nav-link">
               <MdOutlineContactSupport className="me-1" size={25} />
               <span className="nav-link-text">Contacto</span>
             </NavLink>

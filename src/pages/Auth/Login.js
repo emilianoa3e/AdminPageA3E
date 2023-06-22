@@ -56,7 +56,7 @@ function Login() {
                     <TextInput
                       label="Correo electrónico"
                       name="email"
-                      placeholder="ejem@gmail.com"
+                      placeholder="ejemplo@a3e.com.mx"
                       isInvalid={!!errors.email && touched.email}
                     />
                   </FormBt.Group>
@@ -65,7 +65,7 @@ function Login() {
                       autoComplete="off"
                       label="Contraseña"
                       name="password"
-                      placeholder="*****"
+                      placeholder="••••••••"
                       type={showPassword ? "text" : "password"}
                       isInvalid={!!errors.password && touched.password}
                       icon={showPassword ? IoMdEye : IoMdEyeOff}

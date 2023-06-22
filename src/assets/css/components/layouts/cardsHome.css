@@ -4,6 +4,11 @@
   position: relative;
 }
 
+.card-main:hover {
+  transform: scale(1.03);
+  transition: transform 0.3s ease-in-out;
+}
+
 .card-overlay {
   position: absolute;
   top: 0;

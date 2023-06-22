@@ -47,7 +47,7 @@ function EditorWys({ setContentEditor, initialContent }) {
                 "bold italic underline strikethrough forecolor backcolor fontsizeinput fontfamily |" +
                 "alignleft aligncenter alignright alignjustify lineheight | " +
                 "blocks | numlist bullist | " +
-                "removeformat | ltr rtl |",
+                "removeformat codesample |",
               font_size_input_default_unit: "px",
               line_height_formats: "1 1.1 1.2 1.3 1.4 1.5 2 2.5 3",
               color_cols: 9,

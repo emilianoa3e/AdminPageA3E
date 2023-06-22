@@ -69,14 +69,14 @@ function ClientsMain() {
         </Col>
       </Row>
       {clientsList.length !== 0 ? (
-        <Row>
+        <div className="clients-container">
           {clientsList.map((client) => (
-            <Col key={client._id} xs={12} sm={6} md={6} lg={3}>
+            <Col key={client._id} xs={12} sm={9} md={7} lg={5} xl={3}>
               <Card className="client-card">
                 <Card.Img
                   variant="top"
                   src={client.image}
-                  className="client-card-img mb-2 p-2"
+                  className="client-card-img mb-2"
                 />
                 <Card.Body className="p-0 mb-2 d-flex flex-column">
                   <Card.Title
@@ -90,20 +90,22 @@ function ClientsMain() {
                   >
                     {client.name}
                   </Card.Title>
-                  <div className="d-flex justify-content-center mb-2">
-                    <CustomButton
-                      text="Eliminar"
-                      color="danger"
-                      size="small"
-                      onClick={() => handleDelete(client._id)}
-                      className="me-2 col-4"
-                    />
-                  </div>
+                  <Card.Footer>
+                    <div className="d-flex justify-content-center mt-2">
+                      <CustomButton
+                        text="Eliminar"
+                        color="danger"
+                        size="small"
+                        onClick={() => handleDelete(client._id)}
+                        className="me-2 col-4"
+                      />
+                    </div>
+                  </Card.Footer>
                 </Card.Body>
               </Card>
             </Col>
           ))}
-        </Row>
+        </div>
       ) : (
         <NotFound
           text="No hay clientes registrados"
