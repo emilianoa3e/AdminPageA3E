@@ -63,7 +63,7 @@ function EditService() {
           <Col lg={9}>
             <Formik
               initialValues={{
-                title: service.title || "",
+                title: service.title,
               }}
               enableReinitialize={true}
               validationSchema={objectSchema}

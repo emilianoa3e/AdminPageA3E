@@ -11,9 +11,11 @@ import SplashScreen from "../../utils/SplashScreen";
 import NotFound from "../../../components/shared/NotFound";
 import { ModalCreateContact } from "../../../components/contact/ModalCreateContact";
 import { showConfirmDialog } from "../../../shared/plugins/alert";
+import { ModalEditContact } from "../../../components/contact/ModalEditContact";
 
 function ContactsMain() {
-  const [show, setShow] = useState(false);
+  const [showCreate, setShowCreate] = useState(false);
+  const [showUpdate, setShowUpdate] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [contactsList, setContactsList] = useState([
     {
@@ -22,9 +24,16 @@ function ContactsMain() {
       contact: "",
     },
   ]);
+  const [selectedId, setSelectedId] = useState(null);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleCloseCreate = () => setShowCreate(false);
+  const handleShowCreate = () => setShowCreate(true);
+
+  const handleCloseUpdate = () => setShowUpdate(false);
+  const handleShowUpdate = (id) => {
+    setSelectedId(id);
+    setShowUpdate(true);
+  };
 
   const getContacts = async () => {
     setIsLoading(true);
@@ -36,6 +45,10 @@ function ContactsMain() {
   useEffect(() => {
     getContacts();
   }, []);
+
+  const handleUpdate = (id) => {
+    handleShowUpdate(id);
+  };
 
   const handleDelete = (id) => {
     showConfirmDialog(
@@ -66,7 +79,7 @@ function ContactsMain() {
             text="Registrar contacto"
             color="primary"
             size="medium"
-            onClick={() => handleShow()}
+            onClick={() => handleShowCreate()}
           />
         </Col>
       </Row>
@@ -101,7 +114,7 @@ function ContactsMain() {
                       text="Editar"
                       color="primary"
                       size="small"
-                      onClick={() => {}}
+                      onClick={() => handleUpdate(contact._id)}
                     />
                     <CustomButton
                       className="mt-2 col-5"
@@ -124,8 +137,15 @@ function ContactsMain() {
         />
       )}
       <ModalCreateContact
-        show={show}
-        handleClose={handleClose}
+        show={showCreate}
+        handleClose={handleCloseCreate}
+        getContacts={getContacts}
+      />
+      <ModalEditContact
+        id={selectedId}
+        setSelectedId={setSelectedId}
+        show={showUpdate}
+        handleClose={handleCloseUpdate}
         getContacts={getContacts}
       />
     </Container>
