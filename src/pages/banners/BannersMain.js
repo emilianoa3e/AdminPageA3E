@@ -81,6 +81,13 @@ function BannerMain() {
         </Col>
         <Col xs={12} md={2} className="d-flex justify-content-end">
           <CustomButton
+            text="Regresar"
+            color="secondary"
+            size="medium"
+            onClick={() => navigate("/home")}
+            className="me-2"
+          />
+          <CustomButton
             text="Crear banner"
             color="primary"
             size="medium"
@@ -90,7 +97,7 @@ function BannerMain() {
           />
         </Col>
       </Row>
-      <Col>
+      <Col className="mt-5">
         {bannerList.length !== 0 ? (
           <Row>
             {bannerList.map((banner) => (

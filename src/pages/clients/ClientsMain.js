@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Col, Row, Card, Container } from "react-bootstrap";
 import { getAllClients, deleteClient } from "../../utils/clientsFunctions";
 import { ModalCreateClient } from "../../components/client/ModalCreateClient";
@@ -9,6 +10,7 @@ import NotFound from "../../components/shared/NotFound";
 import "../../assets/css/pages/Clients.css";
 
 function ClientsMain() {
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [clientsList, setClientsList] = useState([
@@ -60,6 +62,13 @@ function ClientsMain() {
           <h1>Clientes</h1>
         </Col>
         <Col xs={12} md={2} className="d-flex justify-content-end">
+          <CustomButton
+            text="Regresar"
+            color="secondary"
+            size="medium"
+            onClick={() => navigate("/home")}
+            className="me-2"
+          />
           <CustomButton
             text="Registrar cliente"
             color="primary"

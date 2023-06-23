@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Card } from "react-bootstrap";
 import { MdWhatsapp, MdEmail, MdLocalPhone, MdFacebook } from "react-icons/md";
 import { BsLinkedin } from "react-icons/bs";
@@ -14,6 +15,7 @@ import { showConfirmDialog } from "../../../shared/plugins/alert";
 import { ModalEditContact } from "../../../components/contact/ModalEditContact";
 
 function ContactsMain() {
+  const navigate = useNavigate();
   const [showCreate, setShowCreate] = useState(false);
   const [showUpdate, setShowUpdate] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -75,6 +77,13 @@ function ContactsMain() {
           <h1>Contactos</h1>
         </Col>
         <Col xs={12} md={2} className="d-flex justify-content-end">
+          <CustomButton
+            text="Regresar"
+            color="secondary"
+            size="medium"
+            onClick={() => navigate("/contacts-screen")}
+            className="me-2"
+          />
           <CustomButton
             text="Registrar contacto"
             color="primary"

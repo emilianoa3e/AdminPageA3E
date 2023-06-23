@@ -22,6 +22,7 @@ import ClientsMain from "../pages/clients/ClientsMain";
 import RenewToken from "./RenewToken";
 import ContactsScreen from "../pages/contacts/ContactsScreen";
 import ContactsMain from "../pages/contacts/contact/ContactMain";
+import SaleMain from "../pages/contacts/sale/SaleMain";
 
 const AppRouter = () => {
   const { state, renewAuthToken } = useContext(AuthContext);
@@ -40,7 +41,7 @@ const AppRouter = () => {
     <BrowserRouter>
       {isLogged ? (
         <Layout>
-          <RenewToken/>
+          <RenewToken />
           <Routes>
             <Route exact path="/" element={<PrivateRoute />}>
               <Route exact path="/" element={<Home />} />
@@ -76,10 +77,17 @@ const AppRouter = () => {
               <Route exact path="/profile" element={<CompanyNews />} />
             </Route> */}
             <Route exact path="/contacts-screen" element={<PrivateRoute />}>
-              <Route exact path="/contacts-screen" element={<ContactsScreen />} />
+              <Route
+                exact
+                path="/contacts-screen"
+                element={<ContactsScreen />}
+              />
             </Route>
             <Route exact path="/contacts" element={<PrivateRoute />}>
               <Route exact path="/contacts" element={<ContactsMain />} />
+            </Route>
+            <Route exact path="/sales" element={<PrivateRoute />}>
+              <Route exact path="/sales" element={<SaleMain />} />
             </Route>
             <Route exact path="/*" element={<Navigate to="/" />} />
           </Routes>

@@ -38,8 +38,6 @@ export const ModalEditContact = ({
     }
   }, [id]);
 
-  console.log(contact);
-
   const objectSchema = Yup.object({
     type: Yup.string().required("El tipo de contacto es requerido"),
     contact: Yup.string()

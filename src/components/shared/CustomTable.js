@@ -1,32 +1,60 @@
-import React from 'react'
-import { Table } from 'react-bootstrap'
-function CustomTable() {
+import React from "react";
+import { Table } from "react-bootstrap";
+import { MdDensityMedium } from "react-icons/md";
+import CustomButton from "./CustomButton";
+import NotFound from "../../components/shared/NotFound";
+
+function CustomTable({ data }) {
+  const headers = Object.keys(data[0] ? data[0] : {});
+  const excludedFields = ["_id", "__v"];
+
+  const filteredHeaders = headers.filter(
+    (header) => !excludedFields.includes(header)
+  );
+
+  console.log("filteredHeaders", filteredHeaders);
+
+  if (data.length === 0) {
+    return (
+      <NotFound text="No se encontraron datos" textSize={20} iconSize={100} />
+    );
+  }
+
+  const reversedData = [...data].reverse();
+
   return (
-    <Table striped bordered hover variant="dark">
+    <Table hover>
       <thead>
         <tr>
-          <th>#</th>
-          <th>Nombre del servicio</th>
-          <th>Última actualización</th>
-          <th>Acciones</th>
+          {filteredHeaders.map((header, index) => (
+            <th className="text-center" key={index}>
+              {header.toUpperCase()}
+            </th>
+          ))}
+          <th className="text-center">
+            <MdDensityMedium size={20} color=""/>
+          </th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td></td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
+        {reversedData.map((row, index) => (
+          <tr key={index}>
+            {filteredHeaders.map((header, index) => (
+              <td key={index}>{row[header]}</td>
+            ))}
+            <td className="text-center">
+              <CustomButton
+                text="Visto"
+                color="success"
+                size="small"
+                onClick={() => {}}
+              />
+            </td>
+          </tr>
+        ))}
       </tbody>
     </Table>
-  )
+  );
 }
 
-export default CustomTable
+export default CustomTable;
