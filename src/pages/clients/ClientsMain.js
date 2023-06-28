@@ -80,16 +80,18 @@ function ClientsMain() {
       {clientsList.length !== 0 ? (
         <div className="clients-container">
           {clientsList.map((client) => (
-            <Col key={client._id} xs={12} sm={9} md={7} lg={5} xl={3}>
+            <Col key={client._id} xs={12} sm={7} md={5} lg={4} xl={3}>
               <Card className="client-card">
-                <Card.Img
-                  variant="top"
-                  src={client.image}
-                  className="client-card-img mb-2"
-                />
+                <Card.Header className="client-card-header">
+                  <Card.Img
+                    variant="top"
+                    src={client.image}
+                    className="client-card-img mb-2"
+                  />
+                </Card.Header>
                 <Card.Body className="p-0 mb-2 d-flex flex-column">
                   <Card.Title
-                    className="client-name ps-1 pe-1"
+                    className="client-name ps-1 pe-1 mt-2"
                     style={{
                       display: "-webkit-box",
                       WebkitLineClamp: 2,
@@ -99,14 +101,14 @@ function ClientsMain() {
                   >
                     {client.name}
                   </Card.Title>
-                  <Card.Footer>
+                  <Card.Footer className="client-card-footer">
                     <div className="d-flex justify-content-center mt-2">
                       <CustomButton
                         text="Eliminar"
                         color="danger"
                         size="small"
                         onClick={() => handleDelete(client._id)}
-                        className="me-2 col-4"
+                        className="col-4"
                       />
                     </div>
                   </Card.Footer>
