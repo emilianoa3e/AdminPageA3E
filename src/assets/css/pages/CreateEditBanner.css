@@ -1,0 +1,29 @@
+.form {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.form-dropzone {
+  padding-top: 70px;
+}
+
+.buttons-top {
+  display: flex;
+  justify-content: end;
+  padding-right: 50px;
+}
+
+@media (max-width: 950px) {
+  .form {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .form-dropzone {
+    padding-top: 20px;
+  }
+
+  .buttons-top {
+    justify-content: center;
+    padding-right: 10px;
+  }
+}

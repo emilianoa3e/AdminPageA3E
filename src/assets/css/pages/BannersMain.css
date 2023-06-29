@@ -1,0 +1,25 @@
+.title {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.buttons-top {
+  display: flex;
+  justify-content: end;
+}
+
+@media (max-width: 1000px) {
+  .buttons-top {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 720px) {
+  .title {
+    font-size: 30px;
+  }
+
+  .buttons-top {
+    justify-content: center;
+  }
+}

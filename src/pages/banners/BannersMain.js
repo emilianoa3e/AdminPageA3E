@@ -11,6 +11,7 @@ import SplashScreen from "../utils/SplashScreen";
 import CustomButton from "../../components/shared/CustomButton";
 import BannerPreview from "../utils/BannerPreview";
 import NotFound from "../../components/shared/NotFound";
+import "../../assets/css/pages/BannersMain.css";
 
 function BannerMain() {
   const navigate = useNavigate();
@@ -76,10 +77,10 @@ function BannerMain() {
   return (
     <Container fluid>
       <Row className="mb-4">
-        <Col xs={12} md={10}>
-          <h1>Banners</h1>
+        <Col xs={12} md={8} lg={10}>
+          <h1 className="title">Banners</h1>
         </Col>
-        <Col xs={12} md={2} className="d-flex justify-content-end">
+        <Col xs={12} md={4} lg={2} className="buttons-top">
           <CustomButton
             text="Regresar"
             color="secondary"
@@ -102,7 +103,7 @@ function BannerMain() {
           <Row>
             {bannerList.map((banner) => (
               <Row key={banner._id} className="mb-4">
-                <Col lg={10}>
+                <Col sm={12} lg={10}>
                   <BannerPreview
                     title={banner.title}
                     description={banner.description}
@@ -112,6 +113,7 @@ function BannerMain() {
                   />
                 </Col>
                 <Col
+                  sm={12}
                   lg={2}
                   className="d-flex align-items-center justify-content-center"
                 >

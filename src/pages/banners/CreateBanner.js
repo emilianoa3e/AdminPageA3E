@@ -11,6 +11,7 @@ import { showConfirmDialog } from "../../shared/plugins/alert";
 import FileDropzone from "../../components/shared/Dropzone";
 import CustomButton from "../../components/shared/CustomButton";
 import BannerPreview from "../utils/BannerPreview";
+import "../../assets/css/pages/CreateEditBanner.css";
 
 function CreateBanner() {
   const navigate = useNavigate();
@@ -35,128 +36,123 @@ function CreateBanner() {
   });
 
   return (
-    <>
-      <Container fluid className="p-0 m-0">
-        <Row>
-          <Col lg={12}>
-            <Formik
-              initialValues={{
-                title: "",
-                description: "",
-                link: "",
-              }}
-              validationSchema={objectSchema}
-              onSubmit={(values) => handleSubmit(values, uploadedFile)}
-            >
-              {({ errors, values, touched }) => (
-                <Form>
-                  <div style={{ textAlign: "right" }}>
-                    <Row className="m-0 p-0">
-                      <Col lg={10}>
-                        <CustomButton
-                          type="button"
-                          text="Cancelar"
-                          color="danger"
-                          size="medium"
-                          onClick={() => navigate("/banners")}
-                        />
-                      </Col>
-                      <Col lg={1}>
-                        <CustomButton
-                          type="submit"
-                          text="Guardar"
-                          color="primary"
-                          size="medium"
-                          disabled={
-                            !values.title ||
-                            !!errors.title ||
-                            !uploadedFile ||
-                            !!errors.link
-                          }
-                        />
-                      </Col>
-                    </Row>
-                  </div>
-                  <Row className="ms-5 me-5 ps-5 pe-5">
-                    <Col lg={4} style={{ paddingTop: "70px" }}>
-                      <FormBt.Group className="mb-3">
-                        <FileDropzone
-                          uploadedFile={uploadedFile}
-                          setUploadedFile={setUploadedFile}
-                          onContext="banner"
-                        />
-                        <p
-                          className="text-center"
-                          style={{
-                            fontSize: "0.8rem",
-                            fontStyle: "italic",
-                            color: "grey",
-                            opacity: "0.7",
-                          }}
-                        >
-                          *Agregue una imagen para verlo en la vista previa*
-                        </p>
-                      </FormBt.Group>
-                    </Col>
-                    <Col lg={8}>
-                      <Row>
-                        <FormBt.Group className="mb-3">
-                          <TextInput
-                            maxLength="60"
-                            label="Título"
-                            name="title"
-                            icon={MdTitle}
-                            placeholder="Título"
-                            isInvalid={!!errors.title && touched.title}
-                          />
-                        </FormBt.Group>
-                      </Row>
-                      <Row>
-                        <FormBt.Group className="mb-3">
-                          <TextInput
-                            maxLength="100"
-                            as="textarea"
-                            label="Descripción"
-                            name="description"
-                            style={{ resize: "none", height: "70px" }}
-                            icon={MdOutlineDescription}
-                            placeholder="Descripción"
-                          />
-                        </FormBt.Group>
-                      </Row>
-                      <Row>
-                        <FormBt.Group className="mb-3">
-                          <TextInput
-                            maxLength="80"
-                            label="Link"
-                            name="link"
-                            icon={MdOutlineLink}
-                            placeholder="Link"
-                            isInvalid={!!errors.link && touched.link}
-                          />
-                        </FormBt.Group>
-                      </Row>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Container fluid className="p-0 m-0">
-                      <p className="text-center">Vista previa</p>
-                    </Container>
-                    <BannerPreview
-                      title={values.title}
-                      description={values.description}
-                      image={imagePreview}
-                      link={values.link}
-                      onContext="bannerPreview"
+    <Container fluid className="p-0 m-0">
+      <Row>
+        <Col lg={12}>
+          <Formik
+            initialValues={{
+              title: "",
+              description: "",
+              link: "",
+            }}
+            validationSchema={objectSchema}
+            onSubmit={(values) => handleSubmit(values, uploadedFile)}
+          >
+            {({ errors, values, touched }) => (
+              <Form>
+                <Row className="text-end">
+                  <Col className="buttons-top">
+                    <CustomButton
+                      type="button"
+                      text="Cancelar"
+                      color="danger"
+                      size="medium"
+                      onClick={() => navigate("/banners")}
+                      className="me-2"
                     />
-                  </Row>
-                </Form>
-              )}
-            </Formik>
-          </Col>
-        </Row>
-      </Container>
-    </>
+                    <CustomButton
+                      type="submit"
+                      text="Guardar"
+                      color="primary"
+                      size="medium"
+                      disabled={
+                        !values.title ||
+                        !!errors.title ||
+                        !uploadedFile ||
+                        !!errors.link
+                      }
+                    />
+                  </Col>
+                </Row>
+                <Row className="form">
+                  <Col lg={4} className="form-dropzone">
+                    <FormBt.Group className="mb-3">
+                      <FileDropzone
+                        uploadedFile={uploadedFile}
+                        setUploadedFile={setUploadedFile}
+                        onContext="banner"
+                      />
+                      <p
+                        className="text-center"
+                        style={{
+                          fontSize: "0.8rem",
+                          fontStyle: "italic",
+                          color: "grey",
+                          opacity: "0.7",
+                        }}
+                      >
+                        *Agregue una imagen para verlo en la vista previa*
+                      </p>
+                    </FormBt.Group>
+                  </Col>
+                  <Col lg={8}>
+                    <Row>
+                      <FormBt.Group className="mb-3">
+                        <TextInput
+                          maxLength="60"
+                          label="Título"
+                          name="title"
+                          icon={MdTitle}
+                          placeholder="Título"
+                          isInvalid={!!errors.title && touched.title}
+                        />
+                      </FormBt.Group>
+                    </Row>
+                    <Row>
+                      <FormBt.Group className="mb-3">
+                        <TextInput
+                          maxLength="100"
+                          as="textarea"
+                          label="Descripción"
+                          name="description"
+                          style={{ resize: "none", height: "70px" }}
+                          icon={MdOutlineDescription}
+                          placeholder="Descripción"
+                        />
+                      </FormBt.Group>
+                    </Row>
+                    <Row>
+                      <FormBt.Group className="mb-3">
+                        <TextInput
+                          maxLength="80"
+                          label="Link"
+                          name="link"
+                          icon={MdOutlineLink}
+                          placeholder="Link"
+                          isInvalid={!!errors.link && touched.link}
+                        />
+                      </FormBt.Group>
+                    </Row>
+                  </Col>
+                </Row>
+                <Row>
+                  <Container fluid className="p-0 m-0">
+                    <p className="text-center">Vista previa</p>
+                  </Container>
+                  <BannerPreview
+                    title={values.title}
+                    description={values.description}
+                    image={imagePreview}
+                    link={values.link}
+                    onContext="bannerPreview"
+                  />
+                </Row>
+              </Form>
+            )}
+          </Formik>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

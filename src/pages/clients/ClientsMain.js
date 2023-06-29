@@ -59,9 +59,9 @@ function ClientsMain() {
     <Container fluid>
       <Row className="mb-4">
         <Col xs={12} md={10}>
-          <h1>Clientes</h1>
+          <h1 className="client-title">Clientes</h1>
         </Col>
-        <Col xs={12} md={2} className="d-flex justify-content-end">
+        <Col xs={12} md={2} className="client-buttons">
           <CustomButton
             text="Regresar"
             color="secondary"
@@ -80,7 +80,7 @@ function ClientsMain() {
       {clientsList.length !== 0 ? (
         <div className="clients-container">
           {clientsList.map((client) => (
-            <Col key={client._id} xs={12} sm={7} md={5} lg={4} xl={3}>
+            <Col key={client._id} xs={12} sm={7} md={6} lg={4} xl={3}>
               <Card className="client-card">
                 <Card.Header className="client-card-header">
                   <Card.Img
@@ -108,7 +108,6 @@ function ClientsMain() {
                         color="danger"
                         size="small"
                         onClick={() => handleDelete(client._id)}
-                        className="col-4"
                       />
                     </div>
                   </Card.Footer>

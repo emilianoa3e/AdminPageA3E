@@ -1,15 +1,15 @@
-.card-main {
+.banner-to-navigate-main {
   border-radius: 20px;
   cursor: pointer;
   position: relative;
 }
 
-.card-main:hover {
+.banner-to-navigate-main:hover {
   transform: scale(1.03);
   transition: transform 0.3s ease-in-out;
 }
 
-.card-overlay {
+.banner-to-navigate-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -29,6 +29,20 @@
   transition: background-color 0.3s ease-in-out;
 }
 
-.card-overlay:hover {
+.banner-to-navigate-overlay:hover {
   background-color: rgba(255, 255, 255, 0.384);
+}
+
+.banner-to-navigate-title {
+  font-size: 40px !important;
+  font-weight: bold !important;
+  margin-left: 10px;
+}
+
+@media (max-width: 600px) {
+  .banner-to-navigate-title {
+    font-size: 30px !important;
+    font-weight: bold !important;
+    margin-left: 10px;
+  }
 }
