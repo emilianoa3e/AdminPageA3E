@@ -33,76 +33,74 @@ function CreateService() {
   });
 
   return (
-    <>
-      <div>
-        <Row>
-          <Col lg={3}>
-            <Galery />
-          </Col>
-          <Col lg={9}>
-            <Formik
-              initialValues={{
-                title: "",
-              }}
-              validationSchema={objectSchema}
-              onSubmit={(values) => handleSubmit(values, content)}
-            >
-              {({ errors, values, touched }) => (
-                <Form>
-                  <Container style={{ textAlign: "right" }}>
-                    <Row>
-                      <Col lg={10}>
-                        <CustomButton
-                          type="button"
-                          text="Cancelar"
-                          color="danger"
-                          size="medium"
-                          onClick={() => navigate("/services")}
-                        />
-                      </Col>
-                      <Col lg={1}>
-                        <CustomButton
-                          type="submit"
-                          text="Guardar"
-                          color="primary"
-                          size="medium"
-                          disabled={!values.title || !content || !!errors.title}
-                        />
-                      </Col>
-                    </Row>
-                  </Container>
-                  <FormBt.Group className="mb-3">
-                    <TextInput
-                      maxLength="80"
-                      label="Título"
-                      name="title"
-                      icon={MdTitle}
-                      placeholder="Título"
-                      isInvalid={!!errors.title && touched.title}
-                    />
-                  </FormBt.Group>
-                  <p
-                    className="text-center align-items-center"
-                    style={{
-                      color: "grey",
-                      fontSize: 14.5,
-                      fontStyle: "italic",
-                    }}
-                  >
-                    Para una mejor experiencia del editor trabaje en pantalla
-                    completa
-                    <MdOutlineFullscreen size={23} className="ms-1" />
-                  </p>
-                  <FormBt.Group className="mb-3">
-                    <EditorWys setContentEditor={setContent} />
-                  </FormBt.Group>
-                </Form>
-              )}
-            </Formik>
-          </Col>
-        </Row>
-      </div>
-    </>
+    <Container fluid>
+      <Row>
+        <Col lg={3}>
+          <Galery />
+        </Col>
+        <Col lg={9}>
+          <Formik
+            initialValues={{
+              title: "",
+            }}
+            validationSchema={objectSchema}
+            onSubmit={(values) => handleSubmit(values, content)}
+          >
+            {({ errors, values, touched }) => (
+              <Form>
+                <Container style={{ textAlign: "right" }}>
+                  <Row>
+                    <Col lg={10}>
+                      <CustomButton
+                        type="button"
+                        text="Cancelar"
+                        color="danger"
+                        size="medium"
+                        onClick={() => navigate("/services")}
+                      />
+                    </Col>
+                    <Col lg={1}>
+                      <CustomButton
+                        type="submit"
+                        text="Guardar"
+                        color="primary"
+                        size="medium"
+                        disabled={!values.title || !content || !!errors.title}
+                      />
+                    </Col>
+                  </Row>
+                </Container>
+                <FormBt.Group className="mb-3">
+                  <TextInput
+                    maxLength="80"
+                    label="Título"
+                    name="title"
+                    icon={MdTitle}
+                    placeholder="Título"
+                    isInvalid={!!errors.title && touched.title}
+                  />
+                </FormBt.Group>
+                <p
+                  className="text-center align-items-center"
+                  style={{
+                    color: "grey",
+                    fontSize: 14.5,
+                    fontStyle: "italic",
+                  }}
+                >
+                  Para una mejor experiencia del editor trabaje en pantalla
+                  completa
+                  <MdOutlineFullscreen size={23} className="ms-1" />
+                </p>
+                <FormBt.Group className="mb-3">
+                  <EditorWys setContentEditor={setContent} />
+                </FormBt.Group>
+              </Form>
+            )}
+          </Formik>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

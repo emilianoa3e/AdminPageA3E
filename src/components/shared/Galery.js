@@ -18,7 +18,6 @@ import SplashScreen from "../../pages/utils/SplashScreen";
 import NotFound from "./NotFound";
 
 function Galery() {
-  const [maxHeight, setMaxHeight] = useState(380);
   const [mediaList, setMediaList] = useState([
     {
       _id: "",
@@ -29,21 +28,6 @@ function Galery() {
   const [filter, setFilter] = useState("all");
   const [isLoading, setIsLoading] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
-
-  useEffect(() => {
-    const handleResize = () => {
-      const windowHeight = window.innerHeight;
-      const galleryHeight = windowHeight - 330;
-      setMaxHeight(galleryHeight);
-    };
-
-    window.addEventListener("resize", handleResize);
-    handleResize();
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   const getMedia = async () => {
     setIsLoading(true);
@@ -98,7 +82,7 @@ function Galery() {
   });
 
   return (
-    <Container className="fluid">
+    <Container fluid>
       <Row>
         <Col>
           <FileDropzone
@@ -147,7 +131,7 @@ function Galery() {
             </Col>
           </Row>
         </Card.Header>
-        <Card.Body style={{ overflowY: "auto", maxHeight: `${maxHeight}px` }}>
+        <Card.Body style={{ overflowY: "auto", maxHeight: "600px" }}>
           <Row>
             {isLoading ? (
               <SplashScreen isLoading={isLoading} />
