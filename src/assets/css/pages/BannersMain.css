@@ -17,6 +17,7 @@
 @media (max-width: 720px) {
   .title {
     font-size: 30px;
+    text-align: center;
   }
 
   .buttons-top {

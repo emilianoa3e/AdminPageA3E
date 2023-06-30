@@ -1,0 +1,12 @@
+.service-create-buttons-top {
+  display: flex;
+  justify-content: end;
+}
+
+@media (max-width: 1000px) {
+  .service-create-buttons-top {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    justify-content: center;
+  }
+}

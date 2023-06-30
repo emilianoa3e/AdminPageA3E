@@ -1,0 +1,20 @@
+.contact-title {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.contact-buttons-top {
+  display: flex;
+  justify-content: end;
+}
+
+@media (max-width: 750px) {
+  .contact-title {
+    text-align: center;
+    font-size: 30px;
+  }
+
+  .contact-buttons-top {
+    justify-content: center;
+  }
+}

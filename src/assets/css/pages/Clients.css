@@ -71,7 +71,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 750px) {
   .client-title{
     text-align: center;
     font-size: 32px;

@@ -13,6 +13,7 @@ import NotFound from "../../../components/shared/NotFound";
 import { ModalCreateContact } from "../../../components/contact/ModalCreateContact";
 import { showConfirmDialog } from "../../../shared/plugins/alert";
 import { ModalEditContact } from "../../../components/contact/ModalEditContact";
+import "../../../assets/css/pages/ContactMain.css";
 
 function ContactsMain() {
   const navigate = useNavigate();
@@ -74,9 +75,9 @@ function ContactsMain() {
     <Container fluid>
       <Row className="mb-4">
         <Col xs={12} md={10}>
-          <h1>Contactos</h1>
+          <h1 className="contact-title">Contactos</h1>
         </Col>
-        <Col xs={12} md={2} className="d-flex justify-content-end">
+        <Col xs={12} md={2} className="contact-buttons-top">
           <CustomButton
             text="Regresar"
             color="secondary"
@@ -119,14 +120,14 @@ function ContactsMain() {
                   <Card.Title className="mt-3">{contact.contact}</Card.Title>
                   <Card.Footer style={{ backgroundColor: "#fff" }}>
                     <CustomButton
-                      className="mt-2 col-5 me-1"
+                      className="mt-2 me-1"
                       text="Editar"
                       color="primary"
                       size="small"
                       onClick={() => handleUpdate(contact._id)}
                     />
                     <CustomButton
-                      className="mt-2 col-5"
+                      className="mt-2"
                       text="Eliminar"
                       color="danger"
                       size="small"

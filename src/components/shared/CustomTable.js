@@ -23,37 +23,39 @@ function CustomTable({ data }) {
   const reversedData = [...data].reverse();
 
   return (
-    <Table hover>
-      <thead>
-        <tr>
-          {filteredHeaders.map((header, index) => (
-            <th className="text-center" key={index}>
-              {header.toUpperCase()}
-            </th>
-          ))}
-          <th className="text-center">
-            <MdDensityMedium size={20} color=""/>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {reversedData.map((row, index) => (
-          <tr key={index}>
+    <div className="table-responsive">
+      <Table hover>
+        <thead>
+          <tr>
             {filteredHeaders.map((header, index) => (
-              <td key={index}>{row[header]}</td>
+              <th className="text-center" key={index}>
+                {header.toUpperCase()}
+              </th>
             ))}
-            <td className="text-center">
-              <CustomButton
-                text="Visto"
-                color="success"
-                size="small"
-                onClick={() => {}}
-              />
-            </td>
+            <th className="text-center">
+              <MdDensityMedium size={20} color="" />
+            </th>
           </tr>
-        ))}
-      </tbody>
-    </Table>
+        </thead>
+        <tbody>
+          {reversedData.map((row, index) => (
+            <tr key={index}>
+              {filteredHeaders.map((header, index) => (
+                <td key={index}>{row[header]}</td>
+              ))}
+              <td className="text-center">
+                <CustomButton
+                  text="Visto"
+                  color="success"
+                  size="small"
+                  onClick={() => {}}
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </div>
   );
 }
 

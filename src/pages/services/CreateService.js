@@ -11,6 +11,7 @@ import CustomButton from "../../components/shared/CustomButton";
 import Galery from "../../components/shared/Galery";
 import EditorWys from "../../components/shared/EditorWys";
 import { showConfirmDialog } from "../../shared/plugins/alert";
+import "../../assets/css/pages/CreateEditService.css";
 
 function CreateService() {
   const navigate = useNavigate();
@@ -35,10 +36,14 @@ function CreateService() {
   return (
     <Container fluid>
       <Row>
-        <Col lg={3}>
+        <Col
+          md={{ span: 8, offset: 2 }}
+          lg={{ span: 3, offset: 0 }}
+          className="text-center"
+        >
           <Galery />
         </Col>
-        <Col lg={9}>
+        <Col md={12} lg={9}>
           <Formik
             initialValues={{
               title: "",
@@ -48,28 +53,25 @@ function CreateService() {
           >
             {({ errors, values, touched }) => (
               <Form>
-                <Container style={{ textAlign: "right" }}>
-                  <Row>
-                    <Col lg={10}>
-                      <CustomButton
-                        type="button"
-                        text="Cancelar"
-                        color="danger"
-                        size="medium"
-                        onClick={() => navigate("/services")}
-                      />
-                    </Col>
-                    <Col lg={1}>
-                      <CustomButton
-                        type="submit"
-                        text="Guardar"
-                        color="primary"
-                        size="medium"
-                        disabled={!values.title || !content || !!errors.title}
-                      />
-                    </Col>
-                  </Row>
-                </Container>
+                <Row className="text-end">
+                  <Col className="service-create-buttons-top">
+                    <CustomButton
+                      type="button"
+                      text="Cancelar"
+                      color="danger"
+                      size="medium"
+                      onClick={() => navigate("/services")}
+                      className="me-2"
+                    />
+                    <CustomButton
+                      type="submit"
+                      text="Guardar"
+                      color="primary"
+                      size="medium"
+                      disabled={!values.title || !content || !!errors.title}
+                    />
+                  </Col>
+                </Row>
                 <FormBt.Group className="mb-3">
                   <TextInput
                     maxLength="80"

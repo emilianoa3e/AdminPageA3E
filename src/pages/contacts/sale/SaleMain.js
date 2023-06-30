@@ -39,16 +39,15 @@ function SaleMain() {
   return (
     <Container fluid>
       <Row className="mb-4">
-        <Col className="mt-1" xs={12} md={10}>
+        <Col className="mt-1">
           <h1>Ventas</h1>
         </Col>
-        <Col xs={12} md={2} className="d-flex justify-content-end">
+        <Col className="d-flex justify-content-end">
           <CustomButton
             text="Regresar"
             color="secondary"
             size="medium"
             onClick={() => navigate("/contacts-screen")}
-            className="me-2"
           />
         </Col>
       </Row>

@@ -54,9 +54,9 @@ function Services() {
     <Container fluid>
       <Row className="mb-4">
         <Col xs={12} md={10}>
-          <h1>Servicios</h1>
+          <h1 className="service-title">Servicios</h1>
         </Col>
-        <Col xs={12} md={2} className="d-flex justify-content-end">
+        <Col xs={12} md={2} className="service-buttons-top">
           <CustomButton
             text="Crear servicio"
             color="primary"
@@ -72,7 +72,7 @@ function Services() {
               <Card className="service-card mt-2">
                 <Card.Body>
                   <Card.Title
-                    className="service-title p-1"
+                    className="service-name p-1"
                     style={{
                       display: "-webkit-box",
                       WebkitLineClamp: 3,
@@ -88,14 +88,14 @@ function Services() {
                       onClick={() => navigate(`/services/${service._id}`)}
                       size="small"
                       color="primary"
-                      className="me-2 col-5"
+                      className="me-2"
                     />
                     <CustomButton
                       text="Eliminar"
                       onClick={() => handleDelete(service._id)}
                       size="small"
                       color="danger"
-                      className="me-2 col-5"
+                      className="me-2"
                     />
                   </div>
                 </Card.Body>
