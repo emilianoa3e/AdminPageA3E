@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Form as FormBt } from "react-bootstrap";
-import { MdTitle, MdOutlineFullscreen } from "react-icons/md";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
 import { useNavigate, useParams } from "react-router-dom";
-import { TextInput } from "../../components/shared/TextInput";
 import { updateService, getServiceById } from "../../utils/serviceFunctions";
 import CustomButton from "../../components/shared/CustomButton";
 import Galery from "../../components/shared/Galery";
-import EditorWys from "../../components/shared/EditorWys";
 import { showConfirmDialog } from "../../shared/plugins/alert";
 import SplashScreen from "../utils/SplashScreen";
 import "../../assets/css/pages/CreateEditService.css";
+import ServiceForm from "../../components/services/ServiceForm";
 
 function EditService() {
   const { id } = useParams();
@@ -48,6 +46,7 @@ function EditService() {
 
   const objectSchema = yup.object().shape({
     title: yup.string().required("El título es requerido"),
+    summary: yup.string().required("El resumen es requerido"),
   });
 
   if (isLoading) {
@@ -68,12 +67,14 @@ function EditService() {
           <Formik
             initialValues={{
               title: service.title,
+              subtitle: service.subtitle,
+              summary: service.summary,
             }}
             enableReinitialize={true}
             validationSchema={objectSchema}
             onSubmit={(values) => handleSubmit(values, content)}
           >
-            {({ errors, values, touched }) => (
+            {({ errors, values, touched, isValid, dirty }) => (
               <Form>
                 <Row className="text-end">
                   <Col className="service-create-buttons-top">
@@ -90,33 +91,17 @@ function EditService() {
                       text="Guardar"
                       color="primary"
                       size="medium"
-                      disabled={!values.title || !content || !!errors.title}
+                      disabled={!isValid || !dirty || !content}
                     />
                   </Col>
                 </Row>
-                <FormBt.Group className="mb-3">
-                  <TextInput
-                    label="Título"
-                    name="title"
-                    icon={MdTitle}
-                    placeholder="Título"
-                    isInvalid={!!errors.title && touched.title}
-                  />
-                </FormBt.Group>
-                <p
-                  className="text-center align-items-center"
-                  style={{ color: "grey", fontSize: 14.5, fontStyle: "italic" }}
-                >
-                  Para una mejor experiencia del editor trabaje en pantalla
-                  completa
-                  <MdOutlineFullscreen size={23} className="ms-1" />
-                </p>
-                <FormBt.Group className="mb-3">
-                  <EditorWys
-                    setContentEditor={setContent}
-                    initialContent={service.content}
-                  />
-                </FormBt.Group>
+                <ServiceForm
+                  errors={errors}
+                  values={values}
+                  touched={touched}
+                  setContent={setContent}
+                  initialContent={service.content}
+                />
               </Form>
             )}
           </Formik>

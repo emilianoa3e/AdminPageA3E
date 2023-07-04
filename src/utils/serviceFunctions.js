@@ -10,6 +10,8 @@ export const saveService = async (values, content, navigate) => {
       instance.defaults.baseURL + "/service/create-service",
       {
         title: values.title,
+        subtitle: values.subtitle,
+        summary: values.summary,
         content,
       }
     );
@@ -69,6 +71,8 @@ export const updateService = async (id, values, content, navigate) => {
       instance.defaults.baseURL + `/service/updateById-service/${id}`,
       {
         title: values.title,
+        subtitle: values.subtitle,
+        summary: values.summary,
         content,
       }
     );

@@ -15,6 +15,8 @@ function Services() {
     {
       _id: "",
       title: "",
+      subtitle: "",
+      summary: "",
       content: "",
     },
   ]);
