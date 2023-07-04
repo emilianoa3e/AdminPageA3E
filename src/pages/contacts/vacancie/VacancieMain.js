@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Col, Row, Container } from "react-bootstrap";
 import { getAllVacancies } from "../../../utils/vacanciesFunctions";
+import { columnsVacancie } from "../../../components/columnsTables/columnsVacancie";
 import SplashScreen from "../../../pages/utils/SplashScreen";
 import CustomButton from "../../../components/shared/CustomButton";
-import CustomTable from "../../../components/shared/CustomTable";
+import DynamicTable from "../../../components/shared/DinamicTable";
 
 function VacancieMain() {
   const navigate = useNavigate();
@@ -56,7 +57,8 @@ function VacancieMain() {
       <Col className="mt-1">
         <Row className="mt-4">
           <Col lg={12} className="mt-1 p-0 m-0">
-            <CustomTable data={vacancies} />
+            {/* <CustomTable data={vacancies} /> */}
+            <DynamicTable columns={columnsVacancie} data={vacancies} />
           </Col>
         </Row>
       </Col>
