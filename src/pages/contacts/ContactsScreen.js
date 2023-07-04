@@ -32,7 +32,7 @@ function ContactsScreen() {
               image="https://res.cloudinary.com/a3e-media/image/upload/v1687451758/del%20home/beca_v1snlk.jpg"
               title="Becarios"
               navigate={navigate}
-              route=""
+              route="/interns"
             />
           </Col>
           <Col lg={6} className="mb-4">
@@ -40,7 +40,7 @@ function ContactsScreen() {
               image="https://res.cloudinary.com/a3e-media/image/upload/v1687451942/del%20home/vancantes_u1llct.jpg"
               title="Vacantes"
               navigate={navigate}
-              route=""
+              route="/vacancies"
             />
           </Col>
         </Row>

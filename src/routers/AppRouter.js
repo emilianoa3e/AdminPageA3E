@@ -23,6 +23,8 @@ import RenewToken from "./RenewToken";
 import ContactsScreen from "../pages/contacts/ContactsScreen";
 import ContactsMain from "../pages/contacts/contact/ContactMain";
 import SaleMain from "../pages/contacts/sale/SaleMain";
+import InternMain from "../pages/contacts/intern/InternMain";
+import VacancieMain from "../pages/contacts/vacancie/VacancieMain";
 
 const AppRouter = () => {
   const { state, renewAuthToken } = useContext(AuthContext);
@@ -88,6 +90,12 @@ const AppRouter = () => {
             </Route>
             <Route exact path="/sales" element={<PrivateRoute />}>
               <Route exact path="/sales" element={<SaleMain />} />
+            </Route>
+            <Route exact path="/interns" element={<PrivateRoute />}>
+              <Route exact path="/interns" element={<InternMain />} />
+            </Route>
+            <Route exact path="/vacancies" element={<PrivateRoute />}>
+              <Route exact path="/vacancies" element={<VacancieMain />} />
             </Route>
             <Route exact path="/*" element={<Navigate to="/" />} />
           </Routes>

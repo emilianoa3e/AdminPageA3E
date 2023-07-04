@@ -1,10 +1,10 @@
 import axios from "axios";
 import instance from "../shared/Axios";
 
-export const getAllInterns = async () => {
+export const getAllVacancies = async () => {
   try {
     const response = await axios.get(
-      instance.defaults.baseURL + "/intern/getAll-interns"
+      instance.defaults.baseURL + "/vacancie/getAll-vacancies"
     );
 
     return response.data;

@@ -12,8 +12,6 @@ function CustomTable({ data }) {
     (header) => !excludedFields.includes(header)
   );
 
-  console.log("filteredHeaders", filteredHeaders);
-
   if (data.length === 0) {
     return (
       <NotFound text="No se encontraron datos" textSize={20} iconSize={100} />
