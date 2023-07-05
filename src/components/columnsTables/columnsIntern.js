@@ -68,7 +68,7 @@ export const columnsIntern = [
     label: "Información adicional",
     fontSize: 15,
     fontWeight: "bold",
-    minWidth: 170,
+    minWidth: 400,
     color: "white",
   },
   {

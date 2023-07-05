@@ -4,10 +4,12 @@ import { Col, Row, Card, Container } from "react-bootstrap";
 import { getAllClients, deleteClient } from "../../utils/clientsFunctions";
 import { ModalCreateClient } from "../../components/client/ModalCreateClient";
 import { showConfirmDialog } from "../../shared/plugins/alert";
-import CustomButton from "../../components/shared/CustomButton";
+import { MdAdd, MdDelete, MdArrowBackIosNew } from "react-icons/md";
+import { Button } from "@mui/material";
 import SplashScreen from "../utils/SplashScreen";
 import NotFound from "../../components/shared/NotFound";
 import "../../assets/css/pages/Clients.css";
+import Colors from "../../utils/Colors";
 
 function ClientsMain() {
   const navigate = useNavigate();
@@ -58,23 +60,29 @@ function ClientsMain() {
   return (
     <Container fluid>
       <Row className="mb-4">
-        <Col xs={12} md={10}>
+        <Col xs={12} md={7} lg={8}>
           <h1 className="client-title">Clientes</h1>
         </Col>
-        <Col xs={12} md={2} className="client-buttons">
-          <CustomButton
-            text="Regresar"
-            color="secondary"
-            size="medium"
+        <Col xs={12} md={5} lg={4} className="client-buttons">
+          <Button
+            size="large"
+            variant="contained"
+            startIcon={<MdArrowBackIosNew size={20} />}
+            style={{ backgroundColor: Colors.PalleteGrey }}
             onClick={() => navigate("/home")}
             className="me-2"
-          />
-          <CustomButton
-            text="Registrar cliente"
-            color="primary"
-            size="medium"
+          >
+            Regresar
+          </Button>
+          <Button
+            size="large"
+            variant="contained"
+            endIcon={<MdAdd size={20} />}
+            style={{ backgroundColor: Colors.PalletePrimary }}
             onClick={handleShow}
-          />
+          >
+            Registrar cliente
+          </Button>
         </Col>
       </Row>
       {clientsList.length !== 0 ? (
@@ -103,12 +111,18 @@ function ClientsMain() {
                   </Card.Title>
                   <Card.Footer className="client-card-footer">
                     <div className="d-flex justify-content-center mt-2">
-                      <CustomButton
-                        text="Eliminar"
-                        color="danger"
+                      <Button
                         size="small"
+                        variant="contained"
+                        endIcon={<MdDelete size={15} />}
+                        style={{
+                          fontSize: 12,
+                          backgroundColor: Colors.PalleteRed,
+                        }}
                         onClick={() => handleDelete(client._id)}
-                      />
+                      >
+                        Eliminar
+                      </Button>
                     </div>
                   </Card.Footer>
                 </Card.Body>

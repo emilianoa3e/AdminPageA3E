@@ -1,7 +1,9 @@
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { MdCloudUpload } from "react-icons/md";
-import CustomButton from "./CustomButton";
+import { Button } from "@mui/material";
+import { MdCheckCircleOutline, MdHighlightOff } from "react-icons/md";
+import Colors from "../../utils/Colors";
 import "../../assets/css/components/layouts/fileDropzoneGalery.css";
 
 const FileDropzone = ({
@@ -76,7 +78,9 @@ const FileDropzone = ({
     return (
       <>
         <div className={getDropzoneClass()} {...getRootProps()}>
-          {!uploadedFile && <MdCloudUpload size={50} color="#3B97D3" />}
+          {!uploadedFile && (
+            <MdCloudUpload size={50} color={Colors.PalletePrimary} />
+          )}
           <input {...getInputProps()} />
           {isDragAccept && <p>Suelta el archivo aquí...</p>}
           {isDragReject && <p>Formato de archivo no válido.</p>}
@@ -97,22 +101,26 @@ const FileDropzone = ({
             style={{ textAlign: "center", marginBottom: "10px" }}
           >
             <div className="col">
-              <CustomButton
-                text="Guardar"
-                type="button"
-                color="primary"
+              <Button
+                variant="contained"
                 size="medium"
+                endIcon={<MdCheckCircleOutline />}
                 onClick={() => onFileUpload(uploadedFile)}
-              />
+                style={{ fontSize: 12, backgroundColor: Colors.PalletePrimary }}
+              >
+                Guardar
+              </Button>
             </div>
             <div className="col">
-              <CustomButton
-                text="Cancelar"
-                type="button"
-                color="danger"
+              <Button
+                variant="contained"
                 size="medium"
+                endIcon={<MdHighlightOff />}
                 onClick={() => setUploadedFile(null)}
-              />
+                style={{ fontSize: 12, backgroundColor: Colors.PalleteRed }}
+              >
+                Cancelar
+              </Button>
             </div>
           </div>
         )}
@@ -124,7 +132,9 @@ const FileDropzone = ({
     return (
       <>
         <div className={getDropzoneClass()} {...getRootProps()}>
-          {!uploadedFile && <MdCloudUpload size={50} color="#3B97D3" />}
+          {!uploadedFile && (
+            <MdCloudUpload size={50} color={Colors.PalletePrimary} />
+          )}
           <input {...getInputProps()} />
           {isDragAccept && <p>Suelta el archivo aquí...</p>}
           {isDragReject && <p>Formato de archivo no válido.</p>}
@@ -145,13 +155,15 @@ const FileDropzone = ({
             style={{ textAlign: "center", marginBottom: "10px" }}
           >
             <div className="col">
-              <CustomButton
-                text="Cancelar"
-                type="button"
-                color="danger"
+              <Button
+                variant="contained"
                 size="medium"
+                endIcon={<MdHighlightOff />}
                 onClick={() => setUploadedFile(null)}
-              />
+                style={{ fontSize: 12, backgroundColor: Colors.PalleteRed }}
+              >
+                Cancelar
+              </Button>
             </div>
           </div>
         )}

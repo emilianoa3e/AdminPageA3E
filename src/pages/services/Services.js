@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Col, Row, Card, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { getAllServices, deleteService } from "../../utils/serviceFunctions";
-import CustomButton from "../../components/shared/CustomButton";
+import { MdAdd, MdMode, MdDelete } from "react-icons/md";
+import { Button } from "@mui/material";
 import { showConfirmDialog } from "../../shared/plugins/alert";
+import Colors from "../../utils/Colors";
 import SplashScreen from "../utils/SplashScreen";
 import NotFound from "../../components/shared/NotFound";
 import "../../assets/css/pages/Services.css";
@@ -55,16 +57,19 @@ function Services() {
   return (
     <Container fluid>
       <Row className="mb-4">
-        <Col xs={12} md={10}>
+        <Col xs={12} md={7} lg={8}>
           <h1 className="service-title">Servicios</h1>
         </Col>
-        <Col xs={12} md={2} className="service-buttons-top">
-          <CustomButton
-            text="Crear servicio"
-            color="primary"
-            size="medium"
+        <Col xs={12} md={5} lg={4} className="service-buttons-top">
+          <Button
+            size="large"
+            variant="contained"
+            endIcon={<MdAdd size={20} />}
+            style={{ fontSize: 13, backgroundColor: Colors.PalletePrimary }}
             onClick={() => navigate("/services/create-service")}
-          />
+          >
+            Crear servicio
+          </Button>
         </Col>
       </Row>
       {servicesList.length !== 0 ? (
@@ -85,22 +90,27 @@ function Services() {
                     {service.title}
                   </Card.Title>
                   <div className="d-flex justify-content-center">
-                    <CustomButton
-                      text="Editar"
+                    <Button
+                      size="small"
+                      variant="contained"
+                      endIcon={<MdMode size={15} />}
+                      style={{ fontSize: 12, backgroundColor: Colors.PalletePrimary }}
                       onClick={() =>
                         navigate(`/services/edit-service/${service._id}`)
                       }
+                      className="me-1"
+                    >
+                      Editar
+                    </Button>
+                    <Button
                       size="small"
-                      color="primary"
-                      className="me-2"
-                    />
-                    <CustomButton
-                      text="Eliminar"
+                      variant="contained"
+                      endIcon={<MdDelete size={15} />}
+                      style={{ fontSize: 12, backgroundColor: Colors.PalleteRed }}
                       onClick={() => handleDelete(service._id)}
-                      size="small"
-                      color="danger"
-                      className="me-2"
-                    />
+                    >
+                      Eliminar
+                    </Button>
                   </div>
                 </Card.Body>
               </Card>

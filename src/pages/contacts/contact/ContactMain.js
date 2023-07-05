@@ -1,18 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Card } from "react-bootstrap";
-import { MdWhatsapp, MdEmail, MdLocalPhone, MdFacebook } from "react-icons/md";
+import {
+  MdWhatsapp,
+  MdEmail,
+  MdLocalPhone,
+  MdFacebook,
+  MdArrowBackIosNew,
+  MdAdd,
+  MdMode,
+  MdDelete,
+} from "react-icons/md";
 import { BsLinkedin } from "react-icons/bs";
 import {
   getAllContacts,
   deleteContact,
 } from "../../../utils/contactsFunctions";
-import CustomButton from "../../../components/shared/CustomButton";
-import SplashScreen from "../../utils/SplashScreen";
-import NotFound from "../../../components/shared/NotFound";
 import { ModalCreateContact } from "../../../components/contact/ModalCreateContact";
 import { showConfirmDialog } from "../../../shared/plugins/alert";
 import { ModalEditContact } from "../../../components/contact/ModalEditContact";
+import { Button } from "@mui/material";
+import SplashScreen from "../../utils/SplashScreen";
+import NotFound from "../../../components/shared/NotFound";
+import Colors from "../../../utils/Colors";
 import "../../../assets/css/pages/ContactMain.css";
 
 function ContactsMain() {
@@ -74,23 +84,29 @@ function ContactsMain() {
   return (
     <Container fluid>
       <Row className="mb-4">
-        <Col xs={12} md={10}>
+        <Col xs={12} md={7} lg={8}>
           <h1 className="contact-title">Contactos</h1>
         </Col>
-        <Col xs={12} md={2} className="contact-buttons-top">
-          <CustomButton
-            text="Regresar"
-            color="secondary"
-            size="medium"
+        <Col xs={12} md={5} lg={4} className="contact-buttons-top">
+          <Button
+            size="large"
+            variant="contained"
+            startIcon={<MdArrowBackIosNew size={20} />}
+            style={{ backgroundColor: Colors.PalleteGrey }}
             onClick={() => navigate("/contacts-screen")}
             className="me-2"
-          />
-          <CustomButton
-            text="Registrar contacto"
-            color="primary"
-            size="medium"
+          >
+            Regresar
+          </Button>
+          <Button
+            size="large"
+            variant="contained"
+            endIcon={<MdAdd size={20} />}
+            style={{ backgroundColor: Colors.PalletePrimary }}
             onClick={() => handleShowCreate()}
-          />
+          >
+            Registrar contacto
+          </Button>
         </Col>
       </Row>
       {contactsList.length !== 0 ? (
@@ -107,32 +123,46 @@ function ContactsMain() {
               <Card style={{ border: "none" }}>
                 <Card.Body className="text-center">
                   {contact.type === "whatsapp" ? (
-                    <MdWhatsapp size={50} color="#25D366" />
+                    <MdWhatsapp size={50} color={Colors.PalleteWhatsapp} />
                   ) : contact.type === "email" ? (
-                    <MdEmail size={50} color="#00743B" />
+                    <MdEmail size={50} color={Colors.PalleteGreenA3E} />
                   ) : contact.type === "phone" ? (
-                    <MdLocalPhone size={50} color="#00743B" />
+                    <MdLocalPhone size={50} color={Colors.PalleteGreenA3E} />
                   ) : contact.type === "facebook" ? (
-                    <MdFacebook size={50} color="#4267B2" />
+                    <MdFacebook size={50} color={Colors.PalleteFacebook} />
                   ) : contact.type === "linkedin" ? (
-                    <BsLinkedin size={50} color="#0e76a8" />
+                    <BsLinkedin size={50} color={Colors.PalleteLinkedin} />
                   ) : null}
                   <Card.Title className="mt-3">{contact.contact}</Card.Title>
-                  <Card.Footer style={{ backgroundColor: "#fff" }}>
-                    <CustomButton
-                      className="mt-2 me-1"
-                      text="Editar"
+                  <Card.Footer style={{ backgroundColor: Colors.PalleteWhite }}>
+                    <Button
+                      size="small"
+                      variant="contained"
                       color="primary"
-                      size="small"
+                      endIcon={<MdMode size={15} />}
+                      style={{
+                        fontSize: 12,
+                        backgroundColor: Colors.PalletePrimary,
+                      }}
                       onClick={() => handleUpdate(contact._id)}
-                    />
-                    <CustomButton
-                      className="mt-2"
-                      text="Eliminar"
-                      color="danger"
+                      className="me-1 mb-1"
+                    >
+                      Editar
+                    </Button>
+                    <Button
                       size="small"
+                      variant="contained"
+                      color="error"
+                      endIcon={<MdDelete size={15} />}
+                      style={{
+                        fontSize: 12,
+                        backgroundColor: Colors.PalleteRed,
+                      }}
                       onClick={() => handleDelete(contact._id)}
-                    />
+                      className="mb-1"
+                    >
+                      Eliminar
+                    </Button>
                   </Card.Footer>
                 </Card.Body>
               </Card>

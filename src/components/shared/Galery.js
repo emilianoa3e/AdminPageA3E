@@ -16,6 +16,7 @@ import { showConfirmDialog } from "../../shared/plugins/alert";
 import FileDropzone from "./Dropzone";
 import SplashScreen from "../../pages/utils/SplashScreen";
 import NotFound from "./NotFound";
+import Colors from "../../utils/Colors";
 
 function Galery() {
   const [mediaList, setMediaList] = useState([
@@ -103,7 +104,7 @@ function Galery() {
                 style={{
                   cursor: "pointer",
                   fontSize: "1.5rem",
-                  color: "#3B97D3",
+                  color: Colors.PalletePrimary,
                 }}
               />
             </Col>
@@ -114,7 +115,7 @@ function Galery() {
                 style={{
                   cursor: "pointer",
                   fontSize: "1.5rem",
-                  color: "#3B97D3",
+                  color: Colors.PalletePrimary,
                 }}
               />
             </Col>
@@ -125,7 +126,7 @@ function Galery() {
                 style={{
                   cursor: "pointer",
                   fontSize: "1.5rem",
-                  color: "#3B97D3",
+                  color: Colors.PalletePrimary,
                 }}
               />
             </Col>
@@ -178,7 +179,7 @@ function Galery() {
                               style={{
                                 cursor: "pointer",
                                 fontSize: "1.5rem",
-                                color: "#F5462F",
+                                color: Colors.PalleteRed,
                               }}
                             />
                           </Col>

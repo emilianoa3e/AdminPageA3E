@@ -2,18 +2,24 @@ import React, { useState } from "react";
 import { Modal, Form as FormBt } from "react-bootstrap";
 import { Form, Formik } from "formik";
 import { TextInput } from "../shared/TextInput";
-import { MdTitle } from "react-icons/md";
+import { MdTitle, MdCheckCircleOutline } from "react-icons/md";
 import { showConfirmDialog } from "../../shared/plugins/alert";
 import { saveClient } from "../../utils/clientsFunctions";
+import { Button } from "@mui/material";
 import * as Yup from "yup";
 import FileDropzone from "../shared/Dropzone";
-import CustomButton from "../shared/CustomButton";
+import Colors from "../../utils/Colors";
 
 export const ModalCreateClient = ({ props, show, handleClose, getClients }) => {
   const [uploadedFile, setUploadedFile] = useState(null);
 
   const objectSchema = Yup.object({
-    name: Yup.string().required("El nombre es requerido"),
+    name: Yup.string()
+      .matches(
+        /^[0-9a-zA-ZáéíóúÁÉÍÓÚüïüëöñÑ ]+$/,
+        "El nombre no puede contener caracteres especiales"
+      )
+      .required("El nombre es requerido"),
   });
 
   const handleSubmit = (values, file) => {
@@ -70,15 +76,21 @@ export const ModalCreateClient = ({ props, show, handleClose, getClients }) => {
                 onContext="client"
               />
               <Modal.Footer>
-                <CustomButton
-                  className="mt-3"
+                <Button
                   type="submit"
-                  text="Guardar cliente"
-                  color="primary"
+                  variant="contained"
                   size="medium"
-                  disabled={!values.name || !uploadedFile}
-                  onClick={() => {}}
-                />
+                  style={
+                    !values.name || !!errors.name || !uploadedFile
+                      ? { backgroundColor: Colors.PalletePrimaryLight }
+                      : { backgroundColor: Colors.PalletePrimary }
+                  }
+                  endIcon={<MdCheckCircleOutline />}
+                  disabled={!values.name || !!errors.name || !uploadedFile}
+                  className="mt-3"
+                >
+                  Guardar cliente
+                </Button>
               </Modal.Footer>
             </Modal.Body>
           </Form>

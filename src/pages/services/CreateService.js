@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import { Form, Formik } from "formik";
-import * as yup from "yup";
 import { saveService } from "../../utils/serviceFunctions";
-import CustomButton from "../../components/shared/CustomButton";
-import Galery from "../../components/shared/Galery";
 import { showConfirmDialog } from "../../shared/plugins/alert";
-import "../../assets/css/pages/CreateEditService.css";
+import { Button } from "@mui/material";
+import { MdCheckCircleOutline, MdArrowBackIosNew } from "react-icons/md";
 import ServiceForm from "../../components/services/ServiceForm";
+import Galery from "../../components/shared/Galery";
+import * as yup from "yup";
+import "../../assets/css/pages/CreateEditService.css";
+import Colors from "../../utils/Colors";
 
 function CreateService() {
   const navigate = useNavigate();
@@ -55,21 +57,30 @@ function CreateService() {
               <Form>
                 <Row className="text-end">
                   <Col className="service-create-buttons-top">
-                    <CustomButton
-                      type="button"
-                      text="Cancelar"
-                      color="danger"
+                    <Button
+                      variant="contained"
                       size="medium"
+                      startIcon={<MdArrowBackIosNew />}
+                      style={{ backgroundColor: Colors.PalleteGrey }}
                       onClick={() => navigate("/services")}
                       className="me-2"
-                    />
-                    <CustomButton
-                      type="submit"
-                      text="Guardar"
-                      color="primary"
+                    >
+                      Regresar
+                    </Button>
+                    <Button
+                      variant="contained"
                       size="medium"
+                      endIcon={<MdCheckCircleOutline />}
+                      style={
+                        !isValid || !dirty || !content
+                          ? { backgroundColor: Colors.PalletePrimaryLight }
+                          : { backgroundColor: Colors.PalletePrimary }
+                      }
+                      type="submit"
                       disabled={!isValid || !dirty || !content}
-                    />
+                    >
+                      Guardar
+                    </Button>
                   </Col>
                 </Row>
                 <ServiceForm

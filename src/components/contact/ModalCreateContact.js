@@ -2,12 +2,13 @@ import React from "react";
 import { Modal, Form as FormBt } from "react-bootstrap";
 import { Form, Formik } from "formik";
 import { TextInput } from "../shared/TextInput";
-import { MdContacts } from "react-icons/md";
+import { MdContacts, MdCheckCircleOutline } from "react-icons/md";
 import { createContact } from "../../utils/contactsFunctions";
 import { showConfirmDialog } from "../../shared/plugins/alert";
-import * as Yup from "yup";
-import CustomButton from "../shared/CustomButton";
+import { Button } from "@mui/material";
 import { SelectInput } from "../shared/SelectInput";
+import * as Yup from "yup";
+import Colors from "../../utils/Colors";
 
 export const ModalCreateContact = ({
   props,
@@ -18,11 +19,11 @@ export const ModalCreateContact = ({
   const objectSchema = Yup.object({
     type: Yup.string().required("El tipo de contacto es requerido"),
     contact: Yup.string()
-    .matches(
-      /^[0-9a-zA-ZáéíóúÁÉÍÓÚüïüëöñÑ@. ]+$/,
-      "El contacto no puede contener caracteres especiales"
-    )
-    .required("El contacto es requerido"),
+      .matches(
+        /^[0-9a-zA-Z áéíóúÁÉÍÓÚüïüëöñÑ@._-]+$/,
+        "El contacto no puede contener caracteres especiales"
+      )
+      .required("El contacto es requerido"),
   });
 
   const options = [
@@ -94,20 +95,36 @@ export const ModalCreateContact = ({
                   className="text-muted mt-1"
                   style={{ fontSize: 11.5, fontStyle: "italic" }}
                 >
-                  Telefono o Whatsapp: 7771234567 | Email: ejemplo@dominio.com
-                  | Facebook | Linkedin
+                  Telefono o Whatsapp: 7771234567 | Email: ejemplo@dominio.com |
+                  Facebook | Linkedin
                 </p>
               </FormBt.Group>
               <Modal.Footer>
-                <CustomButton
-                  className="mt-3"
+                <Button
+                  variant="contained"
                   type="submit"
-                  text="Guardar cliente"
-                  color="primary"
                   size="medium"
-                  disabled={!values.type || !values.contact}
-                  onClick={() => {}}
-                />
+                  endIcon={<MdCheckCircleOutline />}
+                  style={
+                    !values.type ||
+                    !!errors.type ||
+                    !values.contact ||
+                    !!errors.contact
+                      ? {
+                          backgroundColor: Colors.PalletePrimaryLight,
+                        }
+                      : { backgroundColor: Colors.PalletePrimary }
+                  }
+                  disabled={
+                    !values.type ||
+                    !!errors.type ||
+                    !values.contact ||
+                    !!errors.contact
+                  }
+                  className="mt-3"
+                >
+                  Guardar contacto
+                </Button>
               </Modal.Footer>
             </Modal.Body>
           </Form>

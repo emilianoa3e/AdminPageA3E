@@ -6,11 +6,13 @@ import {
   changeVacancieStatus,
   deleteVacancie,
 } from "../../../utils/vacanciesFunctions";
+import { Button } from "@mui/material";
 import { columnsVacancie } from "../../../components/columnsTables/columnsVacancie";
 import { showConfirmDialog } from "../../../shared/plugins/alert";
+import { MdArrowBackIosNew } from "react-icons/md";
 import SplashScreen from "../../../pages/utils/SplashScreen";
-import CustomButton from "../../../components/shared/CustomButton";
 import DynamicTable from "../../../components/shared/DynamicTable";
+import Colors from "../../../utils/Colors";
 
 function VacancieMain() {
   const navigate = useNavigate();
@@ -42,7 +44,7 @@ function VacancieMain() {
 
   const handleChangeStatus = (id) => {
     showConfirmDialog(
-      "¿Estás seguro de cambiar el status de la vacante a completado?",
+      "¿Quieres cambiar el status de la vacante a completado?",
       "ESTA ACCIÓN NO SE PUEDE DESHACER.",
       "Sí, cambiar",
       "Cancelar",
@@ -57,7 +59,7 @@ function VacancieMain() {
   const handleDelete = (id) => {
     showConfirmDialog(
       "¿Estás seguro de eliminar la vacante?",
-      "Se eliminará la vacante",
+      "Se eliminará permanentemente.",
       "Sí, eliminar",
       "Cancelar",
       () => {
@@ -74,31 +76,30 @@ function VacancieMain() {
 
   return (
     <Container fluid>
-      <Row className="mb-4">
-        <Col className="mt-1">
-          <h1>Vacantes</h1>
-        </Col>
-        <Col className="d-flex justify-content-end">
-          <CustomButton
-            text="Regresar"
-            color="secondary"
-            size="medium"
+      <Row>
+        <div style={{ width: "230px" }}>
+          <Button
+            size="large"
+            variant="contained"
+            startIcon={<MdArrowBackIosNew size={20} />}
+            style={{ backgroundColor: Colors.PalleteGrey }}
             onClick={() => navigate("/contacts-screen")}
+          >
+            Regresar
+          </Button>
+        </div>
+      </Row>
+      <Row className="mt-4">
+        <Col lg={12} className="mt-1 p-0 m-0">
+          <DynamicTable
+            titleTable="Vacantes"
+            columns={columnsVacancie}
+            data={vacancies}
+            handleChangeStatus={handleChangeStatus}
+            handleDelete={handleDelete}
           />
         </Col>
       </Row>
-      <Col className="mt-1">
-        <Row className="mt-4">
-          <Col lg={12} className="mt-1 p-0 m-0">
-            <DynamicTable
-              columns={columnsVacancie}
-              data={vacancies}
-              handleChangeStatus={handleChangeStatus}
-              handleDelete={handleDelete}
-            />
-          </Col>
-        </Row>
-      </Col>
     </Container>
   );
 }

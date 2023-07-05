@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Modal, Form as FormBt } from "react-bootstrap";
 import { Form, Formik } from "formik";
 import { TextInput } from "../shared/TextInput";
-import { MdContacts } from "react-icons/md";
-import { updateContact } from "../../utils/contactsFunctions";
+import { MdContacts, MdCheckCircleOutline } from "react-icons/md";
+import { updateContact, getContactById } from "../../utils/contactsFunctions";
 import { showConfirmDialog } from "../../shared/plugins/alert";
-import { getContactById } from "../../utils/contactsFunctions";
-import * as Yup from "yup";
-import CustomButton from "../shared/CustomButton";
+import { Button } from "@mui/material";
 import { SelectInput } from "../shared/SelectInput";
+import Colors from "../../utils/Colors";
 import SplashScreen from "../../pages/utils/SplashScreen";
+import * as Yup from "yup";
 
 export const ModalEditContact = ({
   props,
@@ -42,7 +42,7 @@ export const ModalEditContact = ({
     type: Yup.string().required("El tipo de contacto es requerido"),
     contact: Yup.string()
       .matches(
-        /^[0-9a-zA-ZáéíóúÁÉÍÓÚüïüëöñÑ@.\-_ ]+$/,
+        /^[0-9a-zA-Z áéíóúÁÉÍÓÚüïüëöñÑ@._-]+$/,
         "El contacto no puede contener caracteres especiales"
       )
       .required("El contacto es requerido"),
@@ -128,15 +128,31 @@ export const ModalEditContact = ({
                     </p>
                   </FormBt.Group>
                   <Modal.Footer>
-                    <CustomButton
-                      className="mt-3"
+                    <Button
+                      variant="contained"
                       type="submit"
-                      text="Guardar cliente"
-                      color="primary"
                       size="medium"
-                      disabled={!values.type || !values.contact}
-                      onClick={() => {}}
-                    />
+                      endIcon={<MdCheckCircleOutline />}
+                      style={
+                        !values.type ||
+                        !!errors.type ||
+                        !values.contact ||
+                        !!errors.contact
+                          ? {
+                              backgroundColor: Colors.PalletePrimaryLight,
+                            }
+                          : { backgroundColor: Colors.PalletePrimary }
+                      }
+                      disabled={
+                        !values.type ||
+                        !!errors.type ||
+                        !values.contact ||
+                        !!errors.contact
+                      }
+                      className="mt-3"
+                    >
+                      Guardar contacto
+                    </Button>
                   </Modal.Footer>
                 </Modal.Body>
               </Form>

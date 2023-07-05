@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Form as FormBt } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { Formik, Form } from "formik";
-import * as yup from "yup";
 import { useNavigate, useParams } from "react-router-dom";
 import { updateService, getServiceById } from "../../utils/serviceFunctions";
-import CustomButton from "../../components/shared/CustomButton";
-import Galery from "../../components/shared/Galery";
 import { showConfirmDialog } from "../../shared/plugins/alert";
+import { Button } from "@mui/material";
+import { MdCheckCircleOutline, MdHighlightOff } from "react-icons/md";
+import Galery from "../../components/shared/Galery";
 import SplashScreen from "../utils/SplashScreen";
-import "../../assets/css/pages/CreateEditService.css";
 import ServiceForm from "../../components/services/ServiceForm";
+import Colors from "../../utils/Colors";
+import * as yup from "yup";
+import "../../assets/css/pages/CreateEditService.css";
 
 function EditService() {
   const { id } = useParams();
@@ -74,25 +76,34 @@ function EditService() {
             validationSchema={objectSchema}
             onSubmit={(values) => handleSubmit(values, content)}
           >
-            {({ errors, values, touched, isValid, dirty }) => (
+            {({ errors, values, touched, isValid }) => (
               <Form>
                 <Row className="text-end">
                   <Col className="service-create-buttons-top">
-                    <CustomButton
-                      type="button"
-                      text="Cancelar"
-                      color="danger"
+                    <Button
+                      variant="contained"
                       size="medium"
+                      endIcon={<MdHighlightOff />}
+                      style={{ backgroundColor: Colors.PalleteRed }}
                       onClick={() => navigate("/services")}
                       className="me-2"
-                    />
-                    <CustomButton
-                      type="submit"
-                      text="Guardar"
-                      color="primary"
+                    >
+                      Cancelar
+                    </Button>
+                    <Button
+                      variant="contained"
                       size="medium"
-                      disabled={!isValid || !dirty || !content}
-                    />
+                      endIcon={<MdCheckCircleOutline />}
+                      style={
+                        !isValid || !content
+                          ? { backgroundColor: Colors.PalletePrimaryLight }
+                          : { backgroundColor: Colors.PalletePrimary }
+                      }
+                      type="submit"
+                      disabled={!isValid || !content}
+                    >
+                      Guardar
+                    </Button>
                   </Col>
                 </Row>
                 <ServiceForm
