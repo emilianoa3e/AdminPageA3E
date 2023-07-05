@@ -9,7 +9,7 @@ import '../../assets/css/components/layouts/customDropdown.css'
 function CustomDropdown() {
     const navigate = useNavigate();
     const {logout, authState} = useContext(AuthContext)
-
+  
     const handleLogout = ()=>{
         logout()
     }
@@ -27,7 +27,7 @@ function CustomDropdown() {
               <Dropdown.Toggle className="d-flex align-items-center dropdown-link text-left">
                 <div className="profile-info">
                   <MdAccountCircle className="me-1 ms-0" size={25} />
-                  {/* {authState.fullName} */}
+                  {authState.fullName}
                 </div>
                 <MdArrowDropDown color="ccc" size="2em" />
               </Dropdown.Toggle>
