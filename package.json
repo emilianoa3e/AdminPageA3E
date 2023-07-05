@@ -28,6 +28,7 @@
     "sweetalert2": "^11.7.12",
     "tinymce": "^6.4.2",
     "web-vitals": "^2.1.4",
+    "yarn": "^1.22.19",
     "yup": "^1.2.0"
   },
   "scripts": {

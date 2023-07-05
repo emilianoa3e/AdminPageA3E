@@ -29,6 +29,7 @@ import VacancieMain from "../pages/contacts/vacancie/VacancieMain";
 const AppRouter = () => {
   const { state, renewAuthToken } = useContext(AuthContext);
   const { isLogged, isLoading } = state;
+  const {id, fullName, email, role} = state
 
   //hace una llamada al método para preguntar por el token, almacenado en LocalStorage
   useEffect(() => {
@@ -38,7 +39,7 @@ const AppRouter = () => {
   if (isLoading) {
     return <Loader />;
   }
-
+  console.log()
   return (
     <BrowserRouter>
       {isLogged ? (
