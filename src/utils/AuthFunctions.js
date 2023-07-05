@@ -61,17 +61,25 @@ export const renewToken = async (dispatch) => {
       if (resp.data) {
         const data = resp.data;
         const token = data.token;
-        const fullname = data.fullname;
-        const id = data.id;
-        const email = data.email;
-        const role = data.role;
+        const fullName = data.data.name + " " + data.data.lastname;
+        const id = data.data.id;
+        const email = data.data.email;
+        const role = data.data.role;
+
+        if (role !== "admin") {
+          localStorage.removeItem("token");
+          dispatch({
+            type: "LOGOUT",
+          });
+          return;
+        }
 
         localStorage.setItem("token", token);
 
         dispatch({
           type: "LOGIN",
           payload: {
-            fullname,
+            fullName,
             id,
             email,
             role,
