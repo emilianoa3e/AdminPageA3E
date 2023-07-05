@@ -46,9 +46,7 @@ function BannerMain() {
       "Cancelar",
       () => {
         updateStatus(id).then(() => {
-          getAllBanners().then((updatedList) => {
-            setBannerList(updatedList.banners);
-          });
+          getBanners();
         });
       }
     );
@@ -62,9 +60,7 @@ function BannerMain() {
       "Cancelar",
       () => {
         deleteBanner(id).then(() => {
-          getAllBanners().then((updatedList) => {
-            setBannerList(updatedList.banners);
-          });
+          getBanners();
         });
       }
     );

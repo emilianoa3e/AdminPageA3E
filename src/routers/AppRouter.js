@@ -63,11 +63,27 @@ const AppRouter = () => {
             <Route exact path="/services" element={<PrivateRoute />}>
               <Route exact path="/services" element={<Services />} />
             </Route>
-            <Route exact path="/create-service" element={<PrivateRoute />}>
-              <Route exact path="/create-service" element={<CreateService />} />
+            <Route
+              exact
+              path="/services/create-service"
+              element={<PrivateRoute />}
+            >
+              <Route
+                exact
+                path="/services/create-service"
+                element={<CreateService />}
+              />
             </Route>
-            <Route exact path="/services/:id" element={<PrivateRoute />}>
-              <Route exact path="/services/:id" element={<EditService />} />
+            <Route
+              exact
+              path="/services/edit-service/:id"
+              element={<PrivateRoute />}
+            >
+              <Route
+                exact
+                path="/services/edit-service/:id"
+                element={<EditService />}
+              />
             </Route>
             <Route exact path="/us" element={<PrivateRoute />}>
               <Route exact path="/us" element={<OurCompany />} />
@@ -85,17 +101,49 @@ const AppRouter = () => {
                 element={<ContactsScreen />}
               />
             </Route>
-            <Route exact path="/contacts" element={<PrivateRoute />}>
-              <Route exact path="/contacts" element={<ContactsMain />} />
+            <Route
+              exact
+              path="/contacts-screen/contacts"
+              element={<PrivateRoute />}
+            >
+              <Route
+                exact
+                path="/contacts-screen/contacts"
+                element={<ContactsMain />}
+              />
             </Route>
-            <Route exact path="/sales" element={<PrivateRoute />}>
-              <Route exact path="/sales" element={<SaleMain />} />
+            <Route
+              exact
+              path="/contacts-screen/sales"
+              element={<PrivateRoute />}
+            >
+              <Route
+                exact
+                path="/contacts-screen/sales"
+                element={<SaleMain />}
+              />
             </Route>
-            <Route exact path="/interns" element={<PrivateRoute />}>
-              <Route exact path="/interns" element={<InternMain />} />
+            <Route
+              exact
+              path="/contacts-screen/interns"
+              element={<PrivateRoute />}
+            >
+              <Route
+                exact
+                path="/contacts-screen/interns"
+                element={<InternMain />}
+              />
             </Route>
-            <Route exact path="/vacancies" element={<PrivateRoute />}>
-              <Route exact path="/vacancies" element={<VacancieMain />} />
+            <Route
+              exact
+              path="/contacts-screen/vacancies"
+              element={<PrivateRoute />}
+            >
+              <Route
+                exact
+                path="/contacts-screen/vacancies"
+                element={<VacancieMain />}
+              />
             </Route>
             <Route exact path="/*" element={<Navigate to="/" />} />
           </Routes>

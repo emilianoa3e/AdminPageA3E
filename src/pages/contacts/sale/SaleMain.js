@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Col, Row, Container } from "react-bootstrap";
 import { getAllSales } from "../../../utils/salesFunctions";
+import { columnsSale } from "../../../components/columnsTables/columnsSale";
 import SplashScreen from "../../../pages/utils/SplashScreen";
 import CustomButton from "../../../components/shared/CustomButton";
-import CustomTable from "../../../components/shared/CustomTable";
+import DynamicTable from "../../../components/shared/DynamicTable";
 
 function SaleMain() {
   const navigate = useNavigate();
@@ -54,7 +55,7 @@ function SaleMain() {
       <Col className="mt-1">
         <Row className="mt-4">
           <Col lg={12} className="mt-1">
-            <CustomTable data={sales} />
+            <DynamicTable columns={columnsSale} data={sales} />
           </Col>
         </Row>
       </Col>

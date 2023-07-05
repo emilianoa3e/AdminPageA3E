@@ -11,12 +11,19 @@ import {
   Button,
 } from "@mui/material";
 import { IoMdEye } from "react-icons/io";
+import { MdCheckCircleOutline, MdDelete } from "react-icons/md";
 
-function DynamicTable({ columns, data }) {
+function DynamicTable({ columns, data, handleChangeStatus, handleDelete }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [showCompleted, setShowCompleted] = useState(false);
 
   const reversedData = [...data].reverse();
+
+  const completedData = reversedData.filter((row) => row.status === true);
+  const notCompletedData = reversedData.filter((row) => row.status !== true);
+
+  const filteredData = showCompleted ? completedData : notCompletedData;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -27,9 +34,29 @@ function DynamicTable({ columns, data }) {
     setPage(0);
   };
 
+  const handleToggleCompleted = () => {
+    setShowCompleted(!showCompleted);
+    setPage(0);
+  };
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{ maxHeight: 350 }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "end",
+        }}
+      >
+        <Button
+          className="m-2"
+          variant="outlined"
+          color="error"
+          onClick={handleToggleCompleted}
+        >
+          {showCompleted ? "Mostrar Todos" : "Mostrar Completados"}
+        </Button>
+      </div>
+      <TableContainer sx={{ maxHeight: "75vh" }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -41,7 +68,7 @@ function DynamicTable({ columns, data }) {
                     minWidth: column.minWidth,
                     fontSize: column.fontSize,
                     fontWeight: column.fontWeight,
-                    backgroundColor: "#00743B",
+                    backgroundColor: "#007",
                     color: column.color,
                   }}
                 >
@@ -51,11 +78,11 @@ function DynamicTable({ columns, data }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {reversedData
+            {filteredData
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow hover tabIndex={-1} key={row.code}>
+                  <TableRow hover tabIndex={-1} key={row._id}>
                     {columns.map((column) => {
                       if (column.id === "curriculum") {
                         return (
@@ -76,7 +103,27 @@ function DynamicTable({ columns, data }) {
                       if (column.id === "actions") {
                         return (
                           <TableCell key={column.id} align={column.align}>
-                            <button>hola</button>
+                            {showCompleted ? (
+                              <Button
+                                variant="contained"
+                                color="error"
+                                style={{ fontSize: 10 }}
+                                endIcon={<MdDelete />}
+                                onClick={() => handleDelete(row._id)}
+                              >
+                                Eliminar
+                              </Button>
+                            ) : (
+                              <Button
+                                variant="contained"
+                                color="success"
+                                style={{ fontSize: 10 }}
+                                endIcon={<MdCheckCircleOutline />}
+                                onClick={() => handleChangeStatus(row._id)}
+                              >
+                                Marcar como completada
+                              </Button>
+                            )}
                           </TableCell>
                         );
                       }
@@ -96,9 +143,9 @@ function DynamicTable({ columns, data }) {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[5, 10, 20, 50]}
+        rowsPerPageOptions={[5, 10, 20, 30]}
         component="div"
-        count={reversedData.length}
+        count={filteredData.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

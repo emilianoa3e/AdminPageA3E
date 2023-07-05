@@ -14,7 +14,7 @@ function ContactsScreen() {
               image="https://res.cloudinary.com/a3e-media/image/upload/v1687451445/del%20home/banner-contactos_s5wgmf.jpg"
               title="Medios de contactos"
               navigate={navigate}
-              route="/contacts"
+              route="/contacts-screen/contacts"
             />
           </Col>
           <Col lg={6}>
@@ -22,7 +22,7 @@ function ContactsScreen() {
               image="https://res.cloudinary.com/a3e-media/image/upload/v1687534600/del%20home/ventas_xddemo.jpg"
               title="Ventas"
               navigate={navigate}
-              route="/sales"
+              route="/contacts-screen/sales"
             />
           </Col>
         </Row>
@@ -32,7 +32,7 @@ function ContactsScreen() {
               image="https://res.cloudinary.com/a3e-media/image/upload/v1687451758/del%20home/beca_v1snlk.jpg"
               title="Becarios"
               navigate={navigate}
-              route="/interns"
+              route="/contacts-screen/interns"
             />
           </Col>
           <Col lg={6} className="mb-4">
@@ -40,7 +40,7 @@ function ContactsScreen() {
               image="https://res.cloudinary.com/a3e-media/image/upload/v1687451942/del%20home/vancantes_u1llct.jpg"
               title="Vacantes"
               navigate={navigate}
-              route="/vacancies"
+              route="/contacts-screen/vacancies"
             />
           </Col>
         </Row>

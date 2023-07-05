@@ -63,7 +63,7 @@ function Services() {
             text="Crear servicio"
             color="primary"
             size="medium"
-            onClick={() => navigate("/create-service")}
+            onClick={() => navigate("/services/create-service")}
           />
         </Col>
       </Row>
@@ -87,7 +87,9 @@ function Services() {
                   <div className="d-flex justify-content-center">
                     <CustomButton
                       text="Editar"
-                      onClick={() => navigate(`/services/${service._id}`)}
+                      onClick={() =>
+                        navigate(`/services/edit-service/${service._id}`)
+                      }
                       size="small"
                       color="primary"
                       className="me-2"
