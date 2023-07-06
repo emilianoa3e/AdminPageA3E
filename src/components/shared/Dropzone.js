@@ -117,7 +117,7 @@ const FileDropzone = ({
                 size="medium"
                 endIcon={<MdHighlightOff />}
                 onClick={() => setUploadedFile(null)}
-                style={{ fontSize: 12, backgroundColor: Colors.PalleteRed }}
+                style={{ fontSize: 12, backgroundColor: Colors.PalleteDanger }}
               >
                 Cancelar
               </Button>
@@ -160,7 +160,7 @@ const FileDropzone = ({
                 size="medium"
                 endIcon={<MdHighlightOff />}
                 onClick={() => setUploadedFile(null)}
-                style={{ fontSize: 12, backgroundColor: Colors.PalleteRed }}
+                style={{ fontSize: 12, backgroundColor: Colors.PalleteDanger }}
               >
                 Cancelar
               </Button>

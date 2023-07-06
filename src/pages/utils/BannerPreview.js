@@ -21,21 +21,38 @@ function BannerPreview({ title, description, image, link, onContext }) {
       );
     } else {
       return (
-        <Carousel style={{ margin: 0, padding: 0 }}>
+        <Carousel
+          controls={false}
+          style={{ margin: 0, padding: 0 }}
+          className="carousel"
+        >
           <Carousel.Item>
             <img
               className="d-block w-100"
               src={image}
               alt={title}
-              height={"200px"}
               style={{ objectFit: "cover" }}
             />
-            <Carousel.Caption>
-              <h3>{title}</h3>
-              <p>{description}</p>
+            <Carousel.Caption
+              className="text-start w-100 h-50"
+              style={{ position: "absolute", left: 0 }}
+            >
               {link ? (
-                <a href={link} target="_blank" className="btn btn-success">
-                  Ver más
+                <a
+                  href={link}
+                  target="_blank"
+                  className="carousel-btn btn"
+                  style={{
+                    position: "relative",
+                    top: 10,
+                    left: 50,
+                    backgroundColor: "#00743B",
+                    color: "white",
+                    padding: "0.6% 4% 0.6% 4%",
+                    borderRadius: "0px 20px 20px 20px",
+                  }}
+                >
+                  VER MÁS
                 </a>
               ) : (
                 ""

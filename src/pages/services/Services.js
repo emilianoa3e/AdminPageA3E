@@ -106,7 +106,7 @@ function Services() {
                       size="small"
                       variant="contained"
                       endIcon={<MdDelete size={15} />}
-                      style={{ fontSize: 12, backgroundColor: Colors.PalleteRed }}
+                      style={{ fontSize: 12, backgroundColor: Colors.PalleteDanger }}
                       onClick={() => handleDelete(service._id)}
                     >
                       Eliminar

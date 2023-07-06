@@ -39,7 +39,7 @@ function Login() {
         </h1>
         <div className="row">
           <div className="col-12 col-md-6">
-            <h1 className={`${styles.title} mb-2`}>Iniciar sesión</h1>
+            <h2 className={`${styles.title} mb-2`}>Iniciar sesión</h2>
             <Formik
               initialValues={{
                 email: "",

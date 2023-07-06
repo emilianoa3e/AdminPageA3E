@@ -7,11 +7,13 @@ import {
   deleteBanner,
 } from "../../utils/bannersFunctions";
 import { showConfirmDialog } from "../../shared/plugins/alert";
+import { MdAdd, MdArrowBackIosNew } from "react-icons/md";
+import { Button } from "@mui/material";
+import { columnsBanner } from "../../components/columnsTables/columnsBanner";
+import Colors from "../../utils/Colors";
 import SplashScreen from "../utils/SplashScreen";
-import CustomButton from "../../components/shared/CustomButton";
-import BannerPreview from "../utils/BannerPreview";
-import NotFound from "../../components/shared/NotFound";
 import "../../assets/css/pages/BannersMain.css";
+import DynamicTable from "../../components/shared/DynamicTable";
 
 function BannerMain() {
   const navigate = useNavigate();
@@ -38,7 +40,7 @@ function BannerMain() {
     getBanners();
   }, []);
 
-  const handleStatus = (id) => {
+  const handleChangeStatus = (id) => {
     showConfirmDialog(
       "¿Estás seguro de cambiar el status del banner?",
       "Se cambiará el status del banner",
@@ -73,91 +75,43 @@ function BannerMain() {
   return (
     <Container fluid>
       <Row className="mb-4">
-        <Col xs={12} md={8} lg={10}>
-          <h1 className="title">Banners</h1>
-        </Col>
-        <Col xs={12} md={4} lg={2} className="buttons-top">
-          <CustomButton
-            text="Regresar"
-            color="secondary"
-            size="medium"
+        <Col className="banner-main-buttons-top">
+          <Button
+            size="large"
+            variant="contained"
+            startIcon={<MdArrowBackIosNew />}
+            style={{ backgroundColor: Colors.PalleteGrey }}
             onClick={() => navigate("/home")}
             className="me-2"
-          />
-          <CustomButton
-            text="Crear banner"
-            color="primary"
-            size="medium"
+          >
+            Regresar
+          </Button>
+          <Button
+            size="large"
+            variant="contained"
+            endIcon={<MdAdd />}
+            style={{ backgroundColor: Colors.PalletePrimary }}
             onClick={() => {
               navigate("/create-banner");
             }}
+          >
+            Crear banner
+          </Button>
+        </Col>
+      </Row>
+      <Row className="mt-4">
+        <Col lg={12} className="mt-1 p-0 m-0">
+          <DynamicTable
+            titleTable="Banners"
+            columns={columnsBanner}
+            data={bannerList}
+            handleChangeStatus={handleChangeStatus}
+            handleDelete={handleDelete}
+            showFilter="banner"
+            navigate={navigate}
           />
         </Col>
       </Row>
-      <Col className="mt-5">
-        {bannerList.length !== 0 ? (
-          <Row>
-            {bannerList.map((banner) => (
-              <Row key={banner._id} className="mb-4">
-                <Col sm={12} lg={10}>
-                  <BannerPreview
-                    title={banner.title}
-                    description={banner.description}
-                    image={banner.image}
-                    link={banner.link}
-                    onContext="bannersMain"
-                  />
-                </Col>
-                <Col
-                  sm={12}
-                  lg={2}
-                  className="d-flex align-items-center justify-content-center"
-                >
-                  <Row className="justify-content-center mt-2">
-                    <CustomButton
-                      text="Editar"
-                      color="primary"
-                      size="medium"
-                      onClick={() => navigate(`/banners/${banner._id}`)}
-                      className="mb-2 col-8"
-                    />
-                    <CustomButton
-                      text="Eliminar"
-                      color="danger"
-                      size="medium"
-                      onClick={() => handleDelete(banner._id)}
-                      className="mb-2 col-8"
-                    />
-                    {banner.status ? (
-                      <CustomButton
-                        text="Desactivar"
-                        color="secondary"
-                        size="medium"
-                        onClick={() => handleStatus(banner._id)}
-                        className="mb-2 col-8"
-                      />
-                    ) : (
-                      <CustomButton
-                        text="Activar"
-                        color="success"
-                        size="medium"
-                        onClick={() => handleStatus(banner._id)}
-                        className="mb-2 col-8"
-                      />
-                    )}
-                  </Row>
-                </Col>
-              </Row>
-            ))}
-          </Row>
-        ) : (
-          <NotFound
-            text="No hay banners registrados"
-            textSize={30}
-            iconSize={150}
-          />
-        )}
-      </Col>
     </Container>
   );
 }

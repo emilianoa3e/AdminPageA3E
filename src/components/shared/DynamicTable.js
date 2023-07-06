@@ -11,7 +11,13 @@ import {
   Button,
 } from "@mui/material";
 import { IoMdEye } from "react-icons/io";
-import { MdCheckCircleOutline, MdHighlightOff, MdDelete } from "react-icons/md";
+import {
+  MdCheckCircleOutline,
+  MdHighlightOff,
+  MdDelete,
+  MdMode,
+  MdLink,
+} from "react-icons/md";
 import Colors from "../../utils/Colors";
 
 function DynamicTable({
@@ -20,6 +26,8 @@ function DynamicTable({
   data,
   handleChangeStatus,
   handleDelete,
+  showFilter,
+  navigate,
 }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -62,17 +70,31 @@ function DynamicTable({
         >
           {titleTable}
         </h2>
-        <Button
-          className="m-2"
-          variant="outlined"
-          color="secondary"
-          onClick={handleToggleCompleted}
-          endIcon={
-            showCompleted ? <MdHighlightOff /> : <MdCheckCircleOutline />
-          }
-        >
-          {showCompleted ? "Mostrar No Completados" : "Mostrar Completados"}
-        </Button>
+        {showFilter === "banner" ? (
+          <Button
+            className="m-2"
+            variant="outlined"
+            color="secondary"
+            onClick={handleToggleCompleted}
+            endIcon={
+              showCompleted ? <MdCheckCircleOutline /> : <MdHighlightOff />
+            }
+          >
+            {showCompleted ? "Mostrar Activados" : "Mostrar No Activados"}
+          </Button>
+        ) : (
+          <Button
+            className="m-2"
+            variant="outlined"
+            color="secondary"
+            onClick={handleToggleCompleted}
+            endIcon={
+              showCompleted ? <MdHighlightOff /> : <MdCheckCircleOutline />
+            }
+          >
+            {showCompleted ? "Mostrar No Completados" : "Mostrar Completados"}
+          </Button>
+        )}
       </div>
       <TableContainer sx={{ maxHeight: "75vh" }}>
         <Table stickyHeader aria-label="sticky table">
@@ -108,20 +130,52 @@ function DynamicTable({
                     key={row._id}
                   >
                     {columns.map((column) => {
-                      if (column.id === "curriculum") {
+                      if (column.id === "image") {
+                        return (
+                          <TableCell key={column.id} align={column.align}>
+                            <img
+                              src={row.image}
+                              alt={row.title}
+                              style={{
+                                width: 200,
+                                height: 80,
+                                borderRadius: 5,
+                              }}
+                            />
+                          </TableCell>
+                        );
+                      }
+                      if (column.id === "curriculum" || column.id === "link") {
                         return (
                           <TableCell key={column.id} align={column.align}>
                             <Button
+                              title={
+                                column.id === "curriculum"
+                                  ? row.curriculum
+                                  : row.link
+                              }
                               variant="contained"
-                              href={row.curriculum}
+                              href={
+                                column.id === "curriculum"
+                                  ? row.curriculum
+                                  : row.link
+                              }
                               target="_blank"
                               style={{
                                 fontSize: 10,
                                 backgroundColor: Colors.PalletePrimary,
                               }}
-                              endIcon={<IoMdEye />}
+                              endIcon={
+                                column.id === "curriculum" ? (
+                                  <IoMdEye />
+                                ) : (
+                                  <MdLink />
+                                )
+                              }
                             >
-                              Visualizar
+                              {column.id === "curriculum"
+                                ? "Visualizar"
+                                : "Ir al link"}
                             </Button>
                           </TableCell>
                         );
@@ -132,8 +186,10 @@ function DynamicTable({
                             {showCompleted ? (
                               <Button
                                 variant="contained"
-                                color="error"
-                                style={{ fontSize: 10 }}
+                                style={{
+                                  fontSize: 10,
+                                  backgroundColor: Colors.PalleteDanger,
+                                }}
                                 endIcon={<MdDelete />}
                                 onClick={() => handleDelete(row._id)}
                               >
@@ -142,12 +198,71 @@ function DynamicTable({
                             ) : (
                               <Button
                                 variant="contained"
-                                color="success"
-                                style={{ fontSize: 10 }}
+                                style={{
+                                  fontSize: 10,
+                                  backgroundColor: Colors.PalleteSuccess,
+                                }}
                                 endIcon={<MdCheckCircleOutline />}
                                 onClick={() => handleChangeStatus(row._id)}
                               >
                                 Marcar como completada
+                              </Button>
+                            )}
+                          </TableCell>
+                        );
+                      }
+                      if (column.id === "actions banner") {
+                        return (
+                          <TableCell key={column.id} align={column.align}>
+                            <Button
+                              variant="contained"
+                              style={{
+                                fontSize: 10,
+                                backgroundColor: Colors.PalletePrimary,
+                              }}
+                              endIcon={<MdMode />}
+                              onClick={() => navigate(`/banners/${row._id}`)}
+                              className="m-1"
+                            >
+                              Editar
+                            </Button>
+                            <Button
+                              variant="contained"
+                              style={{
+                                fontSize: 10,
+                                backgroundColor: Colors.PalleteDanger,
+                              }}
+                              endIcon={<MdDelete />}
+                              onClick={() => handleDelete(row._id)}
+                              className="m-1"
+                            >
+                              Eliminar
+                            </Button>
+                            {row.status ? (
+                              <Button
+                                variant="contained"
+                                style={{
+                                  fontSize: 10,
+                                  backgroundColor: Colors.PalleteSuccess,
+                                }}
+                                endIcon={<MdCheckCircleOutline />}
+                                onClick={() => handleChangeStatus(row._id)}
+                                className="m-1"
+                              >
+                                Activar
+                              </Button>
+                            ) : (
+                              <Button
+                                variant="contained"
+                                style={{
+                                  fontSize: 10,
+                                  backgroundColor: Colors.PalleteGrey,
+                                }}
+                                endIcon={<MdHighlightOff />}
+                                onClick={() => handleChangeStatus(row._id)}
+                                className="m-1"
+                              >
+                                Desactivar
                               </Button>
                             )}
                           </TableCell>

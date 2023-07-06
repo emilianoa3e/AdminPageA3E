@@ -1,26 +1,26 @@
-.title {
-  font-size: 40px;
+.banner-main-title {
+  font-size: 30px;
   font-weight: bold;
 }
 
-.buttons-top {
+.banner-main-buttons-top {
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
 }
 
 @media (max-width: 1000px) {
-  .buttons-top {
+  .banner-main-buttons-top {
     justify-content: center;
   }
 }
 
 @media (max-width: 720px) {
-  .title {
-    font-size: 30px;
+  .banner-main-title {
+    font-size: 25px;
     text-align: center;
   }
 
-  .buttons-top {
+  .banner-main-buttons-top {
     justify-content: center;
   }
 }

@@ -8,8 +8,8 @@ import { MdAdd, MdDelete, MdArrowBackIosNew } from "react-icons/md";
 import { Button } from "@mui/material";
 import SplashScreen from "../utils/SplashScreen";
 import NotFound from "../../components/shared/NotFound";
-import "../../assets/css/pages/Clients.css";
 import Colors from "../../utils/Colors";
+import "../../assets/css/pages/Clients.css";
 
 function ClientsMain() {
   const navigate = useNavigate();
@@ -67,7 +67,7 @@ function ClientsMain() {
           <Button
             size="large"
             variant="contained"
-            startIcon={<MdArrowBackIosNew size={20} />}
+            startIcon={<MdArrowBackIosNew />}
             style={{ backgroundColor: Colors.PalleteGrey }}
             onClick={() => navigate("/home")}
             className="me-2"
@@ -77,7 +77,7 @@ function ClientsMain() {
           <Button
             size="large"
             variant="contained"
-            endIcon={<MdAdd size={20} />}
+            endIcon={<MdAdd />}
             style={{ backgroundColor: Colors.PalletePrimary }}
             onClick={handleShow}
           >
@@ -117,7 +117,7 @@ function ClientsMain() {
                         endIcon={<MdDelete size={15} />}
                         style={{
                           fontSize: 12,
-                          backgroundColor: Colors.PalleteRed,
+                          backgroundColor: Colors.PalleteDanger,
                         }}
                         onClick={() => handleDelete(client._id)}
                       >

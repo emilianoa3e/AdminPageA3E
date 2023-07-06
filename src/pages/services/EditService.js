@@ -84,7 +84,7 @@ function EditService() {
                       variant="contained"
                       size="medium"
                       endIcon={<MdHighlightOff />}
-                      style={{ backgroundColor: Colors.PalleteRed }}
+                      style={{ backgroundColor: Colors.PalleteDanger }}
                       onClick={() => navigate("/services")}
                       className="me-2"
                     >

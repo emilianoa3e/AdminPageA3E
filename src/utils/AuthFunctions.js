@@ -16,14 +16,22 @@ export const loginPost = async (email, password) => {
       dataJson
     );
 
-    if (response.data.msg === "User logged") {
+    if (
+      response.data.msg === "User logged" &&
+      response.data.data.role === "admin"
+    ) {
       Toast.fire({
         icon: "success",
         title: "Bienvenido de nuevo 😄",
       });
+
+      return response.data.token;
     }
 
-    return response.data.token;
+    Toast.fire({
+      icon: "error",
+      title: "No tienes permisos para acceder a esta página 😞",
+    });
   } catch (error) {
     console.log("error", error);
 

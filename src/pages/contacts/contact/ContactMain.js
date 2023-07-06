@@ -138,7 +138,6 @@ function ContactsMain() {
                     <Button
                       size="small"
                       variant="contained"
-                      color="primary"
                       endIcon={<MdMode size={15} />}
                       style={{
                         fontSize: 12,
@@ -152,11 +151,10 @@ function ContactsMain() {
                     <Button
                       size="small"
                       variant="contained"
-                      color="error"
                       endIcon={<MdDelete size={15} />}
                       style={{
                         fontSize: 12,
-                        backgroundColor: Colors.PalleteRed,
+                        backgroundColor: Colors.PalleteDanger,
                       }}
                       onClick={() => handleDelete(contact._id)}
                       className="mb-1"
