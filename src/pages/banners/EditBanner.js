@@ -3,13 +3,15 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import { Form, Formik } from "formik";
 import { Form as FormBt } from "react-bootstrap";
-import * as yup from "yup";
 import { TextInput } from "../../components/shared/TextInput";
 import { MdTitle, MdOutlineDescription, MdOutlineLink } from "react-icons/md";
 import { getBannerById, updateBanner } from "../../utils/bannersFunctions";
 import { showConfirmDialog } from "../../shared/plugins/alert";
+import { MdCheckCircleOutline, MdHighlightOff } from "react-icons/md";
+import { Button } from "@mui/material";
+import * as yup from "yup";
+import Colors from "../../utils/Colors";
 import FileDropzone from "../../components/shared/Dropzone";
-import CustomButton from "../../components/shared/CustomButton";
 import BannerPreview from "../utils/BannerPreview";
 import SplashScreen from "../utils/SplashScreen";
 import "../../assets/css/pages/CreateEditBanner.css";
@@ -78,23 +80,36 @@ function EditBanner() {
               <Form>
                 <Row className="text-end">
                   <Col className="buttons-top">
-                    <CustomButton
-                      type="button"
-                      text="Cancelar"
-                      color="danger"
+                    <Button
+                      variant="contained"
                       size="medium"
+                      startIcon={<MdHighlightOff />}
+                      style={{ backgroundColor: Colors.PalleteDanger }}
                       onClick={() => navigate("/banners")}
                       className="me-2"
-                    />
-                    <CustomButton
-                      type="submit"
-                      text="Guardar"
-                      color="primary"
+                    >
+                      Cancelar
+                    </Button>
+                    <Button
+                      variant="contained"
                       size="medium"
-                      disabled={
-                        !values.title || !!errors.title || !!errors.link
+                      endIcon={<MdCheckCircleOutline />}
+                      style={
+                        !values.title ||
+                        !!errors.title ||
+                        !!errors.link
+                          ? { backgroundColor: Colors.PalletePrimaryLight }
+                          : { backgroundColor: Colors.PalletePrimary }
                       }
-                    />
+                      disabled={
+                        !values.title ||
+                        !!errors.title ||
+                        !!errors.link
+                      }
+                      type="submit"
+                    >
+                      Guardar
+                    </Button>
                   </Col>
                 </Row>
                 <Row className="form">

@@ -140,6 +140,7 @@ function DynamicTable({
                                 width: 200,
                                 height: 80,
                                 borderRadius: 5,
+                                border: "1px solid #afafaf",
                               }}
                             />
                           </TableCell>
