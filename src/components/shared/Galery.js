@@ -17,6 +17,7 @@ import FileDropzone from "./Dropzone";
 import SplashScreen from "../../pages/utils/SplashScreen";
 import NotFound from "./NotFound";
 import Colors from "../../utils/Colors";
+import "../../assets/css/components/layouts/Galery.css"
 
 function Galery() {
   const [mediaList, setMediaList] = useState([
@@ -29,6 +30,7 @@ function Galery() {
   const [filter, setFilter] = useState("all");
   const [isLoading, setIsLoading] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
+  const [copiedId, setCopiedId] = useState(null);
 
   const getMedia = async () => {
     setIsLoading(true);
@@ -66,8 +68,13 @@ function Galery() {
     );
   };
 
-  const copyToClipboard = (link) => {
-    navigator.clipboard.writeText(link);
+  const copyToClipboard = (link, id) => {
+    navigator.clipboard.writeText(link).then(() => {
+      setCopiedId(id);
+      setTimeout(() => {
+        setCopiedId(null);
+      }, 2500);
+    });
   };
 
   const handleFilterChange = (type) => {
@@ -167,7 +174,9 @@ function Galery() {
                         <Card.Footer style={{ textAlign: "center" }}>
                           <Col style={{ alignItems: "center" }}>
                             <MdCopyAll
-                              onClick={() => copyToClipboard(media.multimedia)}
+                              onClick={() =>
+                                copyToClipboard(media.multimedia, media._id)
+                              }
                               style={{
                                 cursor: "pointer",
                                 fontSize: "1.5rem",
@@ -179,10 +188,18 @@ function Galery() {
                               style={{
                                 cursor: "pointer",
                                 fontSize: "1.5rem",
-                                color: Colors.PalleteRed,
+                                color: Colors.PalleteDanger,
                               }}
                             />
                           </Col>
+                          {copiedId === media._id && (
+                            <div
+                              id={`copied-${media._id}`}
+                              className="copied-style fade-out-animation"
+                            >
+                              ¡Copiado!
+                            </div>
+                          )}
                         </Card.Footer>
                       </Card>
                     ))}
