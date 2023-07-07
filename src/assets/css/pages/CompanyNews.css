@@ -1,0 +1,38 @@
+.new-card {
+  border: none;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.new-card:hover {
+  box-shadow: 0px 10px 35px rgba(0, 0, 0, 0.459);
+  transform: scale(1.03);
+  transition: transform 0.3s ease-in-out;
+}
+
+.new-name {
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.new-title {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.new-buttons-top {
+  display: flex;
+  justify-content: end;
+}
+
+@media (max-width: 750px) {
+  .new-title {
+    font-size: 25px;
+    text-align: center;
+  }
+
+  .new-buttons-top {
+    justify-content: center;
+  }
+}

@@ -9,8 +9,6 @@ import Login from "../pages/Auth/Login";
 import { AuthContext } from "../context/auth/AuthContext";
 import Loader from "../components/shared/Loader";
 import Services from "../pages/services/Services";
-import Us from "../pages/us/OurCompany.js";
-import News from "../pages/news/CompanyNews";
 import OurCompany from "../pages/us/OurCompany.js";
 import CompanyNews from "../pages/news/CompanyNews";
 import CreateService from "../pages/services/CreateService";
@@ -25,11 +23,11 @@ import ContactsMain from "../pages/contacts/contact/ContactMain";
 import SaleMain from "../pages/contacts/sale/SaleMain";
 import InternMain from "../pages/contacts/intern/InternMain";
 import VacancieMain from "../pages/contacts/vacancie/VacancieMain";
-
+import EditNew from "../pages/news/EditNew";
+import CreateNew from "../pages/news/CreateNew";
 const AppRouter = () => {
   const { state, renewAuthToken } = useContext(AuthContext);
   const { isLogged, isLoading } = state;
-  const {id, fullName, email, role} = state
 
   //hace una llamada al método para preguntar por el token, almacenado en LocalStorage
   useEffect(() => {
@@ -39,7 +37,7 @@ const AppRouter = () => {
   if (isLoading) {
     return <Loader />;
   }
-  console.log()
+  console.log();
   return (
     <BrowserRouter>
       {isLogged ? (
@@ -91,6 +89,12 @@ const AppRouter = () => {
             </Route>
             <Route exact path="/news" element={<PrivateRoute />}>
               <Route exact path="/news" element={<CompanyNews />} />
+            </Route>
+            <Route exact path="/news/create-new/" element={<PrivateRoute />}>
+              <Route exact path="/news/create-new/" element={<CreateNew/>} />
+            </Route>
+            <Route exact path="/news/edit-new/:id" element={<PrivateRoute />}>
+              <Route exact path="/news/edit-new/:id" element={<EditNew />} />
             </Route>
             {/* <Route exact path="/profile" element={<PrivateRoute />}>
               <Route exact path="/profile" element={<CompanyNews />} />
