@@ -88,7 +88,7 @@ function EditNew() {
                       size="medium"
                       endIcon={<MdHighlightOff />}
                       style={{ backgroundColor: Colors.PalleteDanger }}
-                      onClick={() => navigate("/services")}
+                      onClick={() => navigate("/news")}
                       className="me-2"
                     >
                       Cancelar
