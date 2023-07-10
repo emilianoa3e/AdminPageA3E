@@ -20,6 +20,8 @@ function EditService() {
   const [content, setContent] = useState("");
   const [service, setService] = useState({
     title: "",
+    subtitle: "",
+    summary: "",
     content: "",
   });
 
@@ -28,6 +30,7 @@ function EditService() {
     const getService = async () => {
       const data = await getServiceById(id);
       setService(data.service);
+      setContent(data.service.content);
       setIsLoading(false);
     };
 
@@ -72,7 +75,6 @@ function EditService() {
               subtitle: service.subtitle,
               summary: service.summary,
             }}
-            enableReinitialize={true}
             validationSchema={objectSchema}
             onSubmit={(values) => handleSubmit(values, content)}
           >
@@ -111,7 +113,7 @@ function EditService() {
                   values={values}
                   touched={touched}
                   setContent={setContent}
-                  initialContent={service.content}
+                  initialContent={content}
                 />
               </Form>
             )}

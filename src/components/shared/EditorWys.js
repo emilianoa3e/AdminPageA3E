@@ -3,7 +3,7 @@ import { Col, Container } from "react-bootstrap";
 import "react-quill/dist/quill.snow.css";
 import { Editor } from "@tinymce/tinymce-react";
 
-function EditorWys({ setContentEditor, initialContent }) {
+function EditorWys({ setContent, initialContent }) {
   return (
     <>
       <Container>
@@ -57,8 +57,8 @@ function EditorWys({ setContentEditor, initialContent }) {
                 "Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats",
               images_file_types: "",
             }}
-            onEditorChange={(content, editor) => {
-              setContentEditor(content);
+            onEditorChange={(content) => {
+              setContent(content);
             }}
           />
         </Col>

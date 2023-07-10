@@ -56,7 +56,7 @@ function ServiceForm({ errors, values, touched, setContent, initialContent }) {
       </p>
       <FormBt.Group className="mb-2">
         <EditorWys
-          setContentEditor={setContent}
+          setContent={setContent}
           initialContent={initialContent}
         />
       </FormBt.Group>
