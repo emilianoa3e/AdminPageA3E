@@ -4,13 +4,14 @@ import { Col, Container, Row } from "react-bootstrap";
 import { Form, Formik } from "formik";
 import { showConfirmDialog } from "../../shared/plugins/alert";
 import { Button } from "@mui/material";
-import { MdCheckCircleOutline, MdArrowBackIosNew } from "react-icons/md";
+import { MdCheckCircleOutline, MdHighlightOff } from "react-icons/md";
 import Galery from "../../components/shared/Galery";
 import * as yup from "yup";
 import Colors from "../../utils/Colors";
 import NoticeForm from "./NoticeForm";
 import { getNewById, updateNew } from "../../utils/newsFunctions";
 import SplashScreen from "../utils/SplashScreen";
+
 function EditNew() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -28,13 +29,12 @@ function EditNew() {
     const getNew = async () => {
       const data = await getNewById(id);
       setNotice(data.dataNew);
+      setContent(data.dataNew.content);
       setIsLoading(false);
     };
 
     getNew();
   }, []);
-
-  console.log(notice);
 
   const handleSubmit = (values, content) => {
     showConfirmDialog(
@@ -54,10 +54,10 @@ function EditNew() {
     summary: yup.string().required("El resumen es requerido"),
   });
 
-
   if (isLoading) {
     return <SplashScreen isLoading={isLoading} />;
   }
+
   return (
     <Container fluid>
       <Row>
@@ -86,12 +86,12 @@ function EditNew() {
                     <Button
                       variant="contained"
                       size="medium"
-                      startIcon={<MdArrowBackIosNew />}
-                      style={{ backgroundColor: Colors.PalleteGrey }}
-                      onClick={() => navigate("/news")}
+                      endIcon={<MdHighlightOff />}
+                      style={{ backgroundColor: Colors.PalleteDanger }}
+                      onClick={() => navigate("/services")}
                       className="me-2"
                     >
-                      Regresar
+                      Cancelar
                     </Button>
                     <Button
                       variant="contained"
@@ -112,7 +112,7 @@ function EditNew() {
                 <NoticeForm
                   errors={errors}
                   values={values}
-                  touched={touched}                 
+                  touched={touched}
                   setContent={setContent}
                   initialContent={notice.content}
                 />

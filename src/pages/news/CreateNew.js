@@ -71,12 +71,12 @@ function CreateNew() {
                       size="medium"
                       endIcon={<MdCheckCircleOutline />}
                       style={
-                        !isValid || !dirty 
+                        !isValid || !dirty || !content
                           ? { backgroundColor: Colors.PalletePrimaryLight }
                           : { backgroundColor: Colors.PalletePrimary }
                       }
                       type="submit"
-                      disabled={!isValid || !dirty }
+                      disabled={!isValid || !dirty || !content}
                     >
                       Guardar
                     </Button>
