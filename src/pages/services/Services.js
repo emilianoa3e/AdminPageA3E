@@ -42,9 +42,7 @@ function Services() {
       "Cancelar",
       () => {
         deleteService(id).then(() => {
-          getAllServices().then((updatedList) => {
-            setServicesList(updatedList.services);
-          });
+          getServices()
         });
       }
     );
