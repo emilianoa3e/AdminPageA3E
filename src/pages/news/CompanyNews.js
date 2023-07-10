@@ -7,7 +7,7 @@ import { showConfirmDialog } from "../../shared/plugins/alert";
 import Colors from "../../utils/Colors";
 import SplashScreen from "../utils/SplashScreen";
 import NotFound from "../../components/shared/NotFound";
-import { getAllNews } from "../../utils/newsFunctions";
+import { deleteNew, getAllNews } from "../../utils/newsFunctions";
 import '../../assets/css/pages/CompanyNews.css'
 
 function CompanyNews() {
@@ -38,19 +38,17 @@ function CompanyNews() {
 
   const handleDelete = (id) => {
     console.log("clic");
-    // showConfirmDialog(
-    //   "¿Estás seguro de eliminar este servicio?",
-    //   "Se eliminará el servicio",
-    //   "Si, eliminar servicio",
-    //   "Cancelar",
-    //   () => {
-    //     deleteService(id).then(() => {
-    //       getAllServices().then((updatedList) => {
-    //         setServicesList(updatedList.services);
-    //       });
-    //     });
-    //   }
-    // );
+    showConfirmDialog(
+      "¿Estás seguro de eliminar esta noticia?",
+      "Se eliminará la noticia",
+      "Si, eliminar noticia",
+      "Cancelar",
+      () => {
+        deleteNew(id).then(() => {
+          getNews()
+        });
+      }
+    );
   };
 
 
@@ -72,7 +70,7 @@ function CompanyNews() {
             style={{ fontSize: 13, backgroundColor: Colors.PalletePrimary }}
             onClick={() => navigate("/news/create-new")}
           >
-            Crear servicio
+            Crear noticia
           </Button>
         </Col>
       </Row>

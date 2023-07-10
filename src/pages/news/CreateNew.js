@@ -7,6 +7,9 @@ import { Button } from "@mui/material";
 import { MdCheckCircleOutline, MdArrowBackIosNew } from "react-icons/md";
 import Galery from "../../components/shared/Galery";
 import * as yup from "yup";
+import Colors from "../../utils/Colors";
+import NoticeForm from "./NoticeForm";
+import { saveNew } from "../../utils/newsFunctions";
 
 function CreateNew() {
   const navigate = useNavigate();
@@ -14,9 +17,9 @@ function CreateNew() {
 
   const handleSubmit = (values, content) => {
     showConfirmDialog(
-      "¿Estás seguro de crear este servicio?",
-      "Se creará un nuevo servicio",
-      "Si, crear servicio",
+      "¿Estás seguro de crear esta noticia?",
+      "Se creará una nueva noticia",
+      "Si, crear noticia",
       "Cancelar",
       () => {
         saveNew(values, content, navigate);
@@ -68,18 +71,18 @@ function CreateNew() {
                       size="medium"
                       endIcon={<MdCheckCircleOutline />}
                       style={
-                        !isValid || !dirty || !content
+                        !isValid || !dirty 
                           ? { backgroundColor: Colors.PalletePrimaryLight }
                           : { backgroundColor: Colors.PalletePrimary }
                       }
                       type="submit"
-                      disabled={!isValid || !dirty || !content}
+                      disabled={!isValid || !dirty }
                     >
                       Guardar
                     </Button>
                   </Col>
                 </Row>
-                <ServiceForm
+                <NoticeForm
                   errors={errors}
                   values={values}
                   touched={touched}
