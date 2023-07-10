@@ -113,7 +113,7 @@ function EditService() {
                   values={values}
                   touched={touched}
                   setContent={setContent}
-                  initialContent={content}
+                  initialContent={service.content}
                 />
               </Form>
             )}
