@@ -25,6 +25,7 @@ import InternMain from "../pages/contacts/intern/InternMain";
 import VacancieMain from "../pages/contacts/vacancie/VacancieMain";
 import EditNew from "../pages/news/EditNew";
 import CreateNew from "../pages/news/CreateNew";
+
 const AppRouter = () => {
   const { state, renewAuthToken } = useContext(AuthContext);
   const { isLogged, isLoading } = state;
@@ -37,7 +38,7 @@ const AppRouter = () => {
   if (isLoading) {
     return <Loader />;
   }
-  console.log();
+
   return (
     <BrowserRouter>
       {isLogged ? (
@@ -91,7 +92,7 @@ const AppRouter = () => {
               <Route exact path="/news" element={<CompanyNews />} />
             </Route>
             <Route exact path="/news/create-new/" element={<PrivateRoute />}>
-              <Route exact path="/news/create-new/" element={<CreateNew/>} />
+              <Route exact path="/news/create-new/" element={<CreateNew />} />
             </Route>
             <Route exact path="/news/edit-new/:id" element={<PrivateRoute />}>
               <Route exact path="/news/edit-new/:id" element={<EditNew />} />

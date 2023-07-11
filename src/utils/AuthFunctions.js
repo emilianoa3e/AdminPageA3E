@@ -25,6 +25,7 @@ export const loginPost = async (email, password) => {
         title: "Bienvenido de nuevo 😄",
       });
 
+      console.log(response.data);
       return response.data.token;
     }
 

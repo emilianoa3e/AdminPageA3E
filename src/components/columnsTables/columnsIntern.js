@@ -28,7 +28,7 @@ export const columnsIntern = [
     label: "Edad",
     fontSize: 15,
     fontWeight: "bold",
-    minWidth: 170,
+    minWidth: 100,
     color: "white",
   },
   {
@@ -49,10 +49,10 @@ export const columnsIntern = [
   },
   {
     id: "degree",
-    label: "Grado",
+    label: "Carrera",
     fontSize: 15,
     fontWeight: "bold",
-    minWidth: 170,
+    minWidth: 200,
     color: "white",
   },
   {

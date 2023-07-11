@@ -28,7 +28,7 @@ export const columnsVacancie = [
     label: "Edad",
     fontSize: 15,
     fontWeight: "bold",
-    minWidth: 170,
+    minWidth: 100,
     color: "white",
   },
   {
@@ -49,10 +49,10 @@ export const columnsVacancie = [
   },
   {
     id: "position",
-    label: "Puesto",
+    label: "Posición de interés",
     fontSize: 15,
     fontWeight: "bold",
-    minWidth: 170,
+    minWidth: 200,
     color: "white",
   },
   {

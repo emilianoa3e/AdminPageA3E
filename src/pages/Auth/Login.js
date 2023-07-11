@@ -13,6 +13,7 @@ import { TextInput } from "../../components/shared/TextInput";
 function Login() {
   const { login } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
+
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -21,7 +22,6 @@ function Login() {
   const handleOnSubmit = (values, resetForm) => {
     login(values.email, values.password);
   };
-
 
   const objectSchema = yup.object({
     email: yup
