@@ -31,10 +31,10 @@ function CustomNavbar() {
               <MdHome className="me-1" size={25} />
               <span className="nav-link-text">Inicio</span>
             </NavLink>
-            <NavLink to="/us" className="nav-link">
+            {/* <NavLink to="/us" className="nav-link">
               <MdSupervisedUserCircle className="me-1" size={25} />
               <span className="nav-link-text">Nosotros</span>
-            </NavLink>
+            </NavLink> */}
             <NavLink to="/services" className="nav-link">
               <MdHomeRepairService className="me-1" size={25} />
               <span className="nav-link-text">Servicios</span>
@@ -47,10 +47,10 @@ function CustomNavbar() {
               <MdOutlineContactSupport className="me-1" size={25} />
               <span className="nav-link-text">Contacto</span>
             </NavLink>
-            <NavLink to="/sismedia" className="nav-link">
+            {/* <NavLink to="/sismedia" className="nav-link">
               <MdAssignmentTurnedIn className="me-1" size={25} />
               <span className="nav-link-text">Sismedia-RT</span>
-            </NavLink>
+            </NavLink> */}
           </Nav>
           <Nav>
             <CustomDropdown />
