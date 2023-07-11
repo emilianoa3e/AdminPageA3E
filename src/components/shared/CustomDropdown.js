@@ -5,6 +5,7 @@ import { Row, Col, Container, Dropdown } from "react-bootstrap";
 import { getUser } from "../../utils/profileFunctions";
 import { MdAccountCircle, MdArrowDropDown, MdLogout } from "react-icons/md";
 import { ModalProfile } from "../profile/ModalProfile";
+import { showConfirmDialog } from "../../shared/plugins/alert";
 import "../../assets/css/components/layouts/customDropdown.css";
 
 function CustomDropdown() {
@@ -32,7 +33,15 @@ function CustomDropdown() {
   }, [authState]);
 
   const handleLogout = () => {
-    logout();
+    showConfirmDialog(
+      "¿Está seguro que desea cerrar sesión?",
+      "Se cerrará su sesión",
+      "Cerrar sesión",
+      "Cancelar",
+      () => {
+        logout();
+      }
+    );
   };
 
   return (
@@ -66,7 +75,9 @@ function CustomDropdown() {
           handleClose={handleClose}
           handleEdit={handleEdit}
           isEdit={isEdit}
+          setIsEdit={setIsEdit}
           userData={userData}
+          getUserProfile={getUserProfile}
         />
       </Container>
     </div>
