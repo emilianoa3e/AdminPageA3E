@@ -28,7 +28,7 @@ import CreateNew from "../pages/news/CreateNew";
 
 const AppRouter = () => {
   const { state, renewAuthToken } = useContext(AuthContext);
-  const { isLogged, isLoading } = state;
+  const { isLogged, isLoading, role } = state;
 
   //hace una llamada al método para preguntar por el token, almacenado en LocalStorage
   useEffect(() => {
@@ -45,49 +45,57 @@ const AppRouter = () => {
         <Layout>
           <RenewToken />
           <Routes>
-            <Route exact path="/" element={<PrivateRoute />}>
-              <Route exact path="/" element={<Home />} />
-            </Route>
-            <Route exact path="/banners" element={<PrivateRoute />}>
-              <Route exact path="/banners" element={<BannerMain />} />
-            </Route>
-            <Route exact path="/create-banner" element={<PrivateRoute />}>
-              <Route exact path="/create-banner" element={<CreateBanner />} />
-            </Route>
-            <Route exact path="/banners/:id" element={<PrivateRoute />}>
-              <Route exact path="/banners/:id" element={<EditBanner />} />
-            </Route>
-            <Route exact path="/clients" element={<PrivateRoute />}>
-              <Route exact path="/clients" element={<ClientsMain />} />
-            </Route>
-            <Route exact path="/services" element={<PrivateRoute />}>
-              <Route exact path="/services" element={<Services />} />
-            </Route>
-            <Route
-              exact
-              path="/services/create-service"
-              element={<PrivateRoute />}
-            >
-              <Route
-                exact
-                path="/services/create-service"
-                element={<CreateService />}
-              />
-            </Route>
-            <Route
-              exact
-              path="/services/edit-service/:id"
-              element={<PrivateRoute />}
-            >
-              <Route
-                exact
-                path="/services/edit-service/:id"
-                element={<EditService />}
-              />
-            </Route>
-            <Route exact path="/us" element={<PrivateRoute />}>
-              <Route exact path="/us" element={<OurCompany />} />
-            </Route>
+            {role === "admin" && (
+              <>
+                <Route exact path="/" element={<PrivateRoute />}>
+                  <Route exact path="/" element={<Home />} />
+                </Route>
+                <Route exact path="/banners" element={<PrivateRoute />}>
+                  <Route exact path="/banners" element={<BannerMain />} />
+                </Route>
+                <Route exact path="/create-banner" element={<PrivateRoute />}>
+                  <Route
+                    exact
+                    path="/create-banner"
+                    element={<CreateBanner />}
+                  />
+                </Route>
+                <Route exact path="/banners/:id" element={<PrivateRoute />}>
+                  <Route exact path="/banners/:id" element={<EditBanner />} />
+                </Route>
+                <Route exact path="/clients" element={<PrivateRoute />}>
+                  <Route exact path="/clients" element={<ClientsMain />} />
+                </Route>
+                <Route exact path="/services" element={<PrivateRoute />}>
+                  <Route exact path="/services" element={<Services />} />
+                </Route>
+                <Route
+                  exact
+                  path="/services/create-service"
+                  element={<PrivateRoute />}
+                >
+                  <Route
+                    exact
+                    path="/services/create-service"
+                    element={<CreateService />}
+                  />
+                </Route>
+                <Route
+                  exact
+                  path="/services/edit-service/:id"
+                  element={<PrivateRoute />}
+                >
+                  <Route
+                    exact
+                    path="/services/edit-service/:id"
+                    element={<EditService />}
+                  />
+                </Route>
+                <Route exact path="/us" element={<PrivateRoute />}>
+                  <Route exact path="/us" element={<OurCompany />} />
+                </Route>
+              </>
+            )}
             <Route exact path="/news" element={<PrivateRoute />}>
               <Route exact path="/news" element={<CompanyNews />} />
             </Route>
@@ -97,9 +105,6 @@ const AppRouter = () => {
             <Route exact path="/news/edit-new/:id" element={<PrivateRoute />}>
               <Route exact path="/news/edit-new/:id" element={<EditNew />} />
             </Route>
-            {/* <Route exact path="/profile" element={<PrivateRoute />}>
-              <Route exact path="/profile" element={<CompanyNews />} />
-            </Route> */}
             <Route exact path="/contacts-screen" element={<PrivateRoute />}>
               <Route
                 exact
@@ -151,6 +156,13 @@ const AppRouter = () => {
                 element={<VacancieMain />}
               />
             </Route>
+            {role === "reclutador" && (
+              <Route
+                exact
+                path="/*"
+                element={<Navigate to="/contacts-screen" />}
+              />
+            )}
             <Route exact path="/*" element={<Navigate to="/" />} />
           </Routes>
         </Layout>

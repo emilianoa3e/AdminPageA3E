@@ -18,14 +18,13 @@ export const loginPost = async (email, password) => {
 
     if (
       response.data.msg === "User logged" &&
-      response.data.data.role === "admin"
+      (response.data.data.role === "admin" ||
+        response.data.data.role === "reclutador")
     ) {
       Toast.fire({
         icon: "success",
         title: "Bienvenido de nuevo 😄",
       });
-
-      console.log(response.data);
       return response.data.token;
     }
 
@@ -75,25 +74,26 @@ export const renewToken = async (dispatch) => {
         const email = data.data.email;
         const role = data.data.role;
 
-        if (role !== "admin") {
+        if (role === "admin" || role === "reclutador") {
+          console.log(typeof role);
+          localStorage.setItem("token", token);
+
+          dispatch({
+            type: "LOGIN",
+            payload: {
+              fullName,
+              id,
+              email,
+              role,
+            },
+          });
+        } else {
           localStorage.removeItem("token");
           dispatch({
             type: "LOGOUT",
           });
           return;
         }
-
-        localStorage.setItem("token", token);
-
-        dispatch({
-          type: "LOGIN",
-          payload: {
-            fullName,
-            id,
-            email,
-            role,
-          },
-        });
       } else {
         localStorage.removeItem("token");
         dispatch({

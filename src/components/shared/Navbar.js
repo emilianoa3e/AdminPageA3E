@@ -1,10 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../../context/auth/AuthContext";
 import { NavLink } from "react-router-dom";
-import {
-  Container,
-  Nav,
-  Navbar as NavbarBt,
-} from "react-bootstrap";
+import { Container, Nav, Navbar as NavbarBt } from "react-bootstrap";
 import {
   MdAssignmentTurnedIn,
   MdHome,
@@ -18,6 +15,8 @@ import logo from "../../assets/img/Logo_Blanco.png";
 import "../../assets/css/components/layouts/navbar.css";
 
 function CustomNavbar() {
+  const { state } = useContext(AuthContext);
+  const { role } = state;
   return (
     <NavbarBt variant="dark" className="custom-navbar" expand="lg" sticky="top">
       <Container>
@@ -27,18 +26,23 @@ function CustomNavbar() {
         <NavbarBt.Toggle aria-controls="basic-navbar-nav" />
         <NavbarBt.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <NavLink to="/" className="nav-link">
-              <MdHome className="me-1" size={25} />
-              <span className="nav-link-text">Inicio</span>
-            </NavLink>
-            {/* <NavLink to="/us" className="nav-link">
+            {role === "admin" && (
+              <>
+                <NavLink to="/" className="nav-link">
+                  <MdHome className="me-1" size={25} />
+                  <span className="nav-link-text">Inicio</span>
+                </NavLink>
+                {/* <NavLink to="/us" className="nav-link">
               <MdSupervisedUserCircle className="me-1" size={25} />
               <span className="nav-link-text">Nosotros</span>
             </NavLink> */}
-            <NavLink to="/services" className="nav-link">
-              <MdHomeRepairService className="me-1" size={25} />
-              <span className="nav-link-text">Servicios</span>
-            </NavLink>
+                <NavLink to="/services" className="nav-link">
+                  <MdHomeRepairService className="me-1" size={25} />
+                  <span className="nav-link-text">Servicios</span>
+                </NavLink>
+              </>
+            )}
+
             <NavLink to="/news" className="nav-link">
               <MdNewspaper className="me-1" size={25} />
               <span className="nav-link-text">Noticias</span>
