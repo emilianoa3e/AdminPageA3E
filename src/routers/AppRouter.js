@@ -25,6 +25,7 @@ import InternMain from "../pages/contacts/intern/InternMain";
 import VacancieMain from "../pages/contacts/vacancie/VacancieMain";
 import EditNew from "../pages/news/EditNew";
 import CreateNew from "../pages/news/CreateNew";
+import UserMain from "../pages/users/UserMain";
 
 const AppRouter = () => {
   const { state, renewAuthToken } = useContext(AuthContext);
@@ -93,6 +94,9 @@ const AppRouter = () => {
                 </Route>
                 <Route exact path="/us" element={<PrivateRoute />}>
                   <Route exact path="/us" element={<OurCompany />} />
+                </Route>
+                <Route exact path="/users" element={<PrivateRoute />}>
+                  <Route exact path="/users" element={<UserMain />} />
                 </Route>
               </>
             )}

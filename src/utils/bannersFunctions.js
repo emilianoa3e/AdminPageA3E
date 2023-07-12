@@ -36,7 +36,7 @@ export const saveBanner = async (values, file, navigate) => {
     if (error.response.data.msg === "Banner already exists") {
       Toast.fire({
         icon: "error",
-        title: "Ya existe un banner con ese título 😞",
+        title: "Ya existe un banner con ese título 🫤",
       });
     } else {
       Toast.fire({
@@ -135,7 +135,7 @@ export const updateStatus = async (id) => {
 
     Toast.fire({
       icon: "error",
-      title: "Error al cambiar el status 😞",
+      title: "Error del servidor 😞",
     });
   }
 };
@@ -159,7 +159,7 @@ export const deleteBanner = async (id) => {
 
     Toast.fire({
       icon: "error",
-      title: "Error al eliminar banner 😞",
+      title: "Error del servidor 😞",
     });
   }
 };

@@ -32,17 +32,16 @@ function CustomNavbar() {
                   <MdHome className="me-1" size={25} />
                   <span className="nav-link-text">Inicio</span>
                 </NavLink>
-                {/* <NavLink to="/us" className="nav-link">
-              <MdSupervisedUserCircle className="me-1" size={25} />
-              <span className="nav-link-text">Nosotros</span>
-            </NavLink> */}
+                <NavLink to="/us" className="nav-link">
+                  <MdSupervisedUserCircle className="me-1" size={25} />
+                  <span className="nav-link-text">Nosotros</span>
+                </NavLink>
                 <NavLink to="/services" className="nav-link">
                   <MdHomeRepairService className="me-1" size={25} />
                   <span className="nav-link-text">Servicios</span>
                 </NavLink>
               </>
             )}
-
             <NavLink to="/news" className="nav-link">
               <MdNewspaper className="me-1" size={25} />
               <span className="nav-link-text">Noticias</span>
@@ -51,6 +50,12 @@ function CustomNavbar() {
               <MdOutlineContactSupport className="me-1" size={25} />
               <span className="nav-link-text">Contacto</span>
             </NavLink>
+            {role === "admin" && (
+              <NavLink to="/users" className="nav-link">
+                <MdSupervisedUserCircle className="me-1" size={25} />
+                <span className="nav-link-text">Usuarios</span>
+              </NavLink>
+            )}
             {/* <NavLink to="/sismedia" className="nav-link">
               <MdAssignmentTurnedIn className="me-1" size={25} />
               <span className="nav-link-text">Sismedia-RT</span>

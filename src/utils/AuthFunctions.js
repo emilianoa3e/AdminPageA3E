@@ -1,6 +1,10 @@
 import axios from "axios";
 import instance from "../shared/Axios";
-import { Toast, showLoadingAlert } from "../shared/plugins/alert";
+import {
+  Toast,
+  showLoadingAlert,
+  showSimpleAlert,
+} from "../shared/plugins/alert";
 
 export const loginPost = async (email, password) => {
   const dataJson = {
@@ -43,6 +47,11 @@ export const loginPost = async (email, password) => {
         icon: "error",
         title: "Correo y/o contraseña incorrectos 😞",
       });
+    } else if (error.response.data.msg === "User disabled") {
+      Toast.fire({
+        icon: "error",
+        title: "Tu cuenta ha sido deshabilitada 😞",
+      });
     } else {
       Toast.fire({
         icon: "error",
@@ -75,7 +84,6 @@ export const renewToken = async (dispatch) => {
         const role = data.data.role;
 
         if (role === "admin" || role === "reclutador") {
-          console.log(typeof role);
           localStorage.setItem("token", token);
 
           dispatch({
@@ -107,6 +115,13 @@ export const renewToken = async (dispatch) => {
       });
     } catch (error) {
       console.log(error);
+      if (error.response.data.msg === "Invalid token") {
+        showSimpleAlert(
+          "Tu sesión ha expirado",
+          "Por favor, inicia sesión nuevamente.",
+          "error"
+        );
+      }
       localStorage.removeItem("token");
       dispatch({
         type: "LOGOUT",

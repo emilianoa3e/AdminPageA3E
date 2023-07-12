@@ -117,7 +117,7 @@ export const ModalProfile = ({
             {({ errors, values, touched, isValid }) => (
               <Form>
                 <Row className="mt-2">
-                  <Col className="col-4">
+                  <Col lg={4}>
                     <div className="d-flex justify-content-center">
                       {userData.gender === "M" ? (
                         <img
@@ -136,7 +136,7 @@ export const ModalProfile = ({
                       )}
                     </div>
                   </Col>
-                  <Col className="col-8">
+                  <Col lg={8} className="mt-2">
                     <ProfileForm
                       errors={errors}
                       values={values}

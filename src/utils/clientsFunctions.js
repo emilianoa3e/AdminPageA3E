@@ -32,7 +32,7 @@ export const saveClient = async (values, file) => {
     if (error.response.data.msg === "Client already exists") {
       Toast.fire({
         icon: "error",
-        title: "El cliente ya existe 😅",
+        title: "El cliente ya existe 🫤",
       });
     } else if (error.response.data.msg === "Error uploading image") {
       Toast.fire({

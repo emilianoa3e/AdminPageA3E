@@ -107,7 +107,7 @@ function BannerMain() {
             data={bannerList}
             handleChangeStatus={handleChangeStatus}
             handleDelete={handleDelete}
-            showFilter="banner"
+            showFilter={true}
             navigate={navigate}
           />
         </Col>

@@ -91,7 +91,7 @@ export const updateService = async (id, values, content, navigate) => {
     if (error.response.data.msg === "Service already exists") {
       Toast.fire({
         icon: "error",
-        title: "Ya existe un servicio con ese título 😞",
+        title: "Ya existe un servicio con ese título 🫤",
       });
     } else {
       Toast.fire({

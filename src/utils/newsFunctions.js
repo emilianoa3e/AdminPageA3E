@@ -51,7 +51,7 @@ export const saveNew = async (values, content, navigate) => {
     if (error.response.data.msg === "New already exists") {
       Toast.fire({
         icon: "error",
-        title: "Ya existe una Noticia con ese título 😞",
+        title: "Ya existe una noticia con ese título 🫤",
       });
     } else {
       Toast.fire({

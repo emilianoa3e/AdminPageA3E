@@ -46,7 +46,7 @@ export const updateUser = async (id, values, data) => {
     } else if (error.response.data.msg === "User already exists") {
       Toast.fire({
         icon: "error",
-        title: "No puedes usar ese correo electrónico 😞",
+        title: "El correo ya está registrado 🫤",
       });
     } else {
       Toast.fire({

@@ -52,3 +52,13 @@ export const Toast = Swal.mixin({
     toast.addEventListener("mouseleave", Swal.resumeTimer);
   },
 });
+
+export const showSimpleAlert = (title, text, icon) => {
+  Swal.fire({
+    title,
+    text,
+    icon,
+    confirmButtonText: "Ok",
+    confirmButtonColor: "#002e60",
+  });
+};

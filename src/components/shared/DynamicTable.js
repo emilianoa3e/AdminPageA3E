@@ -70,7 +70,7 @@ function DynamicTable({
         >
           {titleTable}
         </h2>
-        {showFilter === "banner" ? (
+        {showFilter ? (
           <Button
             className="m-2"
             variant="outlined"
@@ -227,6 +227,51 @@ function DynamicTable({
                             >
                               Editar
                             </Button>
+                            <Button
+                              variant="contained"
+                              style={{
+                                fontSize: 10,
+                                backgroundColor: Colors.PalleteDanger,
+                              }}
+                              endIcon={<MdDelete />}
+                              onClick={() => handleDelete(row._id)}
+                              className="m-1"
+                            >
+                              Eliminar
+                            </Button>
+                            {row.status ? (
+                              <Button
+                                variant="contained"
+                                style={{
+                                  fontSize: 10,
+                                  backgroundColor: Colors.PalleteSuccess,
+                                }}
+                                endIcon={<MdCheckCircleOutline />}
+                                onClick={() => handleChangeStatus(row._id)}
+                                className="m-1"
+                              >
+                                Activar
+                              </Button>
+                            ) : (
+                              <Button
+                                variant="contained"
+                                style={{
+                                  fontSize: 10,
+                                  backgroundColor: Colors.PalleteGrey,
+                                }}
+                                endIcon={<MdHighlightOff />}
+                                onClick={() => handleChangeStatus(row._id)}
+                                className="m-1"
+                              >
+                                Desactivar
+                              </Button>
+                            )}
+                          </TableCell>
+                        );
+                      }
+                      if (column.id === "actions user") {
+                        return (
+                          <TableCell key={column.id} align={column.align}>
                             <Button
                               variant="contained"
                               style={{
