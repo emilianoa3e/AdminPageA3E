@@ -1,0 +1,35 @@
+.pagination {
+  position: fixed;
+  bottom: 1px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffffcc;
+  padding: 1px;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  width: auto;
+}
+
+.pagination a {
+  margin: 0.7rem;
+  text-decoration: none;
+}
+
+.pagination .arrow {
+  font-size: 2.5rem;
+  color: #000000b2;
+}
+
+.pagination .active {
+  width: 3rem;
+  height: 2rem;
+  border-radius: 1rem;
+  background-color: rgba(0, 0, 0, 0.692);
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

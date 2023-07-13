@@ -59,13 +59,13 @@ function ClientsMain() {
 
   return (
     <Container fluid>
-      <Row className="mb-4">
-        <Col xs={12} md={7} lg={8}>
-          <h1 className="client-title">Clientes</h1>
+      <Row className="mb-2">
+        <Col>
+          <h3 style={{ fontWeight: "bold" }}>Clientes</h3>
         </Col>
-        <Col xs={12} md={5} lg={4} className="client-buttons">
+        <Col className="d-flex justify-content-end">
           <Button
-            size="large"
+            size="medium"
             variant="contained"
             startIcon={<MdArrowBackIosNew />}
             style={{ backgroundColor: Colors.PalleteGrey }}
@@ -75,7 +75,7 @@ function ClientsMain() {
             Regresar
           </Button>
           <Button
-            size="large"
+            size="medium"
             variant="contained"
             endIcon={<MdAdd />}
             style={{ backgroundColor: Colors.PalletePrimary }}

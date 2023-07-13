@@ -1,27 +1,43 @@
 import React, { useEffect, useState } from "react";
-import { Col, Row, Card, Container } from "react-bootstrap";
+import { Col, Row, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { getAllServices, deleteService } from "../../utils/serviceFunctions";
-import { MdAdd, MdMode, MdDelete } from "react-icons/md";
+import { MdAdd, MdMode, MdDelete, MdExpandMore } from "react-icons/md";
 import { Button } from "@mui/material";
 import { showConfirmDialog } from "../../shared/plugins/alert";
+import { styled } from "@mui/material/styles";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardActions,
+  Collapse,
+  IconButton,
+  Typography,
+} from "@mui/material";
+import Pagination from "../../components/shared/Pagination";
 import Colors from "../../utils/Colors";
 import SplashScreen from "../utils/SplashScreen";
 import NotFound from "../../components/shared/NotFound";
 import "../../assets/css/pages/Services.css";
 
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+  marginLeft: "auto",
+  transition: theme.transitions.create("transform", {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
+
 function Services() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [servicesList, setServicesList] = useState([
-    {
-      _id: "",
-      title: "",
-      subtitle: "",
-      summary: "",
-      content: "",
-    },
-  ]);
+  const [servicesList, setServicesList] = useState([]);
+  const [itemOffset, setItemOffset] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const getServices = async () => {
     setIsLoading(true);
@@ -30,9 +46,32 @@ function Services() {
     setIsLoading(false);
   };
 
+  const handleExpandClick = (index) => {
+    setServicesList((prevServicesList) => {
+      const updatedServices = [...prevServicesList];
+      updatedServices[index].expanded = !updatedServices[index].expanded;
+      return updatedServices;
+    });
+  };
+
   useEffect(() => {
     getServices();
   }, []);
+
+  const servicesPerPage = 1;
+  const pageCount = Math.ceil(servicesList.length / servicesPerPage);
+
+  useEffect(() => {
+    const maxOffset = Math.max(0, servicesList.length - servicesPerPage);
+    const newOffset = Math.min(itemOffset, maxOffset);
+    setItemOffset(newOffset);
+  }, [servicesList]);
+
+  const handlePageClick = (e) => {
+    const newOffset = e.selected * servicesPerPage;
+    setItemOffset(newOffset);
+    setCurrentPage(e.selected + 1);
+  };
 
   const handleDelete = (id) => {
     showConfirmDialog(
@@ -42,7 +81,8 @@ function Services() {
       "Cancelar",
       () => {
         deleteService(id).then(() => {
-          getServices()
+          getServices();
+          setItemOffset(0);
         });
       }
     );
@@ -54,16 +94,16 @@ function Services() {
 
   return (
     <Container fluid>
-      <Row className="mb-4">
-        <Col xs={12} md={7} lg={8}>
-          <h1 className="service-title">Servicios</h1>
+      <Row className="mb-3">
+        <Col>
+          <h3 style={{ fontWeight: "bold" }}>Servicios</h3>
         </Col>
-        <Col xs={12} md={5} lg={4} className="service-buttons-top">
+        <Col className="d-flex justify-content-end">
           <Button
             size="large"
             variant="contained"
-            endIcon={<MdAdd size={20} />}
-            style={{ fontSize: 13, backgroundColor: Colors.PalletePrimary }}
+            endIcon={<MdAdd />}
+            style={{ backgroundColor: Colors.PalletePrimary }}
             onClick={() => navigate("/services/create-service")}
           >
             Crear servicio
@@ -72,48 +112,70 @@ function Services() {
       </Row>
       {servicesList.length !== 0 ? (
         <Row>
-          {servicesList.map((service) => (
-            <Col key={service._id} xs={12} sm={6} md={4} lg={3}>
-              <Card className="service-card mt-2">
-                <Card.Body>
-                  <Card.Title
-                    className="service-name p-1"
-                    style={{
-                      display: "-webkit-box",
-                      WebkitLineClamp: 3,
-                      WebkitBoxOrient: "vertical",
-                      overflow: "hidden",
-                    }}
+          {servicesList
+            .slice(itemOffset, itemOffset + servicesPerPage)
+            .map((service, index) => (
+              <Card
+                className="mb-2"
+                sx={{
+                  width: "100%",
+                  backgroundColor: Colors.PalletePrimaryLight,
+                }}
+                key={service._id}
+              >
+                <CardHeader
+                  title={service.title}
+                  subheader={service.subtitle}
+                />
+                <CardContent>
+                  <Typography variant="body2" color="text.secondary">
+                    {service.summary}
+                  </Typography>
+                </CardContent>
+                <CardActions disableSpacing>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    endIcon={<MdMode />}
+                    style={{ backgroundColor: Colors.PalletePrimary }}
+                    onClick={() =>
+                      navigate(`/services/edit-service/${service._id}`)
+                    }
+                    className="me-1"
                   >
-                    {service.title}
-                  </Card.Title>
-                  <div className="d-flex justify-content-center">
-                    <Button
-                      size="small"
-                      variant="contained"
-                      endIcon={<MdMode size={15} />}
-                      style={{ fontSize: 12, backgroundColor: Colors.PalletePrimary }}
-                      onClick={() =>
-                        navigate(`/services/edit-service/${service._id}`)
-                      }
-                      className="me-1"
-                    >
-                      Editar
-                    </Button>
-                    <Button
-                      size="small"
-                      variant="contained"
-                      endIcon={<MdDelete size={15} />}
-                      style={{ fontSize: 12, backgroundColor: Colors.PalleteDanger }}
-                      onClick={() => handleDelete(service._id)}
-                    >
-                      Eliminar
-                    </Button>
-                  </div>
-                </Card.Body>
+                    Editar
+                  </Button>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    endIcon={<MdDelete />}
+                    style={{ backgroundColor: Colors.PalleteDanger }}
+                    onClick={() => handleDelete(service._id)}
+                  >
+                    Eliminar
+                  </Button>
+                  <ExpandMore
+                    expand={service.expanded}
+                    onClick={() => handleExpandClick(itemOffset + index)}
+                    aria-expanded={service.expanded}
+                    aria-label="show more"
+                  >
+                    <MdExpandMore />
+                  </ExpandMore>
+                </CardActions>
+                <Collapse in={service.expanded} timeout="auto" unmountOnExit>
+                  <CardContent>
+                    <Typography paragraph>
+                      <div
+                        className="content"
+                        dangerouslySetInnerHTML={{ __html: service.content }}
+                      ></div>
+                    </Typography>
+                  </CardContent>
+                </Collapse>
               </Card>
-            </Col>
-          ))}
+            ))}
+          <Pagination handlePageClick={handlePageClick} pageCount={pageCount} />
         </Row>
       ) : (
         <NotFound

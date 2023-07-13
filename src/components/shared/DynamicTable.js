@@ -9,6 +9,7 @@ import {
   TablePagination,
   TableRow,
   Button,
+  ButtonGroup,
 } from "@mui/material";
 import { IoMdEye } from "react-icons/io";
 import {
@@ -215,102 +216,92 @@ function DynamicTable({
                       if (column.id === "actions banner") {
                         return (
                           <TableCell key={column.id} align={column.align}>
-                            <Button
-                              variant="contained"
-                              style={{
-                                fontSize: 10,
-                                backgroundColor: Colors.PalletePrimary,
-                              }}
-                              endIcon={<MdMode />}
-                              onClick={() => navigate(`/banners/${row._id}`)}
-                              className="m-1"
-                            >
-                              Editar
-                            </Button>
-                            <Button
-                              variant="contained"
-                              style={{
-                                fontSize: 10,
-                                backgroundColor: Colors.PalleteDanger,
-                              }}
-                              endIcon={<MdDelete />}
-                              onClick={() => handleDelete(row._id)}
-                              className="m-1"
-                            >
-                              Eliminar
-                            </Button>
-                            {row.status ? (
+                            <ButtonGroup variant="contained">
                               <Button
-                                variant="contained"
                                 style={{
                                   fontSize: 10,
-                                  backgroundColor: Colors.PalleteSuccess,
+                                  backgroundColor: Colors.PalletePrimary,
                                 }}
-                                endIcon={<MdCheckCircleOutline />}
-                                onClick={() => handleChangeStatus(row._id)}
-                                className="m-1"
+                                endIcon={<MdMode />}
+                                onClick={() => navigate(`/banners/${row._id}`)}
                               >
-                                Activar
+                                Editar
                               </Button>
-                            ) : (
                               <Button
-                                variant="contained"
                                 style={{
                                   fontSize: 10,
-                                  backgroundColor: Colors.PalleteGrey,
+                                  backgroundColor: Colors.PalleteDanger,
                                 }}
-                                endIcon={<MdHighlightOff />}
-                                onClick={() => handleChangeStatus(row._id)}
-                                className="m-1"
+                                endIcon={<MdDelete />}
+                                onClick={() => handleDelete(row._id)}
                               >
-                                Desactivar
+                                Eliminar
                               </Button>
-                            )}
+                              {row.status ? (
+                                <Button
+                                  style={{
+                                    fontSize: 10,
+                                    backgroundColor: Colors.PalleteSuccess,
+                                  }}
+                                  endIcon={<MdCheckCircleOutline />}
+                                  onClick={() => handleChangeStatus(row._id)}
+                                >
+                                  Activar
+                                </Button>
+                              ) : (
+                                <Button
+                                  style={{
+                                    fontSize: 10,
+                                    backgroundColor: Colors.PalleteGrey,
+                                  }}
+                                  endIcon={<MdHighlightOff />}
+                                  onClick={() => handleChangeStatus(row._id)}
+                                >
+                                  Desactivar
+                                </Button>
+                              )}
+                            </ButtonGroup>
                           </TableCell>
                         );
                       }
                       if (column.id === "actions user") {
                         return (
                           <TableCell key={column.id} align={column.align}>
-                            <Button
-                              variant="contained"
-                              style={{
-                                fontSize: 10,
-                                backgroundColor: Colors.PalleteDanger,
-                              }}
-                              endIcon={<MdDelete />}
-                              onClick={() => handleDelete(row._id)}
-                              className="m-1"
-                            >
-                              Eliminar
-                            </Button>
-                            {row.status ? (
+                            <ButtonGroup variant="contained">
                               <Button
-                                variant="contained"
                                 style={{
                                   fontSize: 10,
-                                  backgroundColor: Colors.PalleteSuccess,
+                                  backgroundColor: Colors.PalleteDanger,
                                 }}
-                                endIcon={<MdCheckCircleOutline />}
-                                onClick={() => handleChangeStatus(row._id)}
-                                className="m-1"
+                                endIcon={<MdDelete />}
+                                onClick={() => handleDelete(row._id)}
                               >
-                                Activar
+                                Eliminar
                               </Button>
-                            ) : (
-                              <Button
-                                variant="contained"
-                                style={{
-                                  fontSize: 10,
-                                  backgroundColor: Colors.PalleteGrey,
-                                }}
-                                endIcon={<MdHighlightOff />}
-                                onClick={() => handleChangeStatus(row._id)}
-                                className="m-1"
-                              >
-                                Desactivar
-                              </Button>
-                            )}
+                              {row.status ? (
+                                <Button
+                                  style={{
+                                    fontSize: 10,
+                                    backgroundColor: Colors.PalleteSuccess,
+                                  }}
+                                  endIcon={<MdCheckCircleOutline />}
+                                  onClick={() => handleChangeStatus(row._id)}
+                                >
+                                  Activar
+                                </Button>
+                              ) : (
+                                <Button
+                                  style={{
+                                    fontSize: 10,
+                                    backgroundColor: Colors.PalleteGrey,
+                                  }}
+                                  endIcon={<MdHighlightOff />}
+                                  onClick={() => handleChangeStatus(row._id)}
+                                >
+                                  Desactivar
+                                </Button>
+                              )}
+                            </ButtonGroup>
                           </TableCell>
                         );
                       }

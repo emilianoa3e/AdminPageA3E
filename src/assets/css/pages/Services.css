@@ -1,38 +1,30 @@
-.service-card {
-  border: none;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
-  transition: box-shadow 0.3s ease-in-out;
+/* Contenido */
+.content img {
+  max-width: 100% !important;
+  height: auto;
 }
 
-.service-card:hover {
-  box-shadow: 0px 10px 35px rgba(0, 0, 0, 0.459);
-  transform: scale(1.03);
-  transition: transform 0.3s ease-in-out;
+.content table {
+  width: 100% !important;
 }
 
-.service-name {
-  text-align: center;
-  font-size: 22px;
-  font-weight: bold;
+.content table td {
+  width: 30% !important;
 }
 
-.service-title {
-  font-size: 30px;
-  font-weight: bold;
-}
-
-.service-buttons-top {
-  display: flex;
-  justify-content: end;
+.content video {
+  max-width: 100% !important;
+  height: auto;
 }
 
 @media (max-width: 750px) {
-  .service-title {
-    font-size: 25px;
-    text-align: center;
+  .content h1 {
+    font-size: 22px !important;
   }
+}
 
-  .service-buttons-top {
-    justify-content: center;
+@media (max-width: 350px) {
+  .content h1 {
+    font-size: 20px !important;
   }
 }

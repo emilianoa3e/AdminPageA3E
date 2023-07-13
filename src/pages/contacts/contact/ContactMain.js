@@ -23,7 +23,6 @@ import { Button } from "@mui/material";
 import SplashScreen from "../../utils/SplashScreen";
 import NotFound from "../../../components/shared/NotFound";
 import Colors from "../../../utils/Colors";
-import "../../../assets/css/pages/ContactMain.css";
 
 function ContactsMain() {
   const navigate = useNavigate();
@@ -83,13 +82,13 @@ function ContactsMain() {
 
   return (
     <Container fluid>
-      <Row className="mb-4">
-        <Col xs={12} md={7} lg={8}>
-          <h1 className="contact-title">Contactos</h1>
+      <Row className="mb-2">
+        <Col>
+          <h3 style={{ fontWeight: "bold" }}>Contactos</h3>
         </Col>
-        <Col xs={12} md={5} lg={4} className="contact-buttons-top">
+        <Col className="d-flex justify-content-end">
           <Button
-            size="large"
+            size="medium"
             variant="contained"
             startIcon={<MdArrowBackIosNew size={20} />}
             style={{ backgroundColor: Colors.PalleteGrey }}
@@ -99,7 +98,7 @@ function ContactsMain() {
             Regresar
           </Button>
           <Button
-            size="large"
+            size="medium"
             variant="contained"
             endIcon={<MdAdd size={20} />}
             style={{ backgroundColor: Colors.PalletePrimary }}

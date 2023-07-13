@@ -1,40 +1,77 @@
 import React, { useEffect, useState } from "react";
-import { Col, Row, Card, Container } from "react-bootstrap";
+import { Col, Row, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { MdAdd, MdMode, MdDelete } from "react-icons/md";
+import { MdAdd, MdMode, MdDelete, MdExpandMore } from "react-icons/md";
 import { Button } from "@mui/material";
 import { showConfirmDialog } from "../../shared/plugins/alert";
+import { deleteNew, getAllNews } from "../../utils/newsFunctions";
+import { styled } from "@mui/material/styles";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardActions,
+  Collapse,
+  IconButton,
+  Typography,
+} from "@mui/material";
+import Pagination from "../../components/shared/Pagination";
 import Colors from "../../utils/Colors";
 import SplashScreen from "../utils/SplashScreen";
 import NotFound from "../../components/shared/NotFound";
-import { deleteNew, getAllNews } from "../../utils/newsFunctions";
-import '../../assets/css/pages/CompanyNews.css'
+import "../../assets/css/pages/CompanyNews.css";
+
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+  marginLeft: "auto",
+  transition: theme.transitions.create("transform", {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
 
 function CompanyNews() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [newsList, setNewsList] = useState([
-    {
-      _id: "",
-      title: "",
-      summary: "",
-      type: "",
-      date: "",
-      author: "",
-      content: "",
-    },
-  ]);
+  const [newsList, setNewsList] = useState([]);
+  const [itemOffset, setItemOffset] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const getNews = async () => {
     setIsLoading(true);
     const data = await getAllNews();
-    setNewsList(data.dataNew)
+    setNewsList(data.dataNew);
     setIsLoading(false);
+  };
+
+  const handleExpandClick = (index) => {
+    setNewsList((prevNewsList) => {
+      const updatedNews = [...prevNewsList];
+      updatedNews[index].expanded = !updatedNews[index].expanded;
+      return updatedNews;
+    });
   };
 
   useEffect(() => {
     getNews();
   }, []);
+
+  const newsPerPage = 1;
+  const pageCount = Math.ceil(newsList.length / newsPerPage);
+
+  useEffect(() => {
+    const maxOffset = Math.max(0, newsList.length - newsPerPage);
+    const newOffset = Math.min(itemOffset, maxOffset);
+    setItemOffset(newOffset);
+  }, [newsList]);
+
+  const handlePageClick = (e) => {
+    const newOffset = e.selected * newsPerPage;
+    setItemOffset(newOffset);
+    setCurrentPage(e.selected + 1);
+  };
 
   const handleDelete = (id) => {
     console.log("clic");
@@ -45,12 +82,12 @@ function CompanyNews() {
       "Cancelar",
       () => {
         deleteNew(id).then(() => {
-          getNews()
+          getNews();
+          setItemOffset(0);
         });
       }
     );
   };
-
 
   if (isLoading) {
     return <SplashScreen />;
@@ -58,16 +95,16 @@ function CompanyNews() {
 
   return (
     <Container fluid>
-      <Row className="mb-4">
-        <Col xs={12} md={7} lg={8}>
-          <h1 className="new-title">Noticias</h1>
+      <Row className="mb-3">
+        <Col>
+          <h3>Noticias</h3>
         </Col>
-        <Col xs={12} md={5} lg={4} className="new-buttons-top">
+        <Col className="d-flex justify-content-end">
           <Button
             size="large"
             variant="contained"
-            endIcon={<MdAdd size={20} />}
-            style={{ fontSize: 13, backgroundColor: Colors.PalletePrimary }}
+            endIcon={<MdAdd />}
+            style={{ backgroundColor: Colors.PalletePrimary }}
             onClick={() => navigate("/news/create-new")}
           >
             Crear noticia
@@ -76,51 +113,65 @@ function CompanyNews() {
       </Row>
       {newsList.length !== 0 ? (
         <Row>
-          {newsList.map((notice) => (
-            <Col key={notice._id} xs={12} sm={6} md={4} lg={3}>
-              <Card className="new-card mt-2">
-                <Card.Body>
-                  <Card.Title
-                    className="new-name p-1"
-                    style={{
-                      display: "-webkit-box",
-                      WebkitLineClamp: 3,
-                      WebkitBoxOrient: "vertical",
-                      overflow: "hidden",
-                    }}
+          {newsList
+            .slice(itemOffset, itemOffset + newsPerPage)
+            .map((news, index) => (
+              <Card
+                className="mb-2"
+                sx={{
+                  width: "100%",
+                  backgroundColor: Colors.PalletePrimaryLight,
+                }}
+                key={news._id}
+              >
+                <CardHeader title={news.title} subheader={news.type} />
+                <CardContent>
+                  <Typography variant="body2" color="text.secondary">
+                    {news.summary}
+                  </Typography>
+                </CardContent>
+                <CardActions disableSpacing>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    endIcon={<MdMode />}
+                    style={{ backgroundColor: Colors.PalletePrimary }}
+                    onClick={() => navigate(`/news/edit-new/${news._id}`)}
+                    className="me-1"
                   >
-                    {notice.title}
-                  </Card.Title>
-                  <Card.Text className="text-center">
-                    {notice.summary}
-                  </Card.Text>
-                  <div className="d-flex justify-content-center">
-                    <Button
-                      size="small"
-                      variant="contained"
-                      endIcon={<MdMode size={15} />}
-                      style={{ fontSize: 12, backgroundColor: Colors.PalletePrimary }}
-                      onClick={() =>
-                        navigate(`/news/edit-new/${notice._id}`)
-                      }
-                      className="me-1"
-                    >
-                      Editar
-                    </Button>
-                    <Button
-                      size="small"
-                      variant="contained"
-                      endIcon={<MdDelete size={15} />}
-                      style={{ fontSize: 12, backgroundColor: Colors.PalleteDanger }}
-                      onClick={() => handleDelete(notice._id)}
-                    >
-                      Eliminar
-                    </Button>
-                  </div>
-                </Card.Body>
+                    Editar
+                  </Button>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    endIcon={<MdDelete />}
+                    style={{ backgroundColor: Colors.PalleteDanger }}
+                    onClick={() => handleDelete(news._id)}
+                  >
+                    Eliminar
+                  </Button>
+                  <ExpandMore
+                    expand={news.expanded}
+                    onClick={() => handleExpandClick(itemOffset + index)}
+                    aria-expanded={news.expanded}
+                    aria-label="show more"
+                  >
+                    <MdExpandMore />
+                  </ExpandMore>
+                </CardActions>
+                <Collapse in={news.expanded} timeout="auto" unmountOnExit>
+                  <CardContent>
+                    <Typography paragraph>
+                      <div
+                        className="content"
+                        dangerouslySetInnerHTML={{ __html: news.content }}
+                      ></div>
+                    </Typography>
+                  </CardContent>
+                </Collapse>
               </Card>
-            </Col>
-          ))}
+            ))}
+          <Pagination pageCount={pageCount} handlePageClick={handlePageClick} />
         </Row>
       ) : (
         <NotFound
