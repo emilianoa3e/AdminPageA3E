@@ -51,7 +51,6 @@ export const getAllUsers = async () => {
     const response = await axios.get(
       instance.defaults.baseURL + "/user/getAll-users"
     );
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);

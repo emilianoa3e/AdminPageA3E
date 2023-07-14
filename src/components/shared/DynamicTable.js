@@ -29,9 +29,12 @@ function DynamicTable({
   handleDelete,
   showFilter,
   navigate,
+  showPages,
 }) {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(
+    showPages ? showPages : 5
+  );
   const [showCompleted, setShowCompleted] = useState(false);
 
   const reversedData = [...data].reverse();
@@ -264,7 +267,10 @@ function DynamicTable({
                           </TableCell>
                         );
                       }
-                      if (column.id === "actions user") {
+                      if (
+                        column.id === "actions user" ||
+                        column.id === "actions positions"
+                      ) {
                         return (
                           <TableCell key={column.id} align={column.align}>
                             <ButtonGroup variant="contained">
@@ -321,7 +327,7 @@ function DynamicTable({
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[5, 10, 20, 30]}
+        rowsPerPageOptions={[3, 5, 10, 20, 30]}
         component="div"
         count={filteredData.length}
         rowsPerPage={rowsPerPage}

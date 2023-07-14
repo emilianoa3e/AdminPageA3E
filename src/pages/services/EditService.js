@@ -5,7 +5,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { updateService, getServiceById } from "../../utils/serviceFunctions";
 import { showConfirmDialog } from "../../shared/plugins/alert";
 import { Button } from "@mui/material";
-import { MdCheckCircleOutline, MdHighlightOff } from "react-icons/md";
+import {
+  MdCheckCircleOutline,
+  MdHighlightOff,
+  MdPhotoAlbum,
+} from "react-icons/md";
 import Galery from "../../components/shared/Galery";
 import SplashScreen from "../utils/SplashScreen";
 import ServiceForm from "../../components/services/ServiceForm";
@@ -18,12 +22,24 @@ function EditService() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [content, setContent] = useState("");
-  const [service, setService] = useState({
-    title: "",
-    subtitle: "",
-    summary: "",
-    content: "",
+  const [service, setService] = useState({});
+  const [state, setState] = useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
   });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -55,20 +71,14 @@ function EditService() {
   });
 
   if (isLoading) {
-    return <SplashScreen isLoading={isLoading} />;
+    return <SplashScreen />;
   }
 
   return (
     <Container fluid>
       <Row>
-        <Col
-          md={{ span: 8, offset: 2 }}
-          lg={{ span: 3, offset: 0 }}
-          className="text-center"
-        >
-          <Galery />
-        </Col>
-        <Col md={12} lg={9}>
+        <Galery anchor="left" state={state} toggleDrawer={toggleDrawer} />
+        <Col>
           <Formik
             initialValues={{
               title: service.title,
@@ -80,8 +90,19 @@ function EditService() {
           >
             {({ errors, values, touched, isValid }) => (
               <Form>
-                <Row className="text-end">
-                  <Col className="service-create-buttons-top">
+                <Row className="mb-3">
+                  <Col className="d-flex justify-content-end">
+                    <Col className="d-flex justify-content-start">
+                      <Button
+                        variant="contained"
+                        size="medium"
+                        endIcon={<MdPhotoAlbum />}
+                        style={{ backgroundColor: Colors.PalleteBlueGreen }}
+                        onClick={toggleDrawer("left", true)}
+                      >
+                        Galería
+                      </Button>
+                    </Col>
                     <Button
                       variant="contained"
                       size="medium"

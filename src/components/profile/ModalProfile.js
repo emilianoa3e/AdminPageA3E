@@ -31,8 +31,18 @@ export const ModalProfile = ({
   };
 
   const objectSchema = Yup.object({
-    name: Yup.string().required("El nombre es requerido"),
-    lastname: Yup.string().required("El apellido es requerido"),
+    name: Yup.string()
+    .matches(
+      /^[a-zA-Z áéíóúÁÉÍÓÚüïüëöñÑ@]+$/,
+      "El nombre no puede contener caracteres especiales"
+    )
+    .required("El nombre es requerido"),
+    lastname: Yup.string()
+    .matches(
+      /^[a-zA-Z áéíóúÁÉÍÓÚüïüëöñÑ@]+$/,
+      "El apellido no puede contener caracteres especiales"
+    )
+    .required("El apellido es requerido"),
     email: Yup.string()
       .email("El email no es válido")
       .required("El email es requerido"),

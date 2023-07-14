@@ -3,13 +3,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import { Form, Formik } from "formik";
 import { showConfirmDialog } from "../../shared/plugins/alert";
+import { getNewById, updateNew } from "../../utils/newsFunctions";
 import { Button } from "@mui/material";
-import { MdCheckCircleOutline, MdHighlightOff } from "react-icons/md";
+import {
+  MdCheckCircleOutline,
+  MdHighlightOff,
+  MdPhotoAlbum,
+} from "react-icons/md";
 import Galery from "../../components/shared/Galery";
 import * as yup from "yup";
 import Colors from "../../utils/Colors";
 import NoticeForm from "./NoticeForm";
-import { getNewById, updateNew } from "../../utils/newsFunctions";
 import SplashScreen from "../utils/SplashScreen";
 
 function EditNew() {
@@ -17,12 +21,24 @@ function EditNew() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [content, setContent] = useState("");
-  const [notice, setNotice] = useState({
-    title: "",
-    type: "",
-    summary: "",
-    content: "",
+  const [notice, setNotice] = useState({});
+  const [state, setState] = useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
   });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -61,14 +77,8 @@ function EditNew() {
   return (
     <Container fluid>
       <Row>
-        <Col
-          md={{ span: 8, offset: 2 }}
-          lg={{ span: 3, offset: 0 }}
-          className="text-center"
-        >
-          <Galery />
-        </Col>
-        <Col md={12} lg={9}>
+        <Galery anchor="left" state={state} toggleDrawer={toggleDrawer} />
+        <Col>
           <Formik
             initialValues={{
               title: notice.title,
@@ -81,8 +91,19 @@ function EditNew() {
           >
             {({ errors, values, touched, isValid }) => (
               <Form>
-                <Row className="text-end">
-                  <Col className="service-create-buttons-top">
+                <Row className="mb-3">
+                  <Col className="d-flex justify-content-end">
+                    <Col className="d-flex justify-content-start">
+                      <Button
+                        variant="contained"
+                        size="medium"
+                        endIcon={<MdPhotoAlbum />}
+                        style={{ backgroundColor: Colors.PalleteBlueGreen }}
+                        onClick={toggleDrawer("left", true)}
+                      >
+                        Galería
+                      </Button>
+                    </Col>
                     <Button
                       variant="contained"
                       size="medium"

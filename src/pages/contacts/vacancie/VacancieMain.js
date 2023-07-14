@@ -6,6 +6,7 @@ import {
   changeVacancieStatus,
   deleteVacancie,
 } from "../../../utils/vacanciesFunctions";
+import { ModalPosition } from "../../../components/contact/vacanciePositions/ModalPosition";
 import { Button } from "@mui/material";
 import { columnsVacancie } from "../../../components/columnsTables/columnsVacancie";
 import { showConfirmDialog } from "../../../shared/plugins/alert";
@@ -17,6 +18,7 @@ import Colors from "../../../utils/Colors";
 function VacancieMain() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [show, setShow] = useState(false);
   const [vacancies, setVacancies] = useState([
     {
       fullName: "",
@@ -30,6 +32,9 @@ function VacancieMain() {
       curriculum: "",
     },
   ]);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const getVacancies = async () => {
     setIsLoading(true);
@@ -76,8 +81,13 @@ function VacancieMain() {
 
   return (
     <Container fluid>
-      <Row>
-        <div style={{ width: "230px" }}>
+      <Row className="mb-3">
+        <Col
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
           <Button
             size="large"
             variant="contained"
@@ -87,7 +97,16 @@ function VacancieMain() {
           >
             Regresar
           </Button>
-        </div>
+          <Button
+            size="large"
+            variant="contained"
+            // startIcon={<MdAdd size={20} />}
+            style={{ backgroundColor: Colors.PalleteBlueGreen }}
+            onClick={handleShow}
+          >
+            Ver puestos para vacantes
+          </Button>
+        </Col>
       </Row>
       <Row className="mt-4">
         <Col lg={12} className="mt-1 p-0 m-0">
@@ -100,6 +119,7 @@ function VacancieMain() {
           />
         </Col>
       </Row>
+      <ModalPosition show={show} handleClose={handleClose} />
     </Container>
   );
 }
