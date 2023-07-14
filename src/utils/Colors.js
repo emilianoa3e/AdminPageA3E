@@ -8,6 +8,7 @@ export default {
   PalleteWarning: "#f5a623",
   PalleteInfo: "#00a2ff",
   PalleteGrey: "#9d9699",
+  PalleteBlueGreen: "#4e856f",
   PalleteWhite: "#fff",
   PalleteBlack: "#000",
   PalleteWhatsapp: "#25D366",

@@ -5,7 +5,11 @@ import { Form, Formik } from "formik";
 import { saveService } from "../../utils/serviceFunctions";
 import { showConfirmDialog } from "../../shared/plugins/alert";
 import { Button } from "@mui/material";
-import { MdCheckCircleOutline, MdArrowBackIosNew } from "react-icons/md";
+import {
+  MdCheckCircleOutline,
+  MdArrowBackIosNew,
+  MdPhotoAlbum,
+} from "react-icons/md";
 import ServiceForm from "../../components/services/ServiceForm";
 import Galery from "../../components/shared/Galery";
 import * as yup from "yup";
@@ -15,6 +19,23 @@ import Colors from "../../utils/Colors";
 function CreateService() {
   const navigate = useNavigate();
   const [content, setContent] = useState("");
+  const [state, setState] = useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
 
   const handleSubmit = (values, content) => {
     showConfirmDialog(
@@ -36,14 +57,8 @@ function CreateService() {
   return (
     <Container fluid>
       <Row>
-        <Col
-          md={{ span: 8, offset: 2 }}
-          lg={{ span: 3, offset: 0 }}
-          className="text-center"
-        >
-          <Galery />
-        </Col>
-        <Col md={12} lg={9}>
+        <Galery anchor="left" state={state} toggleDrawer={toggleDrawer} />
+        <Col>
           <Formik
             initialValues={{
               title: "",
@@ -55,8 +70,19 @@ function CreateService() {
           >
             {({ errors, values, touched, isValid, dirty }) => (
               <Form>
-                <Row className="text-end">
-                  <Col className="service-create-buttons-top">
+                <Row className="mb-3">
+                  <Col className="d-flex justify-content-end">
+                    <Col className="d-flex justify-content-start">
+                      <Button
+                        variant="contained"
+                        size="medium"
+                        endIcon={<MdPhotoAlbum />}
+                        style={{ backgroundColor: Colors.PalleteBlueGreen }}
+                        onClick={toggleDrawer("left", true)}
+                      >
+                        Galería
+                      </Button>
+                    </Col>
                     <Button
                       variant="contained"
                       size="medium"

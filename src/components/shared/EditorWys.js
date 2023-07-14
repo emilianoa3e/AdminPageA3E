@@ -9,7 +9,6 @@ function EditorWys({ setContent, initialContent }) {
       <Container>
         <Col>
           <Editor
-          
             apiKey="mx8xfbfszwym72a4mhwdhb2czmco4whjp4bls89y26ov210t"
             initialValue={initialContent}
             init={{
