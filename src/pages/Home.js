@@ -8,7 +8,7 @@ function Home() {
   return (
     <Container>
       <Col lg={12}>
-        <Row className="mb-4">
+        <Row className="mt-4">
           <BannerToNavigate
             image="https://res.cloudinary.com/a3e-media/image/upload/v1687278597/del%20home/banner_hiv8le.png"
             title="Banners"
@@ -16,12 +16,20 @@ function Home() {
             route="/banners"
           />
         </Row>
-        <Row>
+        <Row className="mt-4">
           <BannerToNavigate
             image="https://res.cloudinary.com/a3e-media/image/upload/v1687278954/del%20home/71316_b3vemx.png"
             title="Clientes"
             navigate={navigate}
             route="/clients"
+          />
+        </Row>
+        <Row className="mt-4">
+          <BannerToNavigate
+            image="https://res.cloudinary.com/a3e-media/image/upload/v1687278954/del%20home/71316_b3vemx.png"
+            title="Certificados"
+            navigate={navigate}
+            route="/certifications"
           />
         </Row>
       </Col>

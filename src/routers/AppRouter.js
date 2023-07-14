@@ -26,6 +26,7 @@ import VacancieMain from "../pages/contacts/vacancie/VacancieMain";
 import EditNew from "../pages/news/EditNew";
 import CreateNew from "../pages/news/CreateNew";
 import UserMain from "../pages/users/UserMain";
+import CertificationsMain from "../pages/certifications/CertificationsMain";
 
 const AppRouter = () => {
   const { state, renewAuthToken } = useContext(AuthContext);
@@ -67,6 +68,7 @@ const AppRouter = () => {
                 <Route exact path="/clients" element={<PrivateRoute />}>
                   <Route exact path="/clients" element={<ClientsMain />} />
                 </Route>
+                {/* Clients */}
                 <Route exact path="/services" element={<PrivateRoute />}>
                   <Route exact path="/services" element={<Services />} />
                 </Route>
@@ -97,6 +99,10 @@ const AppRouter = () => {
                 </Route>
                 <Route exact path="/users" element={<PrivateRoute />}>
                   <Route exact path="/users" element={<UserMain />} />
+                </Route>
+                {/* Certifications */}
+                <Route exact path="/certifications" element={<PrivateRoute />}>
+                  <Route exact path="/certifications" element={<CertificationsMain />} />
                 </Route>
               </>
             )}

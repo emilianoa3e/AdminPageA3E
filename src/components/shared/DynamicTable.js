@@ -216,7 +216,7 @@ function DynamicTable({
                           </TableCell>
                         );
                       }
-                      if (column.id === "actions banner") {
+                      if (column.id === "actions banner" || column.id === "actions certification") {
                         return (
                           <TableCell key={column.id} align={column.align}>
                             <ButtonGroup variant="contained">
