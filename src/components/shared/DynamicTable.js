@@ -18,6 +18,7 @@ import {
   MdDelete,
   MdMode,
   MdLink,
+  MdLinkOff,
 } from "react-icons/md";
 import Colors from "../../utils/Colors";
 
@@ -32,9 +33,7 @@ function DynamicTable({
   showPages,
 }) {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(
-    showPages ? showPages : 5
-  );
+  const [rowsPerPage, setRowsPerPage] = useState(showPages ? showPages : 5);
   const [showCompleted, setShowCompleted] = useState(false);
 
   const reversedData = [...data].reverse();
@@ -166,21 +165,41 @@ function DynamicTable({
                                   : row.link
                               }
                               target="_blank"
-                              style={{
-                                fontSize: 10,
-                                backgroundColor: Colors.PalletePrimary,
-                              }}
+                              style={
+                                column.id === "curriculum"
+                                  ? {
+                                      fontSize: 10,
+                                      backgroundColor: Colors.PalletePrimary,
+                                    }
+                                  : row.link
+                                  ? {
+                                      fontSize: 10,
+                                      backgroundColor: Colors.PalletePrimary,
+                                    }
+                                  : {
+                                      fontSize: 10,
+                                      backgroundColor:
+                                        Colors.PalletePrimaryLight,
+                                    }
+                              }
+                              disabled={
+                                column.id === "link" && !row.link ? true : false
+                              }
                               endIcon={
                                 column.id === "curriculum" ? (
                                   <IoMdEye />
-                                ) : (
+                                ) : row.link ? (
                                   <MdLink />
+                                ) : (
+                                  <MdLinkOff />
                                 )
                               }
                             >
                               {column.id === "curriculum"
                                 ? "Visualizar"
-                                : "Ir al link"}
+                                : row.link
+                                ? "Ir al link"
+                                : "No hay link"}
                             </Button>
                           </TableCell>
                         );
@@ -216,7 +235,10 @@ function DynamicTable({
                           </TableCell>
                         );
                       }
-                      if (column.id === "actions banner" ) {
+                      if (
+                        column.id === "actions banner" ||
+                        column.id === "actions certification"
+                      ) {
                         return (
                           <TableCell key={column.id} align={column.align}>
                             <ButtonGroup variant="contained">
@@ -226,58 +248,15 @@ function DynamicTable({
                                   backgroundColor: Colors.PalletePrimary,
                                 }}
                                 endIcon={<MdMode />}
-                                onClick={() => navigate(`/banners/${row._id}`)}
-                              >
-                                Editar
-                              </Button>
-                              <Button
-                                style={{
-                                  fontSize: 10,
-                                  backgroundColor: Colors.PalleteDanger,
+                                onClick={() => {
+                                  column.id === "actions banner"
+                                    ? navigate(
+                                        `/banners/edit-banner/${row._id}`
+                                      )
+                                    : navigate(
+                                        `/certifications/edit-certification/${row._id}`
+                                      );
                                 }}
-                                endIcon={<MdDelete />}
-                                onClick={() => handleDelete(row._id)}
-                              >
-                                Eliminar
-                              </Button>
-                              {row.status ? (
-                                <Button
-                                  style={{
-                                    fontSize: 10,
-                                    backgroundColor: Colors.PalleteSuccess,
-                                  }}
-                                  endIcon={<MdCheckCircleOutline />}
-                                  onClick={() => handleChangeStatus(row._id)}
-                                >
-                                  Activar
-                                </Button>
-                              ) : (
-                                <Button
-                                  style={{
-                                    fontSize: 10,
-                                    backgroundColor: Colors.PalleteGrey,
-                                  }}
-                                  endIcon={<MdHighlightOff />}
-                                  onClick={() => handleChangeStatus(row._id)}
-                                >
-                                  Desactivar
-                                </Button>
-                              )}
-                            </ButtonGroup>
-                          </TableCell>
-                        );
-                      }
-                      if ( column.id === "actions certification") {
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            <ButtonGroup variant="contained">
-                              <Button
-                                style={{
-                                  fontSize: 10,
-                                  backgroundColor: Colors.PalletePrimary,
-                                }}
-                                endIcon={<MdMode />}
-                                onClick={() => navigate(`/certifications/edit-certification/${row._id}`)}
                               >
                                 Editar
                               </Button>

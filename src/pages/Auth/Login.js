@@ -1,22 +1,27 @@
-import { Form, Formik } from "formik";
 import React, { useContext, useState } from "react";
 import styles from "../../assets/css/pages/Login.module.css";
+import { Form, Formik } from "formik";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { AuthContext } from "../../context/auth/AuthContext";
 import { Link } from "react-router-dom";
 import { Form as FormBt } from "react-bootstrap";
+import { TextInput } from "../../components/shared/TextInput";
+import { ModalForgotPass } from "../../components/auth/ModalForgotPass";
 import * as yup from "yup";
 import logo from "../../assets/img/logo.jpeg";
 import CustomButton from "../../components/shared/CustomButton";
-import { TextInput } from "../../components/shared/TextInput";
 
 function Login() {
   const { login } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
 
   //código provisional, no proporciona estado ni contexto
   const handleOnSubmit = (values, resetForm) => {
@@ -73,7 +78,7 @@ function Login() {
                     />
                     <Link
                       className={styles.loginForgotPassword}
-                      // onClick={handleShow}
+                      onClick={handleShow}
                     >
                       ¿Olvidaste tu contraseña?
                     </Link>
@@ -102,7 +107,7 @@ function Login() {
           </div>
         </div>
       </div>
-      {/* <ModalEmail handleClose={handleClose} show={show} /> */}
+      <ModalForgotPass show={showModal} handleClose={handleClose} />
     </>
   );
 }

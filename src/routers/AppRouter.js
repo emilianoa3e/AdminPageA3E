@@ -29,6 +29,7 @@ import UserMain from "../pages/users/UserMain";
 import CertificationsMain from "../pages/certifications/CertificationsMain";
 import CreateCertification from "../pages/certifications/CreateCertification";
 import EditCertification from "../pages/certifications/EditCertification";
+import ResetPassword from "../pages/Auth/ResetPassword";
 
 const AppRouter = () => {
   const { state, renewAuthToken } = useContext(AuthContext);
@@ -64,8 +65,16 @@ const AppRouter = () => {
                     element={<CreateBanner />}
                   />
                 </Route>
-                <Route exact path="/banners/:id" element={<PrivateRoute />}>
-                  <Route exact path="/banners/:id" element={<EditBanner />} />
+                <Route
+                  exact
+                  path="/banners/edit-banner/:id"
+                  element={<PrivateRoute />}
+                >
+                  <Route
+                    exact
+                    path="/banners/edit-banner/:id"
+                    element={<EditBanner />}
+                  />
                 </Route>
                 <Route exact path="/clients" element={<PrivateRoute />}>
                   <Route exact path="/clients" element={<ClientsMain />} />
@@ -208,6 +217,9 @@ const AppRouter = () => {
         <Routes>
           <Route exact path="/login" element={<PublicRoute />}>
             <Route exact path="/login" element={<Login />} />
+          </Route>
+          <Route exact path="/forgot-password/:token" element={<PublicRoute />}>
+            <Route exact path="/forgot-password/:token" element={<ResetPassword />} />
           </Route>
           <Route exact path="/*" element={<Navigate to="/login" replace />} />
         </Routes>

@@ -61,6 +61,97 @@ export const loginPost = async (email, password) => {
   }
 };
 
+export const forgotPasswordPost = async (values) => {
+  showLoadingAlert(
+    "Enviando correo de recuperación...",
+    "Por favor, espere un momento."
+  );
+
+  try {
+    const response = await axios.post(
+      instance.defaults.baseURL + "/auth/forgot-password",
+      {
+        email: values.email,
+      }
+    );
+
+    if (response.data.msg === "Email sent") {
+      showSimpleAlert(
+        "Correo enviado",
+        "Se ha enviado un correo de recuperación de contraseña a tu correo electrónico. Por favor, revisa tu bandeja de entrada.",
+        "success"
+      );
+    }
+  } catch (error) {
+    console.log("error", error);
+
+    if (error.response.data.msg === "User not found") {
+      showSimpleAlert(
+        "Correo no encontrado",
+        "El correo electrónico ingresado no se encuentra registrado.",
+        "error"
+      );
+    } else if (error.response.data.msg === "User disabled") {
+      showSimpleAlert(
+        "Cuenta deshabilitada",
+        "Tu cuenta ha sido deshabilitada. Por favor, contacta con el administrador.",
+        "error"
+      );
+    } else {
+      Toast.fire({
+        icon: "error",
+        title: "Error en el servidor 😞",
+      });
+    }
+  }
+};
+
+export const resetPasswordPost = async (values, token, navigate) => {
+  showLoadingAlert(
+    "Actualizando contraseña...",
+    "Por favor, espere un momento."
+  );
+
+  try {
+    const response = await axios.post(
+      instance.defaults.baseURL + `/auth/reset-password/${token}`,
+      {
+        password: values.password,
+      }
+    );
+
+    if (response.data.msg === "Password reset") {
+      showSimpleAlert(
+        "Contraseña actualizada",
+        "Tu contraseña ha sido actualizada correctamente. Inicia sesión con tu nueva contraseña.",
+        "success"
+      );
+      navigate("/login");
+    }
+  } catch (error) {
+    console.log("error", error);
+
+    if (error.response.data.msg === "Invalid token") {
+      showSimpleAlert(
+        "Enlace expirado o inválido",
+        "El enlace ha expirado o es inválido. Por favor, solicita un nuevo correo de recuperación de contraseña.",
+        "error"
+      );
+    } else if (error.response.data.msg === "Password is the same") {
+      showSimpleAlert(
+        "Error al actualizar contraseña",
+        "La contraseña ingresada es la misma que tienes actualmente. Por favor, ingresa una contraseña diferente.",
+        "error"
+      );
+    } else {
+      Toast.fire({
+        icon: "error",
+        title: "Error en el servidor 😞",
+      });
+    }
+  }
+};
+
 export const renewToken = async (dispatch) => {
   const token = localStorage.getItem("token") || null;
 

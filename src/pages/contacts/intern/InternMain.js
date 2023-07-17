@@ -17,19 +17,7 @@ import Colors from "../../../utils/Colors";
 function InternMain() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [interns, setInterns] = useState([
-    {
-      fullName: "",
-      phone: "",
-      email: "",
-      age: "",
-      institution: "",
-      typePractice: "",
-      degree: "",
-      period: "",
-      info: "",
-    },
-  ]);
+  const [interns, setInterns] = useState([]);
 
   const getInterns = async () => {
     setIsLoading(true);
