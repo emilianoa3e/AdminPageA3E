@@ -64,6 +64,50 @@ function BannerPreview({ title, description, image, link, onContext }) {
     }
   }
 
+if(onContext === "certificationPreview"){
+  return (
+    <Carousel
+      controls={false}
+      style={{ margin: 0, padding: 0 }}
+      className="carousel"
+    >
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src={image}
+          alt={title}
+          style={{ objectFit: "cover" }}
+        />
+        <Carousel.Caption
+          className="text-start w-100 h-50"
+          style={{ position: "absolute", left: 0 }}
+        >
+          {link ? (
+            <a
+              href={link}
+              target="_blank"
+              className="carousel-btn btn"
+              style={{
+                position: "relative",
+                top: 10,
+                left: 50,
+                backgroundColor: "#00743B",
+                color: "white",
+                padding: "0.6% 4% 0.6% 4%",
+                borderRadius: "0px 20px 20px 20px",
+              }}
+            >
+              VER MÁS
+            </a>
+          ) : (
+            ""
+          )}
+        </Carousel.Caption>
+      </Carousel.Item>
+    </Carousel>
+  );
+}
+
   if (onContext === "bannersMain") {
     return (
       <Carousel controls={false} style={{ margin: 0, padding: 0 }}>

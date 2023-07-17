@@ -216,7 +216,7 @@ function DynamicTable({
                           </TableCell>
                         );
                       }
-                      if (column.id === "actions banner" || column.id === "actions certification") {
+                      if (column.id === "actions banner" ) {
                         return (
                           <TableCell key={column.id} align={column.align}>
                             <ButtonGroup variant="contained">
@@ -227,6 +227,57 @@ function DynamicTable({
                                 }}
                                 endIcon={<MdMode />}
                                 onClick={() => navigate(`/banners/${row._id}`)}
+                              >
+                                Editar
+                              </Button>
+                              <Button
+                                style={{
+                                  fontSize: 10,
+                                  backgroundColor: Colors.PalleteDanger,
+                                }}
+                                endIcon={<MdDelete />}
+                                onClick={() => handleDelete(row._id)}
+                              >
+                                Eliminar
+                              </Button>
+                              {row.status ? (
+                                <Button
+                                  style={{
+                                    fontSize: 10,
+                                    backgroundColor: Colors.PalleteSuccess,
+                                  }}
+                                  endIcon={<MdCheckCircleOutline />}
+                                  onClick={() => handleChangeStatus(row._id)}
+                                >
+                                  Activar
+                                </Button>
+                              ) : (
+                                <Button
+                                  style={{
+                                    fontSize: 10,
+                                    backgroundColor: Colors.PalleteGrey,
+                                  }}
+                                  endIcon={<MdHighlightOff />}
+                                  onClick={() => handleChangeStatus(row._id)}
+                                >
+                                  Desactivar
+                                </Button>
+                              )}
+                            </ButtonGroup>
+                          </TableCell>
+                        );
+                      }
+                      if ( column.id === "actions certification") {
+                        return (
+                          <TableCell key={column.id} align={column.align}>
+                            <ButtonGroup variant="contained">
+                              <Button
+                                style={{
+                                  fontSize: 10,
+                                  backgroundColor: Colors.PalletePrimary,
+                                }}
+                                endIcon={<MdMode />}
+                                onClick={() => navigate(`/certifications/edit-certification/${row._id}`)}
                               >
                                 Editar
                               </Button>

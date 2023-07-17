@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import { MdAdd, MdDelete, MdArrowBackIosNew } from "react-icons/md";
 import { Container, Col, Row } from "react-bootstrap";
 import Colors from "../../utils/Colors";
@@ -7,8 +7,8 @@ import { columnsCertification } from "../../components/columnsTables/columnsCert
 import DynamicTable from "../../components/shared/DynamicTable";
 import { Button } from "@mui/material";
 import SplashScreen from "../utils/SplashScreen";
-import { getAllCertifications } from "../../utils/certificationFunctions";
-
+import { deleteCertification, getAllCertifications, updateStatusCertification } from "../../utils/certificationFunctions";
+import { showConfirmDialog } from "../../shared/plugins/alert";
 function CertificationsMain() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -26,30 +26,30 @@ function CertificationsMain() {
   },[])
 
   const handleChangeStatus = (id) => {
-    // showConfirmDialog(
-    //   "¿Estás seguro de cambiar el status del banner?",
-    //   "Se cambiará el status del banner",
-    //   "Si, cambiar status",
-    //   "Cancelar",
-    //   () => {
-    //     updateStatus(id).then(() => {
-    //       getBanners();
-    //     });
-    //   }
-    // );
+    showConfirmDialog(
+      "¿Estás seguro de cambiar el status del banner?",
+      "Se cambiará el status del banner",
+      "Si, cambiar status",
+      "Cancelar",
+      () => {
+        updateStatusCertification(id).then(() => {
+          getCertifications();
+        });
+      }
+    );
   };
   const handleDelete = (id) => {
-    // showConfirmDialog(
-    //   "¿Estás seguro de eliminar el banner?",
-    //   "Se eliminará el banner",
-    //   "Si, eliminar banner",
-    //   "Cancelar",
-    //   () => {
-    //     deleteBanner(id).then(() => {
-    //       getBanners();
-    //     });
-    //   }
-    // );
+    showConfirmDialog(
+      "¿Estás seguro de eliminar el certificado?",
+      "Se eliminará el certificado",
+      "Si, eliminar certificado",
+      "Cancelar",
+      () => {
+        deleteCertification(id).then(() => {
+          getCertifications();
+        });
+      }
+    );
   };
   if (isLoading) {
     return <SplashScreen />;
@@ -58,7 +58,7 @@ function CertificationsMain() {
     <Container fluid>
       <Row className="mb-4">
         <Col xs={12} md={7} lg={8}>
-          <h1 className="client-title">Certificados y licencias</h1>
+          
         </Col>
         <Col xs={12} md={5} lg={4} className="client-buttons">
           <Button
@@ -66,7 +66,7 @@ function CertificationsMain() {
             variant="contained"
             startIcon={<MdArrowBackIosNew />}
             style={{ backgroundColor: Colors.PalleteGrey }}
-            onClick={() => navigate("/home")}
+            onClick={() => navigate( window. history. back())}
             className="me-2"
           >
             Regresar
@@ -75,6 +75,7 @@ function CertificationsMain() {
             size="large"
             variant="contained"
             endIcon={<MdAdd />}
+            onClick={() => navigate("/certifications/create-certification")}
             style={{ backgroundColor: Colors.PalletePrimary }}
           >
             Registrar

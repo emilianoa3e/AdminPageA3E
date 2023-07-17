@@ -128,7 +128,7 @@ const FileDropzone = ({
     );
   }
 
-  if (onContext === "banner" || onContext === "client") {
+  if (onContext === "banner" || onContext === "client" || onContext==="certification") {
     return (
       <>
         <div className={getDropzoneClass()} {...getRootProps()}>

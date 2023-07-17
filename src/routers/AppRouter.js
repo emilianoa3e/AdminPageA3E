@@ -27,6 +27,8 @@ import EditNew from "../pages/news/EditNew";
 import CreateNew from "../pages/news/CreateNew";
 import UserMain from "../pages/users/UserMain";
 import CertificationsMain from "../pages/certifications/CertificationsMain";
+import CreateCertification from "../pages/certifications/CreateCertification";
+import EditCertification from "../pages/certifications/EditCertification";
 
 const AppRouter = () => {
   const { state, renewAuthToken } = useContext(AuthContext);
@@ -102,7 +104,33 @@ const AppRouter = () => {
                 </Route>
                 {/* Certifications */}
                 <Route exact path="/certifications" element={<PrivateRoute />}>
-                  <Route exact path="/certifications" element={<CertificationsMain />} />
+                  <Route
+                    exact
+                    path="/certifications"
+                    element={<CertificationsMain />}
+                  />
+                </Route>
+                <Route
+                  exact
+                  path="/certifications/create-certification"
+                  element={<PrivateRoute />}
+                >
+                  <Route
+                    exact
+                    path="/certifications/create-certification"
+                    element={<CreateCertification />}
+                  />
+                </Route>
+                <Route
+                  exact
+                  path="/certifications/edit-certification/:id"
+                  element={<PrivateRoute />}
+                >
+                  <Route
+                    exact
+                    path="/certifications/edit-certification/:id"
+                    element={<EditCertification />}
+                  />
                 </Route>
               </>
             )}
