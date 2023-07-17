@@ -137,6 +137,7 @@ export const resetPasswordPost = async (values, token, navigate) => {
         "El enlace ha expirado o es inválido. Por favor, solicita un nuevo correo de recuperación de contraseña.",
         "error"
       );
+      navigate("/login");
     } else if (error.response.data.msg === "Password is the same") {
       showSimpleAlert(
         "Error al actualizar contraseña",
@@ -148,6 +149,7 @@ export const resetPasswordPost = async (values, token, navigate) => {
         icon: "error",
         title: "Error en el servidor 😞",
       });
+      navigate("/login");
     }
   }
 };
