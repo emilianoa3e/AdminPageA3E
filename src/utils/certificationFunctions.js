@@ -46,7 +46,7 @@ export const saveCertification = async (values, file, navigate) => {
     if (response.data.msg === "Certification saved") {
       Toast.fire({
         icon: "success",
-        title: "Certificado creado exitosamente 😄",
+        title: "¡Certificado creado exitosamente! 😄",
       });
 
       navigate("/certifications");
@@ -89,7 +89,7 @@ export const updateCertification = async(id, values, file, navigate)=>{
     if (response.data.msg === "Certification updated") {
       Toast.fire({
         icon: "success",
-        title: "Certificado actualizado exitosamente 😄",
+        title: "¡Certificado actualizado exitosamente! 😄",
       });
 
       navigate("/certifications");
@@ -99,7 +99,7 @@ export const updateCertification = async(id, values, file, navigate)=>{
     if (error.response.data.msg === "Certification already exists") {
       Toast.fire({
         icon: "error",
-        title: "Ya existe un certificado con ese título 😞",
+        title: "Ya existe un certificado con ese título 🫤",
       });
     } else {
       Toast.fire({
@@ -120,7 +120,7 @@ export const updateStatusCertification = async (id)=>{
     if (response.data.msg === "Certification status updated") {
       Toast.fire({
         icon: "success",
-        title: "Status cambiado con éxito 😄",
+        title: "¡Status cambiado con éxito! 😄",
       });
     }
   }catch(error){
@@ -143,7 +143,7 @@ export const deleteCertification = async (id)=>{
     if (response.data.msg === "Certification deleted") {
       Toast.fire({
         icon: "success",
-        title: "Certificado eliminado con éxito 😄",
+        title: "¡Certificado eliminado con éxito! 😄",
       });
     }
   }catch(error){

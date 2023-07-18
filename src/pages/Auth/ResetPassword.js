@@ -1,18 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Form as FormBt, Image } from "react-bootstrap";
 import { Formik, Form } from "formik";
 import { TextInput } from "../../components/shared/TextInput";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { showConfirmDialog } from "../../shared/plugins/alert";
-import { resetPasswordPost } from "../../utils/AuthFunctions";
+import { resetPasswordPost, verifyTokenValidity } from "../../utils/authFunctions";
 import CustomButton from "../../components/shared/CustomButton";
 import logo from "../../assets/img/logo.jpeg";
 import * as Yup from "yup";
+import SplashScreen from "../../pages/utils/SplashScreen";
 
 function ResetPassword() {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const token = window.location.pathname.split("/")[2];
+
+  const verifyToken = async () => {
+    setIsLoading(true);
+    const response = await verifyTokenValidity(token, navigate);
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    verifyToken();
+  }, []);
 
   const toggleShowPassword = () => setShowPassword(!showPassword);
 
@@ -26,7 +39,6 @@ function ResetPassword() {
   });
 
   const handleSubmit = (values) => {
-    const token = window.location.pathname.split("/")[2];
     showConfirmDialog(
       "¿Está seguro de reestablecer su contraseña?",
       "Una vez reestablecida su contraseña, deberá iniciar sesión nuevamente",
@@ -37,6 +49,10 @@ function ResetPassword() {
       }
     );
   };
+
+  if (isLoading) {
+    return <SplashScreen />;
+  }
 
   return (
     <Container>

@@ -21,7 +21,7 @@ export const saveUser = async (values) => {
     if (response.data.msg === "User saved") {
       Toast.fire({
         icon: "success",
-        title: "Usuario creado exitosamente 😄",
+        title: "¡Usuario creado exitosamente! 😄",
       });
     }
   } catch (error) {
@@ -30,7 +30,7 @@ export const saveUser = async (values) => {
     if (error.response.data.msg === "User already exists") {
       Toast.fire({
         icon: "error",
-        title: "Ya existe un usuario con ese correo 😞",
+        title: "Este correo ya está en uso 🫤",
       });
     } else if (error.response.data.msg === "Invalid email domain") {
       Toast.fire({
@@ -68,7 +68,7 @@ export const changeStatus = async (id) => {
     if (response.data.msg === "Status changed") {
       Toast.fire({
         icon: "success",
-        title: "Status actualizado exitosamente 😄",
+        title: "¡Status actualizado exitosamente! 😄",
       });
     }
   } catch (error) {
@@ -92,7 +92,7 @@ export const deleteUser = async (id) => {
     if (response.data.msg === "User deleted") {
       Toast.fire({
         icon: "success",
-        title: "Usuario eliminado exitosamente 😄",
+        title: "¡Usuario eliminado exitosamente! 😄",
       });
     }
   } catch (error) {

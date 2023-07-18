@@ -13,7 +13,7 @@ export const showConfirmDialog = (
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#002e60",
-    cancelButtonColor: "rgb(221, 51, 51)",
+    cancelButtonColor: "#a60c07",
     confirmButtonText: confirmButtonText,
     cancelButtonText: cancelButtonText,
   }).then((result) => {

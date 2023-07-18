@@ -25,7 +25,7 @@ export const changeInternStatus = async (id) => {
     if (response.data.msg === "Intern status changed") {
       Toast.fire({
         icon: "success",
-        title: "Status cambiado con éxito 😄",
+        title: "¡Status cambiado con éxito! 😄",
       });
     }
   } catch (error) {
@@ -49,7 +49,7 @@ export const deleteIntern = async (id) => {
     if (response.data.msg === "Intern deleted") {
       Toast.fire({
         icon: "success",
-        title: "Practicante eliminado con éxito 😄",
+        title: "¡Solicitud eliminado con éxito! 😄",
       });
     }
   } catch (error) {

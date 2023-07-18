@@ -25,7 +25,7 @@ export const changeVacancieStatus = async (id) => {
     if (response.data.msg === "Vacancie status changed") {
       Toast.fire({
         icon: "success",
-        title: "Status cambiado con éxito 😄",
+        title: "¡Status cambiado con éxito! 😄",
       });
     }
   } catch (error) {
@@ -49,7 +49,7 @@ export const deleteVacancie = async (id) => {
     if (response.data.msg === "Vacancie deleted") {
       Toast.fire({
         icon: "success",
-        title: "Vacante eliminada con éxito 😄",
+        title: "¡Solicitud eliminada con éxito! 😄",
       });
     }
   } catch (error) {

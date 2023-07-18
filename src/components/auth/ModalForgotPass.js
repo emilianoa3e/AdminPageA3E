@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Modal, Form as FormBt } from "react-bootstrap";
 import { Form, Formik } from "formik";
 import { TextInput } from "../shared/TextInput";
-import { MdOutlineMail, MdCheckCircleOutline } from "react-icons/md";
+import { MdOutlineMail, MdSend } from "react-icons/md";
 import { showConfirmDialog } from "../../shared/plugins/alert";
-import { forgotPasswordPost } from "../../utils/AuthFunctions";
+import { forgotPasswordPost } from "../../utils/authFunctions";
 import { Button } from "@mui/material";
 import * as Yup from "yup";
 import Colors from "../../utils/Colors";
@@ -18,8 +18,8 @@ export const ModalForgotPass = ({ props, show, handleClose }) => {
 
   const handleSubmit = (values) => {
     showConfirmDialog(
-      "¿Está seguro de que desea enviar el correo electrónico?",
-      "Se enviará un correo electrónico para recuperar la contraseña",
+      "¿Está seguro que desea enviar el correo electrónico?",
+      "Se enviará a su correo electrónico un enlace para recuperar su contraseña",
       "Enviar",
       "Cancelar",
       () => {
@@ -67,14 +67,14 @@ export const ModalForgotPass = ({ props, show, handleClose }) => {
                 variant="contained"
                 type="submit"
                 size="medium"
-                endIcon={<MdCheckCircleOutline />}
+                endIcon={<MdSend />}
                 style={
                   !!errors.email || !values.email
                     ? {
                         backgroundColor: Colors.PalletePrimaryLight,
                       }
                     : {
-                        backgroundColor: Colors.PalletePrimary,
+                        backgroundColor: Colors.PalleteDanger,
                       }
                 }
                 disabled={!!errors.email || !values.email}

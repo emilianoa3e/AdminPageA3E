@@ -15,7 +15,7 @@ export const savePosition = async (values) => {
     if (response.data.msg === "Position saved") {
       Toast.fire({
         icon: "success",
-        title: "Puesto creado exitosamente 😄",
+        title: "¡Puesto creado exitosamente! 😄",
       });
     }
   } catch (error) {
@@ -57,7 +57,7 @@ export const changePositionStatus = async (id) => {
     if (response.data.msg === "Position status changed") {
       Toast.fire({
         icon: "success",
-        title: "Status actualizado exitosamente 😄",
+        title: "¡Status actualizado exitosamente! 😄",
       });
     }
   } catch (error) {
@@ -81,7 +81,7 @@ export const deletePosition = async (id) => {
     if (response.data.msg === "Position deleted") {
       Toast.fire({
         icon: "success",
-        title: "Puesto eliminado exitosamente 😄",
+        title: "¡Puesto eliminado exitosamente! 😄",
       });
     }
   } catch (error) {

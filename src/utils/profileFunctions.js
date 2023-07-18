@@ -32,7 +32,7 @@ export const updateUser = async (id, values, data) => {
     if (response.data.msg === "User updated") {
       Toast.fire({
         icon: "success",
-        title: "Información actualizada exitosamente 😄",
+        title: "¡Información actualizada exitosamente! 😄",
       });
     }
   } catch (error) {
@@ -76,7 +76,7 @@ export const updatePassword = async (id, values) => {
     if (response.data.msg === "Password updated") {
       Toast.fire({
         icon: "success",
-        title: "Contraseña actualizada exitosamente 😄",
+        title: "¡Contraseña actualizada exitosamente! 😄",
       });
     }
   } catch (error) {

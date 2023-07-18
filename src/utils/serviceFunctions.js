@@ -19,7 +19,7 @@ export const saveService = async (values, content, navigate) => {
     if (response.data.msg === "Service saved") {
       Toast.fire({
         icon: "success",
-        title: "Servicio creado exitosamente 😄",
+        title: "¡Servicio creado exitosamente! 😄",
       });
 
       navigate("/services");
@@ -30,7 +30,7 @@ export const saveService = async (values, content, navigate) => {
     if (error.response.data.msg === "Service already exists") {
       Toast.fire({
         icon: "error",
-        title: "Ya existe un servicio con ese título 😞",
+        title: "Ya existe un servicio con ese título 🫤",
       });
     } else {
       Toast.fire({
@@ -80,7 +80,7 @@ export const updateService = async (id, values, content, navigate) => {
     if (response.data.msg === "Service updated") {
       Toast.fire({
         icon: "success",
-        title: "Servicio actualizado exitosamente 😄",
+        title: "¡Servicio actualizado exitosamente! 😄",
       });
 
       navigate("/services");
@@ -113,7 +113,7 @@ export const deleteService = async (id) => {
     if (response.data.msg === "Service deleted") {
       Toast.fire({
         icon: "success",
-        title: "Servicio eliminado exitosamente 😄",
+        title: "¡Servicio eliminado exitosamente! 😄",
       });
     }
   } catch (error) {

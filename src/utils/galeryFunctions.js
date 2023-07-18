@@ -22,7 +22,7 @@ export const uploadMultimedia = async (file) => {
     if (response.data.msg === "Multimedia saved") {
       Toast.fire({
         icon: "success",
-        title: "Multimedia guardado con éxito 😄",
+        title: "¡Multimedia guardado con éxito! 😄",
       });
     }
   } catch (error) {
@@ -65,7 +65,7 @@ export const deleteMultimedia = async (id) => {
     if (response.data.msg === "Multimedia deleted") {
       Toast.fire({
         icon: "success",
-        title: "Multimedia eliminado con éxito 😄",
+        title: "¡Multimedia eliminado con éxito! 😄",
       });
     }
   } catch (error) {

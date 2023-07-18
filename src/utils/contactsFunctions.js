@@ -14,7 +14,7 @@ export const createContact = async (values) => {
     if (response.data.msg === "Contact saved") {
       Toast.fire({
         icon: "success",
-        title: "Contacto creado exitosamente 😄",
+        title: "¡Contacto creado exitosamente! 😄",
       });
     }
   } catch (error) {
@@ -63,7 +63,7 @@ export const updateContact = async (id, values) => {
     if (response.data.msg === "Contact updated") {
       Toast.fire({
         icon: "success",
-        title: "Contacto actualizado exitosamente 😄",
+        title: "¡Contacto actualizado exitosamente! 😄",
       });
     }
   } catch (error) {
@@ -87,7 +87,7 @@ export const deleteContact = async (id) => {
     if (response.data.msg === "Contact deleted") {
       Toast.fire({
         icon: "success",
-        title: "Contacto eliminado exitosamente 😄",
+        title: "¡Contacto eliminado exitosamente! 😄",
       });
     }
   } catch (error) {

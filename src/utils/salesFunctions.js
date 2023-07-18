@@ -25,7 +25,7 @@ export const changeSaleStatus = async (id) => {
     if (response.data.msg === "Sale status changed") {
       Toast.fire({
         icon: "success",
-        title: "Status cambiado con éxito 😄",
+        title: "¡Status cambiado con éxito! 😄",
       });
     }
   } catch (error) {
@@ -49,7 +49,7 @@ export const deleteSale = async (id) => {
     if (response.data.msg === "Sale deleted") {
       Toast.fire({
         icon: "success",
-        title: "Venta eliminada con éxito 😄",
+        title: "¡Solicitud eliminada con éxito! 😄",
       });
     }
   } catch (error) {

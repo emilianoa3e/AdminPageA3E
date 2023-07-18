@@ -25,7 +25,7 @@ export const saveBanner = async (values, file, navigate) => {
     if (response.data.msg === "Banner saved") {
       Toast.fire({
         icon: "success",
-        title: "Banner creado exitosamente 😄",
+        title: "¡Banner creado exitosamente! 😄",
       });
 
       navigate("/banners");
@@ -94,7 +94,7 @@ export const updateBanner = async (id, values, file, navigate) => {
     if (response.data.msg === "Banner updated") {
       Toast.fire({
         icon: "success",
-        title: "Banner actualizado exitosamente 😄",
+        title: "¡Banner actualizado exitosamente! 😄",
       });
 
       navigate("/banners");
@@ -127,7 +127,7 @@ export const updateStatus = async (id) => {
     if (response.data.msg === "Banner status updated") {
       Toast.fire({
         icon: "success",
-        title: "Status cambiado con éxito 😄",
+        title: "¡Status cambiado con éxito! 😄",
       });
     }
   } catch (error) {
@@ -151,7 +151,7 @@ export const deleteBanner = async (id) => {
     if (response.data.msg === "Banner deleted") {
       Toast.fire({
         icon: "success",
-        title: "Banner eliminado con éxito 😄",
+        title: "¡Banner eliminado con éxito! 😄",
       });
     }
   } catch (error) {

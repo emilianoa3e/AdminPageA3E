@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import AppRouter from "./routers/AppRouter";
 import "../src/assets/css/General.css";
-import { loginPost, renewToken } from "./utils/AuthFunctions";
+import { loginPost, renewToken } from "./utils/authFunctions";
 import { useState, useEffect, useReducer } from "react";
 import { AuthContext } from "./context/auth/AuthContext";
 import { authReducer } from "./context/auth/AuthReducer";

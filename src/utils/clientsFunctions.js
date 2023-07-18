@@ -23,7 +23,7 @@ export const saveClient = async (values, file) => {
     if (response.data.msg === "Client saved") {
       Toast.fire({
         icon: "success",
-        title: "Cliente creado exitosamente 😄",
+        title: "¡Cliente creado exitosamente! 😄",
       });
     }
   } catch (error) {
@@ -71,7 +71,7 @@ export const deleteClient = async (id) => {
     if (response.data.msg === "Client deleted") {
       Toast.fire({
         icon: "success",
-        title: "Cliente eliminado exitosamente 😄",
+        title: "¡Cliente eliminado exitosamente! 😄",
       });
     }
   } catch (error) {

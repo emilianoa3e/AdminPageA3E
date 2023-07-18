@@ -41,7 +41,7 @@ export const saveNew = async (values, content, navigate) => {
     if (response.data.msg === "New saved") {
       Toast.fire({
         icon: "success",
-        title: "Noticia creada exitosamente 😄",
+        title: "¡Noticia creada exitosamente! 😄",
       });
 
       navigate("/news");
@@ -78,7 +78,7 @@ export const updateNew = async (id, values, content, navigate) =>{
     if (response.data.msg === "New updated") {
       Toast.fire({
         icon: "success",
-        title: "Noticia actualizado exitosamente 😄",
+        title: "¡Noticia actualizado exitosamente! 😄",
       });
 
       navigate("/news");
@@ -108,7 +108,7 @@ export const deleteNew = async (id)=>{
     if (response.data.msg === "New deleted") {
       Toast.fire({
         icon: "success",
-        title: "Noticia eliminado exitosamente 😄",
+        title: "¡Noticia eliminado exitosamente! 😄",
       });
     }
   }catch(error){

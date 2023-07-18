@@ -27,7 +27,7 @@ export const loginPost = async (email, password) => {
     ) {
       Toast.fire({
         icon: "success",
-        title: "Bienvenido de nuevo 😄",
+        title: "¡Bienvenido de nuevo! 😄",
       });
       return response.data.token;
     }
@@ -77,7 +77,7 @@ export const forgotPasswordPost = async (values) => {
 
     if (response.data.msg === "Email sent") {
       showSimpleAlert(
-        "Correo enviado",
+        "¡Correo enviado!",
         "Se ha enviado un correo de recuperación de contraseña a tu correo electrónico. Por favor, revisa tu bandeja de entrada.",
         "success"
       );
@@ -87,13 +87,13 @@ export const forgotPasswordPost = async (values) => {
 
     if (error.response.data.msg === "User not found") {
       showSimpleAlert(
-        "Correo no encontrado",
+        "¡Correo no encontrado!",
         "El correo electrónico ingresado no se encuentra registrado.",
         "error"
       );
     } else if (error.response.data.msg === "User disabled") {
       showSimpleAlert(
-        "Cuenta deshabilitada",
+        "¡Cuenta deshabilitada!",
         "Tu cuenta ha sido deshabilitada. Por favor, contacta con el administrador.",
         "error"
       );
@@ -122,7 +122,7 @@ export const resetPasswordPost = async (values, token, navigate) => {
 
     if (response.data.msg === "Password reset") {
       showSimpleAlert(
-        "Contraseña actualizada",
+        "¡Contraseña actualizada!",
         "Tu contraseña ha sido actualizada correctamente. Inicia sesión con tu nueva contraseña.",
         "success"
       );
@@ -134,7 +134,7 @@ export const resetPasswordPost = async (values, token, navigate) => {
     if (error.response.data.msg === "Invalid token") {
       showSimpleAlert(
         "Enlace expirado o inválido",
-        "El enlace ha expirado o es inválido. Por favor, solicita un nuevo correo de recuperación de contraseña.",
+        "Por favor, solicita un nuevo correo de recuperación de contraseña.",
         "error"
       );
       navigate("/login");
@@ -229,5 +229,29 @@ export const renewToken = async (dispatch) => {
     dispatch({
       type: "LOGOUT",
     });
+  }
+};
+
+export const verifyTokenValidity = async (token, navigate) => {
+  try {
+    const response = await axios.get(
+      instance.defaults.baseURL + `/auth/verify-token/${token}`,
+    )
+    
+    if (response.data.msg === "Token is valid") {
+      return true;
+    }
+
+  } catch (error) {
+    console.log(error);
+    if (error.response.data.msg === "Token expired") {
+      showSimpleAlert(
+        "¡El enlace ha expirado!",
+        "Por favor, solicita un nuevo correo de recuperación de contraseña.",
+        "error"
+      );
+    }
+    localStorage.removeItem("token");
+    navigate("/login");
   }
 };
