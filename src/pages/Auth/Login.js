@@ -65,7 +65,7 @@ function Login() {
                       isInvalid={!!errors.email && touched.email}
                     />
                   </FormBt.Group>
-                  <FormBt.Group className="mb-4">
+                  <FormBt.Group className="mb-2">
                     <TextInput
                       autoComplete="off"
                       label="Contraseña"
@@ -76,14 +76,14 @@ function Login() {
                       icon={showPassword ? IoMdEye : IoMdEyeOff}
                       onIconClick={toggleShowPassword}
                     />
-                    <Link
-                      className={styles.loginForgotPassword}
-                      onClick={handleShow}
-                    >
-                      ¿Olvidaste tu contraseña?
-                    </Link>
                   </FormBt.Group>
-                  <div className="text-center">
+                  <Link
+                    className={styles.loginForgotPassword}
+                    onClick={handleShow}
+                  >
+                    ¿Olvidaste tu contraseña?
+                  </Link>
+                  <div className="mt-2 text-center">
                     <CustomButton
                       text="Iniciar sesión"
                       className="w-100"

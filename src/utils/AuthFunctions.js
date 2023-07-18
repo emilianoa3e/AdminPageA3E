@@ -235,19 +235,24 @@ export const renewToken = async (dispatch) => {
 export const verifyTokenValidity = async (token, navigate) => {
   try {
     const response = await axios.get(
-      instance.defaults.baseURL + `/auth/verify-token/${token}`,
-    )
-    
-    if (response.data.msg === "Token is valid") {
+      instance.defaults.baseURL + `/auth/verify-token/${token}`
+    );
+
+    if (response.data.msg === "Token valid") {
       return true;
     }
-
   } catch (error) {
     console.log(error);
     if (error.response.data.msg === "Token expired") {
       showSimpleAlert(
         "¡El enlace ha expirado!",
         "Por favor, solicita un nuevo correo de recuperación de contraseña.",
+        "error"
+      );
+    } else if (error.response.data.msg === "Token already used") {
+      showSimpleAlert(
+        "¡El enlace ya ha sido utilizado!",
+        "No puedes utilizar el mismo enlace de recuperación de contraseña más de una vez.",
         "error"
       );
     }
