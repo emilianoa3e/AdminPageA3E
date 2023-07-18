@@ -50,7 +50,7 @@ const AppRouter = () => {
         <Layout>
           <RenewToken />
           <Routes>
-            {role === "admin" && (
+            {(role === "admin" || role === "superadmin") && (
               <>
                 <Route exact path="/" element={<PrivateRoute />}>
                   <Route exact path="/" element={<Home />} />
@@ -108,9 +108,11 @@ const AppRouter = () => {
                 <Route exact path="/us" element={<PrivateRoute />}>
                   <Route exact path="/us" element={<OurCompany />} />
                 </Route>
-                <Route exact path="/users" element={<PrivateRoute />}>
-                  <Route exact path="/users" element={<UserMain />} />
-                </Route>
+                {role === "superadmin" && (
+                  <Route exact path="/users" element={<PrivateRoute />}>
+                    <Route exact path="/users" element={<UserMain />} />
+                  </Route>
+                )}
                 {/* Certifications */}
                 <Route exact path="/certifications" element={<PrivateRoute />}>
                   <Route
@@ -219,7 +221,11 @@ const AppRouter = () => {
             <Route exact path="/login" element={<Login />} />
           </Route>
           <Route exact path="/forgot-password/:token" element={<PublicRoute />}>
-            <Route exact path="/forgot-password/:token" element={<ResetPassword />} />
+            <Route
+              exact
+              path="/forgot-password/:token"
+              element={<ResetPassword />}
+            />
           </Route>
           <Route exact path="/*" element={<Navigate to="/login" replace />} />
         </Routes>

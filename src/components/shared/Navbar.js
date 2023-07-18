@@ -26,7 +26,7 @@ function CustomNavbar() {
         <NavbarBt.Toggle aria-controls="basic-navbar-nav" />
         <NavbarBt.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            {role === "admin" && (
+            {(role === "admin" || role === "superadmin") && (
               <>
                 <NavLink to="/" className="nav-link">
                   <MdHome className="me-1" size={25} />
@@ -50,7 +50,7 @@ function CustomNavbar() {
               <MdOutlineContactSupport className="me-1" size={25} />
               <span className="nav-link-text">Contacto</span>
             </NavLink>
-            {role === "admin" && (
+            {role === "superadmin" && (
               <NavLink to="/users" className="nav-link">
                 <MdSupervisedUserCircle className="me-1" size={25} />
                 <span className="nav-link-text">Usuarios</span>

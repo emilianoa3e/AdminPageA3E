@@ -22,7 +22,8 @@ export const loginPost = async (email, password) => {
 
     if (
       response.data.msg === "User logged" &&
-      (response.data.data.role === "admin" ||
+      (response.data.data.role === "superadmin" ||
+        response.data.data.role === "admin" ||
         response.data.data.role === "reclutador")
     ) {
       Toast.fire({
@@ -176,7 +177,11 @@ export const renewToken = async (dispatch) => {
         const email = data.data.email;
         const role = data.data.role;
 
-        if (role === "admin" || role === "reclutador") {
+        if (
+          role === "superadmin" ||
+          role === "admin" ||
+          role === "reclutador"
+        ) {
           localStorage.setItem("token", token);
 
           dispatch({
