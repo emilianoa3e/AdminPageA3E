@@ -4,7 +4,7 @@ import { Form, Formik } from "formik";
 import { TextInput } from "../shared/TextInput";
 import { MdOutlineMail, MdSend } from "react-icons/md";
 import { showConfirmDialog } from "../../shared/plugins/alert";
-import { forgotPasswordPost } from "../../utils/authFunctions";
+import { forgotPasswordPost } from "../../utils/AuthFunctions";
 import { Button } from "@mui/material";
 import * as Yup from "yup";
 import Colors from "../../utils/Colors";

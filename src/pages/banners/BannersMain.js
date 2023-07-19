@@ -6,34 +6,32 @@ import {
   updateStatus,
   deleteBanner,
 } from "../../utils/bannersFunctions";
-import { showConfirmDialog } from "../../shared/plugins/alert";
+import { showConfirmDialog, showError400 } from "../../shared/plugins/alert";
 import { MdAdd, MdArrowBackIosNew } from "react-icons/md";
 import { Button } from "@mui/material";
 import { columnsBanner } from "../../components/columnsTables/columnsBanner";
 import Colors from "../../utils/Colors";
 import SplashScreen from "../utils/SplashScreen";
-import "../../assets/css/pages/BannersMain.css";
 import DynamicTable from "../../components/shared/DynamicTable";
+import "../../assets/css/pages/BannersMain.css";
 
 function BannerMain() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [bannerList, setBannerList] = useState([
-    {
-      _id: "",
-      title: "",
-      description: "",
-      image: "",
-      link: "",
-      status: "",
-    },
-  ]);
+  const [bannerList, setBannerList] = useState([]);
+  const [error, setError] = useState(false);
 
   const getBanners = async () => {
     setIsLoading(true);
-    const data = await getAllBanners();
-    setBannerList(data.banners);
-    setIsLoading(false);
+    try {
+      const data = await getAllBanners();
+      setBannerList(data.banners);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+      setError(true);
+    }
   };
 
   useEffect(() => {
@@ -70,6 +68,12 @@ function BannerMain() {
 
   if (isLoading) {
     return <SplashScreen />;
+  }
+
+  if (error) {
+    showError400(() => {
+      navigate("/home");
+    });
   }
 
   return (

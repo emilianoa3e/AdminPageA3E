@@ -40,7 +40,13 @@ export const loginPost = async (email, password) => {
   } catch (error) {
     console.log("error", error);
 
-    if (
+    if (error.message === "Network Error") {
+      showSimpleAlert(
+        "Error de conexión",
+        "No se pudo conectar con el servidor. Por favor, intente más tarde.",
+        "error"
+      );
+    } else if (
       error.response.data.msg === "User not found" ||
       error.response.data.msg === "Invalid password"
     ) {
@@ -213,7 +219,13 @@ export const renewToken = async (dispatch) => {
       });
     } catch (error) {
       console.log(error);
-      if (error.response.data.msg === "Invalid token") {
+      if (error.message === "Network Error") {
+        showSimpleAlert(
+          "Error de conexión",
+          "No se pudo conectar con el servidor. Por favor, intente más tarde.",
+          "error"
+        );
+      } else if (error.response.data.msg === "Invalid token") {
         showSimpleAlert(
           "Tu sesión ha expirado",
           "Por favor, inicia sesión nuevamente.",

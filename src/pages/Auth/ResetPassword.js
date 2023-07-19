@@ -5,7 +5,7 @@ import { Formik, Form } from "formik";
 import { TextInput } from "../../components/shared/TextInput";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { showConfirmDialog } from "../../shared/plugins/alert";
-import { resetPasswordPost, verifyTokenValidity } from "../../utils/authFunctions";
+import { resetPasswordPost, verifyTokenValidity } from "../../utils/AuthFunctions";
 import CustomButton from "../../components/shared/CustomButton";
 import logo from "../../assets/img/logo.jpeg";
 import * as Yup from "yup";

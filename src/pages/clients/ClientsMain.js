@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Col, Row, Card, Container } from "react-bootstrap";
 import { getAllClients, deleteClient } from "../../utils/clientsFunctions";
 import { ModalCreateClient } from "../../components/client/ModalCreateClient";
-import { showConfirmDialog } from "../../shared/plugins/alert";
+import { showConfirmDialog, showError400 } from "../../shared/plugins/alert";
 import { MdAdd, MdDelete, MdArrowBackIosNew } from "react-icons/md";
 import { Button } from "@mui/material";
 import SplashScreen from "../utils/SplashScreen";
@@ -15,22 +15,23 @@ function ClientsMain() {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [clientsList, setClientsList] = useState([
-    {
-      _id: "",
-      name: "",
-      image: "",
-    },
-  ]);
+  const [clientsList, setClientsList] = useState([]);
+  const [error, setError] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const getClients = async () => {
     setIsLoading(true);
-    const data = await getAllClients();
-    setClientsList(data.clients);
-    setIsLoading(false);
+    try {
+      const data = await getAllClients();
+      setClientsList(data.clients);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+      setError(true);
+    }
   };
 
   const handleDelete = (id) => {
@@ -55,6 +56,12 @@ function ClientsMain() {
 
   if (isLoading) {
     return <SplashScreen />;
+  }
+
+  if (error) {
+    showError400(() => {
+      navigate("/home");
+    });
   }
 
   return (

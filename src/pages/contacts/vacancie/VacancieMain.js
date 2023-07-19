@@ -9,7 +9,7 @@ import {
 import { ModalPosition } from "../../../components/contact/vacanciePositions/ModalPosition";
 import { Button } from "@mui/material";
 import { columnsVacancie } from "../../../components/columnsTables/columnsVacancie";
-import { showConfirmDialog } from "../../../shared/plugins/alert";
+import { showConfirmDialog, showError400 } from "../../../shared/plugins/alert";
 import { MdArrowBackIosNew } from "react-icons/md";
 import SplashScreen from "../../../pages/utils/SplashScreen";
 import DynamicTable from "../../../components/shared/DynamicTable";
@@ -19,28 +19,23 @@ function VacancieMain() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [show, setShow] = useState(false);
-  const [vacancies, setVacancies] = useState([
-    {
-      fullName: "",
-      phone: "",
-      email: "",
-      age: "",
-      residence: "",
-      education: "",
-      position: "",
-      source: "",
-      curriculum: "",
-    },
-  ]);
+  const [vacancies, setVacancies] = useState([]);
+  const [error, setError] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const getVacancies = async () => {
     setIsLoading(true);
-    const data = await getAllVacancies();
-    setVacancies(data.vacancies);
-    setIsLoading(false);
+    try {
+      const data = await getAllVacancies();
+      setVacancies(data.vacancies);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+      setError(true);
+    }
   };
 
   useEffect(() => {
@@ -77,6 +72,12 @@ function VacancieMain() {
 
   if (isLoading) {
     return <SplashScreen />;
+  }
+
+  if (error) {
+    showError400(() => {
+      navigate("/contacts-screen");
+    });
   }
 
   return (

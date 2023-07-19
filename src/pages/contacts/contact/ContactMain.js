@@ -17,7 +17,7 @@ import {
   deleteContact,
 } from "../../../utils/contactsFunctions";
 import { ModalCreateContact } from "../../../components/contact/ModalCreateContact";
-import { showConfirmDialog } from "../../../shared/plugins/alert";
+import { showConfirmDialog, showError400 } from "../../../shared/plugins/alert";
 import { ModalEditContact } from "../../../components/contact/ModalEditContact";
 import { Button } from "@mui/material";
 import SplashScreen from "../../utils/SplashScreen";
@@ -29,14 +29,9 @@ function ContactsMain() {
   const [showCreate, setShowCreate] = useState(false);
   const [showUpdate, setShowUpdate] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [contactsList, setContactsList] = useState([
-    {
-      _id: "",
-      type: "",
-      contact: "",
-    },
-  ]);
+  const [contactsList, setContactsList] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
+  const [error, setError] = useState(false);
 
   const handleCloseCreate = () => setShowCreate(false);
   const handleShowCreate = () => setShowCreate(true);
@@ -49,9 +44,15 @@ function ContactsMain() {
 
   const getContacts = async () => {
     setIsLoading(true);
-    const data = await getAllContacts();
-    setContactsList(data.contacts);
-    setIsLoading(false);
+    try {
+      const data = await getAllContacts();
+      setContactsList(data.contacts);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+      setError(true);
+    }
   };
 
   useEffect(() => {
@@ -78,6 +79,12 @@ function ContactsMain() {
 
   if (isLoading) {
     return <SplashScreen />;
+  }
+
+  if (error) {
+    showError400(() => {
+      navigate("/contacts-screen");
+    });
   }
 
   return (

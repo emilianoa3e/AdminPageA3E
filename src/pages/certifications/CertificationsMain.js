@@ -1,29 +1,41 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate} from "react-router-dom";
-import { MdAdd, MdDelete, MdArrowBackIosNew } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { MdAdd, MdArrowBackIosNew } from "react-icons/md";
 import { Container, Col, Row } from "react-bootstrap";
-import Colors from "../../utils/Colors";
+import {
+  deleteCertification,
+  getAllCertifications,
+  updateStatusCertification,
+} from "../../utils/certificationFunctions";
+import { showConfirmDialog, showError400 } from "../../shared/plugins/alert";
 import { columnsCertification } from "../../components/columnsTables/columnsCertifications";
-import DynamicTable from "../../components/shared/DynamicTable";
 import { Button } from "@mui/material";
+import Colors from "../../utils/Colors";
+import DynamicTable from "../../components/shared/DynamicTable";
 import SplashScreen from "../utils/SplashScreen";
-import { deleteCertification, getAllCertifications, updateStatusCertification } from "../../utils/certificationFunctions";
-import { showConfirmDialog } from "../../shared/plugins/alert";
+
 function CertificationsMain() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const[certificationList, setCertificationList] = useState([])
+  const [certificationList, setCertificationList] = useState([]);
+  const [error, setError] = useState(false);
 
-  const getCertifications = async()=>{
+  const getCertifications = async () => {
     setIsLoading(true);
-    const data = await getAllCertifications();
-    setCertificationList(data.certifications);
-    setIsLoading(false)
-  }
+    try {
+      const data = await getAllCertifications();
+      setCertificationList(data.certifications);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+      setError(true);
+    }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     getCertifications();
-  },[])
+  }, []);
 
   const handleChangeStatus = (id) => {
     showConfirmDialog(
@@ -38,6 +50,7 @@ function CertificationsMain() {
       }
     );
   };
+
   const handleDelete = (id) => {
     showConfirmDialog(
       "¿Estás seguro de eliminar el certificado?",
@@ -51,22 +64,32 @@ function CertificationsMain() {
       }
     );
   };
+
   if (isLoading) {
     return <SplashScreen />;
   }
+
+  if (error) {
+    showError400(() => {
+      navigate("/home");
+    });
+  }
+
   return (
     <Container fluid>
-      <Row className="mb-4">
-        <Col xs={12} md={7} lg={8}>
-          
-        </Col>
-        <Col xs={12} md={5} lg={4} className="client-buttons">
+      <Row className="mb-3">
+        <Col
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
           <Button
             size="large"
             variant="contained"
             startIcon={<MdArrowBackIosNew />}
             style={{ backgroundColor: Colors.PalleteGrey }}
-            onClick={() => navigate( window. history. back())}
+            onClick={() => navigate("/home")}
             className="me-2"
           >
             Regresar

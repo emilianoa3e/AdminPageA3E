@@ -6,7 +6,7 @@ import {
   MdPermMedia,
   MdDeleteForever,
 } from "react-icons/md";
-import { Row, Col, Container, Card } from "react-bootstrap";
+import { Row, Col, Card } from "react-bootstrap";
 import {
   uploadMultimedia,
   getAllMedia,

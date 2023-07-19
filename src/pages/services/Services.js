@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { getAllServices, deleteService } from "../../utils/serviceFunctions";
 import { MdAdd, MdMode, MdDelete, MdExpandMore } from "react-icons/md";
 import { Button } from "@mui/material";
-import { showConfirmDialog } from "../../shared/plugins/alert";
+import { showConfirmDialog, showError400 } from "../../shared/plugins/alert";
 import { styled } from "@mui/material/styles";
 import {
   Card,
@@ -38,12 +38,19 @@ function Services() {
   const [servicesList, setServicesList] = useState([]);
   const [itemOffset, setItemOffset] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [error, setError] = useState(false);
 
   const getServices = async () => {
     setIsLoading(true);
-    const data = await getAllServices();
-    setServicesList(data.services);
-    setIsLoading(false);
+    try {
+      const data = await getAllServices();
+      setServicesList(data.services);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+      setError(true);
+    }
   };
 
   const handleExpandClick = (index) => {
@@ -90,6 +97,12 @@ function Services() {
 
   if (isLoading) {
     return <SplashScreen />;
+  }
+
+  if (error) {
+    showError400(() => {
+      navigate("/home");
+    });
   }
 
   return (
@@ -165,12 +178,10 @@ function Services() {
                 </CardActions>
                 <Collapse in={service.expanded} timeout="auto" unmountOnExit>
                   <CardContent>
-                    <Typography paragraph>
-                      <div
-                        className="content"
-                        dangerouslySetInnerHTML={{ __html: service.content }}
-                      ></div>
-                    </Typography>
+                    <div
+                      className="content"
+                      dangerouslySetInnerHTML={{ __html: service.content }}
+                    ></div>
                   </CardContent>
                 </Collapse>
               </Card>

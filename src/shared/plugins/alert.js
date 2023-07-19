@@ -1,4 +1,10 @@
 import Swal from "sweetalert2";
+import monkeyAngry from "../../assets/img/monoangry.gif";
+import monketService from "../../assets/img/monoservice.gif";
+import monketDestroy from "../../assets/img/monodestroy.gif";
+import disconnect from "../../assets/img/disconnect-removebg-preview.png";
+
+const gifs = [monkeyAngry, monketService, monketDestroy];
 
 export const showConfirmDialog = (
   title,
@@ -60,5 +66,21 @@ export const showSimpleAlert = (title, text, icon) => {
     icon,
     confirmButtonText: "Ok",
     confirmButtonColor: "#002e60",
+  });
+};
+
+export const showError400 = (confirmCallback) => {
+  Swal.fire({
+    title: "¡Ha ocurrido un error!",
+    text: "Hubo un error en el servidor al procesar la petición. Por favor, inténtalo de nuevo más tarde.",
+    imageUrl: gifs[Math.floor(Math.random() * gifs.length)],
+    confirmButtonColor: "#a60c07",
+    confirmButtonText: "Regresar",
+    allowOutsideClick: false,
+    background: `#fff url(${disconnect}) no-repeat bottom`,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      confirmCallback();
+    }
   });
 };

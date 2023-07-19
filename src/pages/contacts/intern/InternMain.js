@@ -9,7 +9,7 @@ import {
 import { columnsIntern } from "../../../components/columnsTables/columnsIntern";
 import { Button } from "@mui/material";
 import { MdArrowBackIosNew } from "react-icons/md";
-import { showConfirmDialog } from "../../../shared/plugins/alert";
+import { showConfirmDialog, showError400 } from "../../../shared/plugins/alert";
 import SplashScreen from "../../../pages/utils/SplashScreen";
 import DynamicTable from "../../../components/shared/DynamicTable";
 import Colors from "../../../utils/Colors";
@@ -18,12 +18,19 @@ function InternMain() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [interns, setInterns] = useState([]);
+  const [error, setError] = useState(false);
 
   const getInterns = async () => {
     setIsLoading(true);
-    const data = await getAllInterns();
-    setInterns(data.interns);
-    setIsLoading(false);
+    try {
+      const data = await getAllInterns();
+      setInterns(data.interns);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+      setError(true);
+    }
   };
 
   useEffect(() => {
@@ -60,6 +67,12 @@ function InternMain() {
 
   if (isLoading) {
     return <SplashScreen />;
+  }
+
+  if (error) {
+    showError400(() => {
+      navigate("/contacts-screen");
+    });
   }
 
   return (

@@ -9,7 +9,7 @@ import {
 import { columnsSale } from "../../../components/columnsTables/columnsSale";
 import { Button } from "@mui/material";
 import { MdArrowBackIosNew } from "react-icons/md";
-import { showConfirmDialog } from "../../../shared/plugins/alert";
+import { showConfirmDialog, showError400 } from "../../../shared/plugins/alert";
 import SplashScreen from "../../../pages/utils/SplashScreen";
 import DynamicTable from "../../../components/shared/DynamicTable";
 import Colors from "../../../utils/Colors";
@@ -17,23 +17,20 @@ import Colors from "../../../utils/Colors";
 function SaleMain() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [sales, setSales] = useState([
-    {
-      fullName: "",
-      email: "",
-      phone: "",
-      typeService: "",
-      enterprise: "",
-      address: "",
-      info: "",
-    },
-  ]);
+  const [sales, setSales] = useState([]);
+  const [error, setError] = useState(false);
 
   const getSales = async () => {
     setIsLoading(true);
-    const data = await getAllSales();
-    setSales(data.sales);
-    setIsLoading(false);
+    try {
+      const data = await getAllSales();
+      setSales(data.sales);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+      setError(true);
+    }
   };
 
   useEffect(() => {
@@ -70,6 +67,12 @@ function SaleMain() {
 
   if (isLoading) {
     return <SplashScreen />;
+  }
+
+  if (error) {
+    showError400(() => {
+      navigate("/contacts-screen");
+    });
   }
 
   return (

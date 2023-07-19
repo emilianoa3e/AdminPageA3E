@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Container, Col, Row } from "react-bootstrap";
 import { Button } from "@mui/material";
-import { showConfirmDialog } from "../../shared/plugins/alert";
+import { showConfirmDialog, showError400 } from "../../shared/plugins/alert";
 import {
   getAllUsers,
   changeStatus,
@@ -9,24 +10,32 @@ import {
 } from "../../utils/usersFunctions";
 import { columnsUser } from "../../components/columnsTables/columnsUser";
 import { MdAdd } from "react-icons/md";
+import { ModalCreateUser } from "../../components/user/ModalCreateUser";
 import SplashScreen from "../../pages/utils/SplashScreen";
 import DynamicTable from "../../components/shared/DynamicTable";
 import Colors from "../../utils/Colors";
-import { ModalCreateUser } from "../../components/user/ModalCreateUser";
 
 function UserMain() {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [show, setShow] = useState(false);
   const [users, setUsers] = useState([]);
+  const [error, setError] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const getUsers = async () => {
     setIsLoading(true);
-    const data = await getAllUsers();
-    setUsers(data.users);
-    setIsLoading(false);
+    try {
+      const data = await getAllUsers();
+      setUsers(data.users);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+      setError(true);
+    }
   };
 
   useEffect(() => {
@@ -63,6 +72,12 @@ function UserMain() {
 
   if (isLoading) {
     return <SplashScreen />;
+  }
+
+  if (error) {
+    showError400(() => {
+      navigate("/home");
+    });
   }
 
   return (

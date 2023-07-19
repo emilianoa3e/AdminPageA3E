@@ -3,7 +3,7 @@ import { Col, Row, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { MdAdd, MdMode, MdDelete, MdExpandMore } from "react-icons/md";
 import { Button } from "@mui/material";
-import { showConfirmDialog } from "../../shared/plugins/alert";
+import { showConfirmDialog, showError400 } from "../../shared/plugins/alert";
 import { deleteNew, getAllNews } from "../../utils/newsFunctions";
 import { styled } from "@mui/material/styles";
 import {
@@ -38,12 +38,19 @@ function CompanyNews() {
   const [newsList, setNewsList] = useState([]);
   const [itemOffset, setItemOffset] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [error, setError] = useState(false);
 
   const getNews = async () => {
     setIsLoading(true);
-    const data = await getAllNews();
-    setNewsList(data.dataNew);
-    setIsLoading(false);
+    try {
+      const data = await getAllNews();
+      setNewsList(data.news);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+      setError(true);
+    }
   };
 
   const handleExpandClick = (index) => {
@@ -91,6 +98,12 @@ function CompanyNews() {
 
   if (isLoading) {
     return <SplashScreen />;
+  }
+
+  if (error) {
+    showError400(() => {
+      navigate("/home");
+    });
   }
 
   return (
@@ -161,12 +174,10 @@ function CompanyNews() {
                 </CardActions>
                 <Collapse in={news.expanded} timeout="auto" unmountOnExit>
                   <CardContent>
-                    <Typography paragraph>
-                      <div
-                        className="content"
-                        dangerouslySetInnerHTML={{ __html: news.content }}
-                      ></div>
-                    </Typography>
+                    <div
+                      className="content"
+                      dangerouslySetInnerHTML={{ __html: news.content }}
+                    ></div>
                   </CardContent>
                 </Collapse>
               </Card>
