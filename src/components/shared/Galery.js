@@ -13,7 +13,13 @@ import {
   deleteMultimedia,
 } from "../../utils/galeryFunctions";
 import { showConfirmDialog } from "../../shared/plugins/alert";
-import { Drawer, Box } from "@mui/material";
+import {
+  Drawer,
+  Box,
+  ImageList,
+  ImageListItem,
+  ImageListItemBar,
+} from "@mui/material";
 import FileDropzone from "./Dropzone";
 import SplashScreen from "../../pages/utils/SplashScreen";
 import NotFound from "./NotFound";
@@ -21,13 +27,7 @@ import Colors from "../../utils/Colors";
 import "../../assets/css/components/layouts/Galery.css";
 
 function Galery({ anchor, state, toggleDrawer }) {
-  const [mediaList, setMediaList] = useState([
-    {
-      _id: "",
-      url: "",
-      type: "",
-    },
-  ]);
+  const [mediaList, setMediaList] = useState([]);
   const [filter, setFilter] = useState("all");
   const [isLoading, setIsLoading] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
@@ -92,7 +92,7 @@ function Galery({ anchor, state, toggleDrawer }) {
       open={state[anchor]}
       onClose={toggleDrawer(anchor, false)}
     >
-      <Box sx={{ width: 400, padding: "25px" }} role="presentation">
+      <Box sx={{ width: 600, padding: "25px" }} role="presentation">
         <Row>
           <Col>
             <FileDropzone
@@ -146,7 +146,7 @@ function Galery({ anchor, state, toggleDrawer }) {
               {isLoading ? (
                 <SplashScreen isLoading={isLoading} />
               ) : (
-                <div>
+                <>
                   {filteredMediaList.length === 0 ? (
                     <NotFound
                       text="No hay multimedia disponible"
@@ -154,60 +154,81 @@ function Galery({ anchor, state, toggleDrawer }) {
                       iconSize={80}
                     />
                   ) : (
-                    <div>
+                    <ImageList variant="masonry" cols={2} gap={5}>
                       {filteredMediaList.map((media) => (
-                        <Card style={{ marginBottom: "15px" }} key={media._id}>
-                          <Card.Body style={{ padding: "0px" }}>
-                            {media.type === "image" ? (
-                              <img
-                                src={media.multimedia}
-                                alt="..."
-                                style={{ width: "100%", height: "auto" }}
-                              />
-                            ) : (
-                              <video
-                                src={media.multimedia}
-                                alt="..."
-                                controls
-                                style={{ width: "100%", height: "auto" }}
-                              />
-                            )}
-                          </Card.Body>
-                          <Card.Footer style={{ textAlign: "center" }}>
-                            <Col style={{ alignItems: "center" }}>
-                              <MdCopyAll
-                                onClick={() =>
-                                  copyToClipboard(media.multimedia, media._id)
-                                }
-                                style={{
-                                  cursor: "pointer",
-                                  fontSize: "1.5rem",
-                                  marginRight: "80px",
-                                }}
-                              />
-                              <MdDeleteForever
-                                onClick={() => handleDelete(media._id)}
-                                style={{
-                                  cursor: "pointer",
-                                  fontSize: "1.5rem",
-                                  color: Colors.PalleteDanger,
-                                }}
-                              />
-                            </Col>
-                            {copiedId === media._id && (
-                              <div
-                                id={`copied-${media._id}`}
-                                className="copied-style fade-out-animation"
-                              >
-                                ¡Copiado!
-                              </div>
-                            )}
-                          </Card.Footer>
-                        </Card>
+                        <ImageListItem key={media._id}>
+                          {media.type === "image" ? (
+                            <img
+                              src={media.multimedia}
+                              alt="..."
+                              style={{
+                                width: "100%",
+                                height: "auto",
+                                borderRadius: 5,
+                                border: "1px solid rgb(180, 180, 180)",
+                              }}
+                              loading="lazy"
+                            />
+                          ) : (
+                            <video
+                              src={media.multimedia}
+                              alt="..."
+                              controls
+                              style={{
+                                width: "100%",
+                                height: "auto",
+                                border: "1px solid rgb(180, 180, 180)",
+                              }}
+                            />
+                          )}
+                          <ImageListItemBar
+                            style={{
+                              backgroundColor: Colors.PalletePrimaryLight,
+                              backfaceVisibility: "hidden",
+                              borderEndStartRadius: 5,
+                              borderEndEndRadius: 5,
+                              border: "1px solid rgb(180, 180, 180)",
+                            }}
+                            actionPosition="left"
+                            actionIcon={
+                              <>
+                                <MdCopyAll
+                                  onClick={() =>
+                                    copyToClipboard(media.multimedia, media._id)
+                                  }
+                                  style={{
+                                    cursor: "pointer",
+                                    fontSize: "1.5rem",
+                                    marginLeft: "6rem",
+                                  }}
+                                  size={18}
+                                />
+                                <MdDeleteForever
+                                  onClick={() => handleDelete(media._id)}
+                                  style={{
+                                    cursor: "pointer",
+                                    fontSize: "1.5rem",
+                                    color: Colors.PalleteDanger,
+                                  }}
+                                  size={18}
+                                  className="ms-5"
+                                />
+                              </>
+                            }
+                          />
+                          {copiedId === media._id && (
+                            <div
+                              id={`copied-${media._id}`}
+                              className="copied-style fade-out-animation"
+                            >
+                              ¡Copiado!
+                            </div>
+                          )}
+                        </ImageListItem>
                       ))}
-                    </div>
+                    </ImageList>
                   )}
-                </div>
+                </>
               )}
             </Row>
           </Card.Body>

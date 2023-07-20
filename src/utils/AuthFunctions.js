@@ -42,7 +42,7 @@ export const loginPost = async (email, password) => {
 
     if (error.message === "Network Error") {
       showSimpleAlert(
-        "Error de conexión",
+        "¡Error de conexión!",
         "No se pudo conectar con el servidor. Por favor, intente más tarde.",
         "error"
       );
@@ -221,7 +221,7 @@ export const renewToken = async (dispatch) => {
       console.log(error);
       if (error.message === "Network Error") {
         showSimpleAlert(
-          "Error de conexión",
+          "¡Error de conexión!",
           "No se pudo conectar con el servidor. Por favor, intente más tarde.",
           "error"
         );
