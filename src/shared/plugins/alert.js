@@ -29,6 +29,33 @@ export const showConfirmDialog = (
   });
 };
 
+export const showConfirmDialogAutoSave = (
+  title,
+  text,
+  confirmButtonText,
+  cancelButtonText,
+  confirmCallback,
+  cancelCallback
+) => {
+  Swal.fire({
+    title: title,
+    text: text,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#002e60",
+    cancelButtonColor: "#a60c07",
+    confirmButtonText: confirmButtonText,
+    cancelButtonText: cancelButtonText,
+    allowOutsideClick: false,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      confirmCallback();
+    } else {
+      cancelCallback();
+    }
+  });
+};
+
 export const showLoadingAlert = (title, text) => {
   Swal.fire({
     title: title,

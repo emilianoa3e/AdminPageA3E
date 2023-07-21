@@ -126,7 +126,6 @@ function DynamicTable({
               .map((row) => {
                 return (
                   <TableRow
-                    style={{ backgroundColor: Colors.PalletePrimaryLight }}
                     hover
                     role="checkbox"
                     tabIndex={-1}

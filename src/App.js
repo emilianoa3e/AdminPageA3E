@@ -67,7 +67,7 @@ function App() {
       payload: true,
     });
 
-    localStorage.removeItem("token");
+    localStorage.clear();
 
     dispatch({
       type: "LOGOUT",

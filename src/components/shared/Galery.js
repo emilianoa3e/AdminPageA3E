@@ -19,6 +19,8 @@ import {
   ImageList,
   ImageListItem,
   ImageListItemBar,
+  BottomNavigation,
+  BottomNavigationAction,
 } from "@mui/material";
 import FileDropzone from "./Dropzone";
 import SplashScreen from "../../pages/utils/SplashScreen";
@@ -74,7 +76,7 @@ function Galery({ anchor, state, toggleDrawer }) {
     });
   };
 
-  const handleFilterChange = (type) => {
+  const handleFilterChange = (event, type) => {
     setFilter(type);
   };
 
@@ -92,7 +94,7 @@ function Galery({ anchor, state, toggleDrawer }) {
       open={state[anchor]}
       onClose={toggleDrawer(anchor, false)}
     >
-      <Box sx={{ width: 600, padding: "25px" }} role="presentation">
+      <Box sx={{ width: 550, padding: "15px" }} role="presentation">
         <Row>
           <Col>
             <FileDropzone
@@ -104,42 +106,28 @@ function Galery({ anchor, state, toggleDrawer }) {
           </Col>
         </Row>
         <Card>
-          <Card.Header>
-            <Row>
-              <Col style={{ textAlign: "center" }}>
-                <MdPermMedia
-                  onClick={() => handleFilterChange("all")}
-                  size={30}
-                  style={{
-                    cursor: "pointer",
-                    fontSize: "1.5rem",
-                    color: Colors.PalletePrimary,
-                  }}
-                />
-              </Col>
-              <Col style={{ textAlign: "center" }}>
-                <MdInsertPhoto
-                  onClick={() => handleFilterChange("image")}
-                  size={30}
-                  style={{
-                    cursor: "pointer",
-                    fontSize: "1.5rem",
-                    color: Colors.PalletePrimary,
-                  }}
-                />
-              </Col>
-              <Col style={{ textAlign: "center" }}>
-                <MdMovie
-                  onClick={() => handleFilterChange("video")}
-                  size={30}
-                  style={{
-                    cursor: "pointer",
-                    fontSize: "1.5rem",
-                    color: Colors.PalletePrimary,
-                  }}
-                />
-              </Col>
-            </Row>
+          <Card.Header className="p-0">
+            <BottomNavigation
+              sx={{ width: "100%" }}
+              value={filter}
+              onChange={handleFilterChange}
+            >
+              <BottomNavigationAction
+                label="Todos"
+                value="all"
+                icon={<MdPermMedia size={30} color={Colors.PalletePrimary} />}
+              />
+              <BottomNavigationAction
+                label="Imágenes"
+                value="image"
+                icon={<MdInsertPhoto size={30} color={Colors.PalletePrimary} />}
+              />
+              <BottomNavigationAction
+                label="Videos"
+                value="video"
+                icon={<MdMovie size={30} color={Colors.PalletePrimary} />}
+              />
+            </BottomNavigation>
           </Card.Header>
           <Card.Body style={{ overflowY: "auto", height: "61vh" }}>
             <Row>
@@ -154,7 +142,7 @@ function Galery({ anchor, state, toggleDrawer }) {
                       iconSize={80}
                     />
                   ) : (
-                    <ImageList variant="masonry" cols={2} gap={5}>
+                    <ImageList variant="masonry" cols={2} gap={3}>
                       {filteredMediaList.map((media) => (
                         <ImageListItem key={media._id}>
                           {media.type === "image" ? (
@@ -199,7 +187,7 @@ function Galery({ anchor, state, toggleDrawer }) {
                                   style={{
                                     cursor: "pointer",
                                     fontSize: "1.5rem",
-                                    marginLeft: "6rem",
+                                    marginLeft: "5.3rem",
                                   }}
                                   size={18}
                                 />

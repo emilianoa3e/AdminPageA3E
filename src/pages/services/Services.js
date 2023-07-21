@@ -173,7 +173,7 @@ function Services() {
                     aria-expanded={service.expanded}
                     aria-label="show more"
                   >
-                    <MdExpandMore />
+                    <MdExpandMore size={40}/>
                   </ExpandMore>
                 </CardActions>
                 <Collapse in={service.expanded} timeout="auto" unmountOnExit>

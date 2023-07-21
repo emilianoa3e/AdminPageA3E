@@ -3,7 +3,10 @@ import { Container, Row, Col } from "react-bootstrap";
 import { Formik, Form } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
 import { updateService, getServiceById } from "../../utils/serviceFunctions";
-import { showConfirmDialog } from "../../shared/plugins/alert";
+import {
+  showConfirmDialog,
+  showConfirmDialogAutoSave,
+} from "../../shared/plugins/alert";
 import { Button } from "@mui/material";
 import {
   MdCheckCircleOutline,
@@ -22,6 +25,7 @@ function EditService() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [content, setContent] = useState("");
+  const [initialContent, setInitialContent] = useState("");
   const [service, setService] = useState({});
   const [state, setState] = useState({
     top: false,
@@ -29,6 +33,32 @@ function EditService() {
     bottom: false,
     right: false,
   });
+
+  useEffect(() => {
+    const showAutosaveDialog = () => {
+      const autosave = localStorage.getItem(
+        `tinymce-autosave-edit-service/${id}draft`
+      );
+      if (autosave) {
+        showConfirmDialogAutoSave(
+          "¿Deseas recuperar el último borrador?",
+          "Podrás continuar donde lo dejaste.",
+          "Si, recuperar",
+          "No",
+          () => {
+            setInitialContent(autosave);
+          },
+          () => {
+            localStorage.removeItem(`tinymce-autosave-edit-service/${id}draft`);
+            localStorage.removeItem(`tinymce-autosave-edit-service/${id}time`);
+          }
+        );
+      } else {
+        console.log("no hay autosave");
+      }
+    };
+    showAutosaveDialog();
+  }, []);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -61,8 +91,31 @@ function EditService() {
       "Cancelar",
       () => {
         updateService(id, values, content, navigate);
+        localStorage.removeItem(`tinymce-autosave-edit-service/${id}draft`);
+        localStorage.removeItem(`tinymce-autosave-edit-service/${id}time`);
       }
     );
+  };
+
+  const handleBack = () => {
+    const autosave = localStorage.getItem(
+      `tinymce-autosave-edit-service/${id}draft`
+    );
+    if (autosave) {
+      showConfirmDialog(
+        "¿Estás seguro de salir?",
+        "Se perderá el trabajo no guardado.",
+        "Si, salir",
+        "Cancelar",
+        () => {
+          localStorage.removeItem(`tinymce-autosave-edit-service/${id}draft`);
+          localStorage.removeItem(`tinymce-autosave-edit-service/${id}time`);
+          navigate("/services");
+        }
+      );
+    } else {
+      navigate("/services");
+    }
   };
 
   const objectSchema = yup.object().shape({
@@ -108,7 +161,7 @@ function EditService() {
                       size="medium"
                       endIcon={<MdHighlightOff />}
                       style={{ backgroundColor: Colors.PalleteDanger }}
-                      onClick={() => navigate("/services")}
+                      onClick={() => handleBack()}
                       className="me-2"
                     >
                       Cancelar
@@ -134,7 +187,10 @@ function EditService() {
                   values={values}
                   touched={touched}
                   setContent={setContent}
-                  initialContent={service.content}
+                  initialContent={
+                    initialContent ? initialContent : service.content
+                  }
+                  onContext={`edit-service/${id}`}
                 />
               </Form>
             )}

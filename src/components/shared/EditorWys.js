@@ -3,7 +3,7 @@ import { Col, Container } from "react-bootstrap";
 import "react-quill/dist/quill.snow.css";
 import { Editor } from "@tinymce/tinymce-react";
 
-function EditorWys({ setContent, initialContent }) {
+function EditorWys({ setContent, initialContent, onContext }) {
   return (
     <>
       <Editor
@@ -15,6 +15,7 @@ function EditorWys({ setContent, initialContent }) {
           plugins: [
             "advlist",
             "autolink",
+            "autosave",
             "autoresize",
             "charmap",
             "code",
@@ -55,6 +56,7 @@ function EditorWys({ setContent, initialContent }) {
             "Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times;" +
             "Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats",
           images_file_types: "",
+          autosave_prefix: `tinymce-autosave-${onContext}`,
         }}
         onEditorChange={(content) => {
           setContent(content);

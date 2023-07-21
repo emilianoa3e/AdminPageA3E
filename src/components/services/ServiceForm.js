@@ -8,7 +8,14 @@ import {
   MdOutlineFullscreen,
 } from "react-icons/md";
 
-function ServiceForm({ errors, values, touched, setContent, initialContent }) {
+function ServiceForm({
+  errors,
+  values,
+  touched,
+  setContent,
+  initialContent,
+  onContext,
+}) {
   return (
     <>
       <Row>
@@ -61,7 +68,11 @@ function ServiceForm({ errors, values, touched, setContent, initialContent }) {
         <MdOutlineFullscreen size={23} className="ms-1" />
       </p>
       <FormBt.Group className="mb-2">
-        <EditorWys setContent={setContent} initialContent={initialContent} />
+        <EditorWys
+          setContent={setContent}
+          initialContent={initialContent}
+          onContext={onContext}
+        />
       </FormBt.Group>
     </>
   );
