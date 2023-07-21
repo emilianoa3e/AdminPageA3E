@@ -16,6 +16,7 @@
     "bootstrap": "^5.3.0",
     "formik": "^2.4.1",
     "fs-extra": "^11.1.1",
+    "primereact": "^9.6.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
     "react-dom": "^18.2.0",

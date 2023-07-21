@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import { Form, Formik } from "formik";
-import { showConfirmDialog } from "../../shared/plugins/alert";
+import {
+  showConfirmDialog,
+  showConfirmDialogAutoSave,
+} from "../../shared/plugins/alert";
 import { saveNew } from "../../utils/newsFunctions";
 import { Button } from "@mui/material";
 import {
@@ -18,12 +21,37 @@ import NoticeForm from "./NoticeForm";
 function CreateNew() {
   const navigate = useNavigate();
   const [content, setContent] = useState("");
+  const [initialContent, setInitialContent] = useState("");
   const [state, setState] = useState({
     top: false,
     left: false,
     bottom: false,
     right: false,
   });
+
+  useEffect(() => {
+    const showAutosaveDialog = () => {
+      const autosave = localStorage.getItem("tinymce-autosave-create-newdraft");
+      if (autosave) {
+        showConfirmDialogAutoSave(
+          "¿Deseas recuperar el último borrador?",
+          "Podrás continuar donde lo dejaste.",
+          "Si, recuperar",
+          "No, empezar de nuevo",
+          () => {
+            setInitialContent(autosave);
+          },
+          () => {
+            localStorage.removeItem("tinymce-autosave-create-newdraft");
+            localStorage.removeItem("tinymce-autosave-create-newtime");
+          }
+        );
+      } else {
+        console.log("no hay autosave");
+      }
+    };
+    showAutosaveDialog();
+  }, []);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -44,8 +72,29 @@ function CreateNew() {
       "Cancelar",
       () => {
         saveNew(values, content, navigate);
+        localStorage.removeItem("tinymce-autosave-create-newdraft");
+        localStorage.removeItem("tinymce-autosave-create-newtime");
       }
     );
+  };
+
+  const handleBack = () => {
+    const autosave = localStorage.getItem("tinymce-autosave-create-newdraft");
+    if (autosave) {
+      showConfirmDialog(
+        "¿Estás seguro de salir?",
+        "Se perderá el trabajo no guardado.",
+        "Si, salir",
+        "Cancelar",
+        () => {
+          localStorage.removeItem("tinymce-autosave-create-newdraft");
+          localStorage.removeItem("tinymce-autosave-create-newtime");
+          navigate("/news");
+        }
+      );
+    } else {
+      navigate("/news");
+    }
   };
 
   const objectSchema = yup.object().shape({
@@ -87,7 +136,7 @@ function CreateNew() {
                       size="medium"
                       startIcon={<MdArrowBackIosNew />}
                       style={{ backgroundColor: Colors.PalleteGrey }}
-                      onClick={() => navigate("/news")}
+                      onClick={() => handleBack()}
                       className="me-2"
                     >
                       Regresar
@@ -113,6 +162,8 @@ function CreateNew() {
                   values={values}
                   touched={touched}
                   setContent={setContent}
+                  initialContent={initialContent}
+                  onContext={"create-new"}
                 />
               </Form>
             )}

@@ -141,7 +141,11 @@ function Services() {
                   subheader={service.subtitle}
                 />
                 <CardContent>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography
+                    fontSize={17}
+                    variant="body2"
+                    color="text.secondary"
+                  >
                     {service.summary}
                   </Typography>
                 </CardContent>
@@ -173,7 +177,7 @@ function Services() {
                     aria-expanded={service.expanded}
                     aria-label="show more"
                   >
-                    <MdExpandMore size={40}/>
+                    <MdExpandMore size={40} />
                   </ExpandMore>
                 </CardActions>
                 <Collapse in={service.expanded} timeout="auto" unmountOnExit>

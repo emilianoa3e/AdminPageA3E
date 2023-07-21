@@ -139,7 +139,11 @@ function CompanyNews() {
               >
                 <CardHeader title={news.title} subheader={news.type} />
                 <CardContent>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography
+                    fontSize={17}
+                    variant="body2"
+                    color="text.secondary"
+                  >
                     {news.summary}
                   </Typography>
                 </CardContent>
