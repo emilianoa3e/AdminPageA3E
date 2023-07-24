@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Modal, Row } from "react-bootstrap";
 import { Form, Formik } from "formik";
 import {
   showConfirmDialog,
@@ -15,14 +15,18 @@ import {
   MdArrowBackIosNew,
   MdPhotoAlbum,
   MdMenu,
+  MdHelpOutline,
 } from "react-icons/md";
+import { ModalHelp } from "../../components/shared/ModalHelp";
+import { stepsCreateNew } from "../../components/stepsTutorial/stepsCreateNew";
 import Galery from "../../components/shared/Galery";
 import * as yup from "yup";
 import NoticeForm from "./NoticeForm";
-import { AuthContext } from "../../context/auth/AuthContext";
+import Colors from "../../utils/Colors";
 
 function CreateNew() {
   const navigate = useNavigate();
+  const [showHelp, setShowHelp] = useState(false);
   const [content, setContent] = useState("");
   const [initialContent, setInitialContent] = useState("");
   const [state, setState] = useState({
@@ -31,6 +35,9 @@ function CreateNew() {
     bottom: false,
     right: false,
   });
+
+  const handleShowHelp = () => setShowHelp(true);
+  const handleCloseHelp = () => setShowHelp(false);
 
   useEffect(() => {
     const showAutosaveDialog = () => {
@@ -140,13 +147,13 @@ function CreateNew() {
                     />
                     <Tooltip
                       target=".speeddial-bottom-right .p-speeddial-action"
-                      position="left"
+                      position="top"
                     />
                     <SpeedDial
                       model={[
                         {
                           label: "Guardar",
-                          icon: <MdCheckCircleOutline size={22}/>,
+                          icon: <MdCheckCircleOutline size={22} />,
                           command: () => {
                             handleSubmit(values, content);
                           },
@@ -154,15 +161,21 @@ function CreateNew() {
                         },
                         {
                           label: "Regresar",
+                          style: { background: Colors.PalleteDanger },
                           icon: <MdArrowBackIosNew size={22} />,
                           command: () => {
                             handleBack();
                           },
                         },
+                        {
+                          label: "¿Como funciona?",
+                          icon: <MdHelpOutline size={22} />,
+                          command: () => {
+                            handleShowHelp();
+                          },
+                        },
                       ]}
-                      type="quarter-circle"
-                      direction="up-left"
-                      radius={65}
+                      direction="left"
                       transitionDelay={80}
                       style={{ position: "fixed", right: 15, bottom: 15 }}
                       className="speeddial-bottom-right"
@@ -185,6 +198,11 @@ function CreateNew() {
           </Formik>
         </Col>
       </Row>
+      <ModalHelp
+        show={showHelp}
+        handleClose={handleCloseHelp}
+        stepsTutorial={stepsCreateNew}
+      />
     </Container>
   );
 }
