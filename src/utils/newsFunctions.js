@@ -25,7 +25,7 @@ export const getNewById = async (id)=>{
   }
 }
 
-export const saveNew = async (values, content, navigate) => {
+export const saveNew = async (values, content, navigate,  date) => {
   showLoadingAlert("Creando noticia...", "Espere un momento por favor.");
   try {
     const response = await axios.post(
@@ -34,6 +34,8 @@ export const saveNew = async (values, content, navigate) => {
         title: values.title,
         type: values.type,
         summary: values.summary,
+        date,
+        author: values.author,
         content,
       }
     );
@@ -62,7 +64,8 @@ export const saveNew = async (values, content, navigate) => {
   }
 };
 
-export const updateNew = async (id, values, content, navigate) =>{
+export const updateNew = async (id, values, content, navigate, date) =>{
+  console.log(values.author, date);
   showLoadingAlert("Actualizando noticia...", "Espere un momento por favor.");
   try{  
     const response = await axios.put(
@@ -71,6 +74,8 @@ export const updateNew = async (id, values, content, navigate) =>{
         title: values.title,
         type: values.type,
         summary: values.summary,
+        date,
+        author: values.author,
         content,
       }
     );

@@ -91,7 +91,8 @@ function EditNew() {
       "Si, editar noticia",
       "Cancelar",
       () => {
-        updateNew(id, values, content, navigate);
+        const date = new Date().toLocaleDateString();
+        updateNew(id, values, content, navigate, date);
         localStorage.removeItem(`tinymce-autosave-edit-new/${id}draft`);
         localStorage.removeItem(`tinymce-autosave-edit-new/${id}time`);
       }
@@ -123,6 +124,7 @@ function EditNew() {
     title: yup.string().required("El título es requerido"),
     type: yup.string().required("El tipo es requerido"),
     summary: yup.string().required("El resumen es requerido"),
+    author: yup.string().required("El autor es requerido"),
   });
 
   if (isLoading) {
@@ -139,6 +141,7 @@ function EditNew() {
               title: notice.title,
               type: notice.type,
               summary: notice.summary,
+              author: notice.author
             }}
             enableReinitialize={true}
             validationSchema={objectSchema}

@@ -137,7 +137,7 @@ function CompanyNews() {
                 }}
                 key={news._id}
               >
-                <CardHeader title={news.title} subheader={news.type} />
+                <CardHeader title={news.title} subheader={`${news.type} | ${news.author} | ${news.date}`} />
                 <CardContent>
                   <Typography
                     fontSize={17}

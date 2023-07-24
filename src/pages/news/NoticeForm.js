@@ -6,6 +6,7 @@ import {
   MdTitle,
   MdOutlineSummarize,
   MdOutlineFullscreen,
+  MdCoPresent
 } from "react-icons/md";
 import { SelectInput } from "../../components/shared/SelectInput";
 
@@ -48,6 +49,8 @@ function NoticeForm({
           </FormBt.Group>
         </Col>
       </Row>
+     <Row>
+      <Col>
       <FormBt.Group className="mb-2">
         <TextInput
           maxLength="240"
@@ -60,6 +63,17 @@ function NoticeForm({
           isInvalid={!!errors.summary && touched.summary}
         />
       </FormBt.Group>
+      <FormBt.Group className="mb-2">
+        <TextInput
+          label="Autor"
+          name="author"
+          icon={MdCoPresent}
+          placeholder="Autor"
+          isInvalid={!!errors.author && touched.author}
+        />
+      </FormBt.Group>
+      </Col>
+     </Row>
       <p
         className="mt-3 text-center align-items-center"
         style={{

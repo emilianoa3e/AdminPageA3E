@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import { Form, Formik } from "formik";
@@ -19,6 +19,7 @@ import {
 import Galery from "../../components/shared/Galery";
 import * as yup from "yup";
 import NoticeForm from "./NoticeForm";
+import { AuthContext } from "../../context/auth/AuthContext";
 
 function CreateNew() {
   const navigate = useNavigate();
@@ -73,7 +74,8 @@ function CreateNew() {
       "Si, crear noticia",
       "Cancelar",
       () => {
-        saveNew(values, content, navigate);
+        const date = new Date().toLocaleDateString();
+        saveNew(values, content, navigate, date);
         localStorage.removeItem("tinymce-autosave-create-newdraft");
         localStorage.removeItem("tinymce-autosave-create-newtime");
       }
@@ -101,8 +103,9 @@ function CreateNew() {
 
   const objectSchema = yup.object().shape({
     title: yup.string().required("El título es requerido"),
-    type: yup.string().required("El tipo es requerido"),
+    type: yup.string().required("El tipo de noticia es requerido"),
     summary: yup.string().required("El resumen es requerido"),
+    author: yup.string().required("El autor es requerido"),
   });
 
   return (
@@ -115,6 +118,7 @@ function CreateNew() {
               title: "",
               type: "",
               summary: "",
+              author: "",
             }}
             validationSchema={objectSchema}
             onSubmit={(values) => handleSubmit(values, content)}
