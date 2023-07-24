@@ -7,17 +7,19 @@ import {
   showConfirmDialog,
   showConfirmDialogAutoSave,
 } from "../../shared/plugins/alert";
-import { Button } from "@mui/material";
+import { SpeedDial } from "primereact/speeddial";
+import { Tooltip } from "primereact/tooltip";
 import {
   MdCheckCircleOutline,
   MdArrowBackIosNew,
   MdPhotoAlbum,
+  MdMenu,
+  MdCancel,
 } from "react-icons/md";
 import ServiceForm from "../../components/services/ServiceForm";
 import Galery from "../../components/shared/Galery";
 import * as yup from "yup";
 import "../../assets/css/pages/CreateEditService.css";
-import Colors from "../../utils/Colors";
 
 function CreateService() {
   const navigate = useNavigate();
@@ -32,7 +34,9 @@ function CreateService() {
 
   useEffect(() => {
     const showAutosaveDialog = () => {
-      const autosave = localStorage.getItem("tinymce-autosave-create-servicedraft");
+      const autosave = localStorage.getItem(
+        "tinymce-autosave-create-servicedraft"
+      );
       if (autosave) {
         showConfirmDialogAutoSave(
           "¿Deseas recuperar el último borrador?",
@@ -80,7 +84,9 @@ function CreateService() {
   };
 
   const handleBack = () => {
-    const autosave = localStorage.getItem("tinymce-autosave-create-servicedraft");
+    const autosave = localStorage.getItem(
+      "tinymce-autosave-create-servicedraft"
+    );
     if (autosave) {
       showConfirmDialog(
         "¿Estás seguro de salir?",
@@ -120,42 +126,50 @@ function CreateService() {
             {({ errors, values, touched, isValid, dirty }) => (
               <Form>
                 <Row className="mb-3">
-                  <Col className="d-flex justify-content-end">
-                    <Col className="d-flex justify-content-start">
-                      <Button
-                        variant="contained"
-                        size="medium"
-                        endIcon={<MdPhotoAlbum />}
-                        style={{ backgroundColor: Colors.PalleteBlueGreen }}
-                        onClick={toggleDrawer("left", true)}
-                      >
-                        Galería
-                      </Button>
-                    </Col>
-                    <Button
-                      variant="contained"
-                      size="medium"
-                      startIcon={<MdArrowBackIosNew />}
-                      style={{ backgroundColor: Colors.PalleteGrey }}
-                      onClick={() => handleBack()}
-                      className="me-2"
-                    >
-                      Regresar
-                    </Button>
-                    <Button
-                      variant="contained"
-                      size="medium"
-                      endIcon={<MdCheckCircleOutline />}
-                      style={
-                        !isValid || !dirty || !content
-                          ? { backgroundColor: Colors.PalletePrimaryLight }
-                          : { backgroundColor: Colors.PalletePrimary }
-                      }
-                      type="submit"
-                      disabled={!isValid || !dirty || !content}
-                    >
-                      Guardar
-                    </Button>
+                  <Col
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <SpeedDial
+                      style={{ position: "fixed", left: 15, bottom: 15 }}
+                      type="quarter-circle"
+                      showIcon={<MdPhotoAlbum size={30} />}
+                      onClick={toggleDrawer("left", true)}
+                    />
+                    <Tooltip
+                      target=".speeddial-bottom-right .p-speeddial-action"
+                      position="left"
+                    />
+                    <SpeedDial
+                      model={[
+                        {
+                          label: "Guardar",
+                          icon: <MdCheckCircleOutline size={22} />,
+                          command: () => {
+                            handleSubmit(values, content);
+                          },
+                          disabled: !isValid || !dirty || !content,
+                        },
+                        {
+                          label: "Regresar",
+                          icon: <MdArrowBackIosNew size={22} />,
+                          command: () => {
+                            handleBack();
+                          },
+                        },
+                      ]}
+                      type="quarter-circle"
+                      direction="up-left"
+                      radius={65}
+                      transitionDelay={80}
+                      style={{ position: "fixed", right: 15, bottom: 15 }}
+                      className="speeddial-bottom-right"
+                      buttonClassName="p-button-secondary"
+                      showIcon={<MdMenu size={30} />}
+                      hideIcon={<MdCancel size={30} />}
+                    />
                   </Col>
                 </Row>
                 <ServiceForm

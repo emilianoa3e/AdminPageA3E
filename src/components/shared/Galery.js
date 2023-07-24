@@ -95,15 +95,13 @@ function Galery({ anchor, state, toggleDrawer }) {
       onClose={toggleDrawer(anchor, false)}
     >
       <Box sx={{ width: 550, padding: "15px" }} role="presentation">
-        <Row>
-          <Col>
+        <Row className="m-1">
             <FileDropzone
               onFileUpload={handleFileUpload}
               uploadedFile={uploadedFile}
               setUploadedFile={setUploadedFile}
               onContext="multimedia"
             />
-          </Col>
         </Row>
         <Card>
           <Card.Header className="p-0">
@@ -129,7 +127,7 @@ function Galery({ anchor, state, toggleDrawer }) {
               />
             </BottomNavigation>
           </Card.Header>
-          <Card.Body style={{ overflowY: "auto", height: "61vh" }}>
+          <Card.Body>
             <Row>
               {isLoading ? (
                 <SplashScreen isLoading={isLoading} />

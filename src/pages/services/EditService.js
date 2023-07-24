@@ -7,16 +7,18 @@ import {
   showConfirmDialog,
   showConfirmDialogAutoSave,
 } from "../../shared/plugins/alert";
-import { Button } from "@mui/material";
+import { SpeedDial } from "primereact/speeddial";
+import { Tooltip } from "primereact/tooltip";
 import {
   MdCheckCircleOutline,
   MdHighlightOff,
   MdPhotoAlbum,
+  MdMenu,
+  MdCancel,
 } from "react-icons/md";
 import Galery from "../../components/shared/Galery";
 import SplashScreen from "../utils/SplashScreen";
 import ServiceForm from "../../components/services/ServiceForm";
-import Colors from "../../utils/Colors";
 import * as yup from "yup";
 import "../../assets/css/pages/CreateEditService.css";
 
@@ -144,42 +146,50 @@ function EditService() {
             {({ errors, values, touched, isValid }) => (
               <Form>
                 <Row className="mb-3">
-                  <Col className="d-flex justify-content-end">
-                    <Col className="d-flex justify-content-start">
-                      <Button
-                        variant="contained"
-                        size="medium"
-                        endIcon={<MdPhotoAlbum />}
-                        style={{ backgroundColor: Colors.PalleteBlueGreen }}
-                        onClick={toggleDrawer("left", true)}
-                      >
-                        Galería
-                      </Button>
-                    </Col>
-                    <Button
-                      variant="contained"
-                      size="medium"
-                      endIcon={<MdHighlightOff />}
-                      style={{ backgroundColor: Colors.PalleteDanger }}
-                      onClick={() => handleBack()}
-                      className="me-2"
-                    >
-                      Cancelar
-                    </Button>
-                    <Button
-                      variant="contained"
-                      size="medium"
-                      endIcon={<MdCheckCircleOutline />}
-                      style={
-                        !isValid || !content
-                          ? { backgroundColor: Colors.PalletePrimaryLight }
-                          : { backgroundColor: Colors.PalletePrimary }
-                      }
-                      type="submit"
-                      disabled={!isValid || !content}
-                    >
-                      Guardar
-                    </Button>
+                  <Col
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <SpeedDial
+                      style={{ position: "fixed", left: 15, bottom: 15 }}
+                      type="quarter-circle"
+                      showIcon={<MdPhotoAlbum size={30} />}
+                      onClick={toggleDrawer("left", true)}
+                    />
+                    <Tooltip
+                      target=".speeddial-bottom-right .p-speeddial-action"
+                      position="left"
+                    />
+                    <SpeedDial
+                      model={[
+                        {
+                          label: "Guardar",
+                          icon: <MdCheckCircleOutline size={22} />,
+                          command: () => {
+                            handleSubmit(values, content);
+                          },
+                          disabled: !isValid || !content,
+                        },
+                        {
+                          label: "Cancelar",
+                          icon: <MdHighlightOff size={22} />,
+                          command: () => {
+                            handleBack();
+                          },
+                        },
+                      ]}
+                      type="quarter-circle"
+                      direction="up-left"
+                      radius={65}
+                      transitionDelay={80}
+                      style={{ position: "fixed", right: 15, bottom: 15 }}
+                      className="speeddial-bottom-right"
+                      buttonClassName="p-button-secondary"
+                      showIcon={<MdMenu size={30} />}
+                      hideIcon={<MdCancel size={30} />}
+                    />
                   </Col>
                 </Row>
                 <ServiceForm

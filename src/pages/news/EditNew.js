@@ -2,17 +2,22 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import { Form, Formik } from "formik";
-import { showConfirmDialog } from "../../shared/plugins/alert";
+import {
+  showConfirmDialog,
+  showConfirmDialogAutoSave,
+} from "../../shared/plugins/alert";
 import { getNewById, updateNew } from "../../utils/newsFunctions";
-import { Button } from "@mui/material";
+import { SpeedDial } from "primereact/speeddial";
+import { Tooltip } from "primereact/tooltip";
 import {
   MdCheckCircleOutline,
   MdHighlightOff,
   MdPhotoAlbum,
+  MdMenu,
+  MdCancel,
 } from "react-icons/md";
 import Galery from "../../components/shared/Galery";
 import * as yup from "yup";
-import Colors from "../../utils/Colors";
 import NoticeForm from "./NoticeForm";
 import SplashScreen from "../utils/SplashScreen";
 
@@ -21,6 +26,7 @@ function EditNew() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [content, setContent] = useState("");
+  const [initialContent, setInitialContent] = useState("");
   const [notice, setNotice] = useState({});
   const [state, setState] = useState({
     top: false,
@@ -28,6 +34,32 @@ function EditNew() {
     bottom: false,
     right: false,
   });
+
+  useEffect(() => {
+    const showAutosaveDialog = () => {
+      const autosave = localStorage.getItem(
+        `tinymce-autosave-edit-new/${id}draft`
+      );
+      if (autosave) {
+        showConfirmDialogAutoSave(
+          "¿Deseas recuperar el último borrador?",
+          "Podrás continuar donde lo dejaste.",
+          "Si, recuperar",
+          "No",
+          () => {
+            setInitialContent(autosave);
+          },
+          () => {
+            localStorage.removeItem(`tinymce-autosave-edit-new/${id}draft`);
+            localStorage.removeItem(`tinymce-autosave-edit-new/${id}time`);
+          }
+        );
+      } else {
+        console.log("no hay autosave");
+      }
+    };
+    showAutosaveDialog();
+  }, []);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -60,8 +92,31 @@ function EditNew() {
       "Cancelar",
       () => {
         updateNew(id, values, content, navigate);
+        localStorage.removeItem(`tinymce-autosave-edit-new/${id}draft`);
+        localStorage.removeItem(`tinymce-autosave-edit-new/${id}time`);
       }
     );
+  };
+
+  const handleBack = () => {
+    const autosave = localStorage.getItem(
+      `tinymce-autosave-edit-new/${id}draft`
+    );
+    if (autosave) {
+      showConfirmDialog(
+        "¿Estás seguro de salir?",
+        "Se perderá el trabajo no guardado.",
+        "Si, salir",
+        "Cancelar",
+        () => {
+          localStorage.removeItem(`tinymce-autosave-edit-new/${id}draft`);
+          localStorage.removeItem(`tinymce-autosave-edit-new/${id}time`);
+          navigate("/news");
+        }
+      );
+    } else {
+      navigate("/news");
+    }
   };
 
   const objectSchema = yup.object().shape({
@@ -92,42 +147,50 @@ function EditNew() {
             {({ errors, values, touched, isValid }) => (
               <Form>
                 <Row className="mb-3">
-                  <Col className="d-flex justify-content-end">
-                    <Col className="d-flex justify-content-start">
-                      <Button
-                        variant="contained"
-                        size="medium"
-                        endIcon={<MdPhotoAlbum />}
-                        style={{ backgroundColor: Colors.PalleteBlueGreen }}
-                        onClick={toggleDrawer("left", true)}
-                      >
-                        Galería
-                      </Button>
-                    </Col>
-                    <Button
-                      variant="contained"
-                      size="medium"
-                      endIcon={<MdHighlightOff />}
-                      style={{ backgroundColor: Colors.PalleteDanger }}
-                      onClick={() => navigate("/news")}
-                      className="me-2"
-                    >
-                      Cancelar
-                    </Button>
-                    <Button
-                      variant="contained"
-                      size="medium"
-                      endIcon={<MdCheckCircleOutline />}
-                      style={
-                        !isValid || !content
-                          ? { backgroundColor: Colors.PalletePrimaryLight }
-                          : { backgroundColor: Colors.PalletePrimary }
-                      }
-                      type="submit"
-                      disabled={!isValid || !content}
-                    >
-                      Guardar
-                    </Button>
+                  <Col
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <SpeedDial
+                      style={{ position: "fixed", left: 15, bottom: 15 }}
+                      type="quarter-circle"
+                      showIcon={<MdPhotoAlbum size={30} />}
+                      onClick={toggleDrawer("left", true)}
+                    />
+                    <Tooltip
+                      target=".speeddial-bottom-right .p-speeddial-action"
+                      position="left"
+                    />
+                    <SpeedDial
+                      model={[
+                        {
+                          label: "Guardar",
+                          icon: <MdCheckCircleOutline size={22} />,
+                          command: () => {
+                            handleSubmit(values, content);
+                          },
+                          disabled: !isValid || !content,
+                        },
+                        {
+                          label: "Cancelar",
+                          icon: <MdHighlightOff size={22} />,
+                          command: () => {
+                            handleBack();
+                          },
+                        },
+                      ]}
+                      type="quarter-circle"
+                      direction="up-left"
+                      radius={65}
+                      transitionDelay={80}
+                      style={{ position: "fixed", right: 15, bottom: 15 }}
+                      className="speeddial-bottom-right"
+                      buttonClassName="p-button-secondary"
+                      showIcon={<MdMenu size={30} />}
+                      hideIcon={<MdCancel size={30} />}
+                    />
                   </Col>
                 </Row>
                 <NoticeForm
@@ -135,7 +198,10 @@ function EditNew() {
                   values={values}
                   touched={touched}
                   setContent={setContent}
-                  initialContent={notice.content}
+                  initialContent={
+                    initialContent ? initialContent : notice.content
+                  }
+                  onContext={`edit-new/${id}`}
                 />
               </Form>
             )}

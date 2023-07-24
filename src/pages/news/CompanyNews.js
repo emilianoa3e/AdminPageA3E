@@ -173,7 +173,7 @@ function CompanyNews() {
                     aria-expanded={news.expanded}
                     aria-label="show more"
                   >
-                    <MdExpandMore />
+                    <MdExpandMore size={40}/>
                   </ExpandMore>
                 </CardActions>
                 <Collapse in={news.expanded} timeout="auto" unmountOnExit>

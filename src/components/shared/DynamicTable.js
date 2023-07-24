@@ -99,7 +99,7 @@ function DynamicTable({
           </Button>
         )}
       </div>
-      <TableContainer sx={{ maxHeight: "75vh" }}>
+      <TableContainer sx={{ maxHeight: "85vh" }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>

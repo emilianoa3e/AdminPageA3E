@@ -7,15 +7,17 @@ import {
   showConfirmDialogAutoSave,
 } from "../../shared/plugins/alert";
 import { saveNew } from "../../utils/newsFunctions";
-import { Button } from "@mui/material";
+import { SpeedDial } from "primereact/speeddial";
+import { Tooltip } from "primereact/tooltip";
 import {
   MdCheckCircleOutline,
+  MdCancel,
   MdArrowBackIosNew,
   MdPhotoAlbum,
+  MdMenu,
 } from "react-icons/md";
 import Galery from "../../components/shared/Galery";
 import * as yup from "yup";
-import Colors from "../../utils/Colors";
 import NoticeForm from "./NoticeForm";
 
 function CreateNew() {
@@ -102,6 +104,7 @@ function CreateNew() {
     type: yup.string().required("El tipo es requerido"),
     summary: yup.string().required("El resumen es requerido"),
   });
+
   return (
     <Container fluid>
       <Row>
@@ -118,43 +121,51 @@ function CreateNew() {
           >
             {({ errors, values, touched, isValid, dirty }) => (
               <Form>
-                <Row className="mb-3">
-                  <Col className="d-flex justify-content-end">
-                    <Col className="d-flex justify-content-start">
-                      <Button
-                        variant="contained"
-                        size="medium"
-                        endIcon={<MdPhotoAlbum />}
-                        style={{ backgroundColor: Colors.PalleteBlueGreen }}
-                        onClick={toggleDrawer("left", true)}
-                      >
-                        Galería
-                      </Button>
-                    </Col>
-                    <Button
-                      variant="contained"
-                      size="medium"
-                      startIcon={<MdArrowBackIosNew />}
-                      style={{ backgroundColor: Colors.PalleteGrey }}
-                      onClick={() => handleBack()}
-                      className="me-2"
-                    >
-                      Regresar
-                    </Button>
-                    <Button
-                      variant="contained"
-                      size="medium"
-                      endIcon={<MdCheckCircleOutline />}
-                      style={
-                        !isValid || !dirty || !content
-                          ? { backgroundColor: Colors.PalletePrimaryLight }
-                          : { backgroundColor: Colors.PalletePrimary }
-                      }
-                      type="submit"
-                      disabled={!isValid || !dirty || !content}
-                    >
-                      Guardar
-                    </Button>
+                <Row className="mb-2">
+                  <Col
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <SpeedDial
+                      style={{ position: "fixed", left: 15, bottom: 15 }}
+                      type="quarter-circle"
+                      showIcon={<MdPhotoAlbum size={30} />}
+                      onClick={toggleDrawer("left", true)}
+                    />
+                    <Tooltip
+                      target=".speeddial-bottom-right .p-speeddial-action"
+                      position="left"
+                    />
+                    <SpeedDial
+                      model={[
+                        {
+                          label: "Guardar",
+                          icon: <MdCheckCircleOutline size={22}/>,
+                          command: () => {
+                            handleSubmit(values, content);
+                          },
+                          disabled: !isValid || !dirty || !content,
+                        },
+                        {
+                          label: "Regresar",
+                          icon: <MdArrowBackIosNew size={22} />,
+                          command: () => {
+                            handleBack();
+                          },
+                        },
+                      ]}
+                      type="quarter-circle"
+                      direction="up-left"
+                      radius={65}
+                      transitionDelay={80}
+                      style={{ position: "fixed", right: 15, bottom: 15 }}
+                      className="speeddial-bottom-right"
+                      buttonClassName="p-button-secondary"
+                      showIcon={<MdMenu size={30} />}
+                      hideIcon={<MdCancel size={30} />}
+                    />
                   </Col>
                 </Row>
                 <NoticeForm
