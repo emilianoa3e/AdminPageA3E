@@ -23,7 +23,9 @@ export const ModalEditContact = ({
   const [contact, setContact] = useState({
     type: "",
     contact: "",
+    destiny: "",
   });
+  
 
   useEffect(() => {
     if (id !== null) {
@@ -37,7 +39,7 @@ export const ModalEditContact = ({
       getContact();
     }
   }, [id]);
-
+console.log(contact);
   const objectSchema = Yup.object({
     type: Yup.string().required("El tipo de contacto es requerido"),
     contact: Yup.string()
@@ -46,6 +48,7 @@ export const ModalEditContact = ({
         "El contacto no puede contener caracteres especiales"
       )
       .required("El contacto es requerido"),
+    destiny: Yup.string().required("El destino de contacto es requerido"),
   });
 
   const options = [
@@ -54,6 +57,12 @@ export const ModalEditContact = ({
     { value: "whatsapp", label: "Whatsapp" },
     { value: "facebook", label: "Facebook" },
     { value: "linkedin", label: "Linkedin" },
+  ];
+
+  const destinyOptions = [
+    { value: "general", label: "General" },
+    { value: "reclutamiento", label: "Reclutamiento" },
+    { value: "ventas", label: "Ventas" },
   ];
 
   const handleSubmit = (values) => {
@@ -93,6 +102,7 @@ export const ModalEditContact = ({
             initialValues={{
               type: contact.type,
               contact: contact.contact,
+              destiny: contact.destiny
             }}
             enableReinitialize={true}
             validationSchema={objectSchema}
@@ -127,6 +137,15 @@ export const ModalEditContact = ({
                       ejemplo@dominio.com | Facebook | Linkedin
                     </p>
                   </FormBt.Group>
+                  <FormBt.Group className="mb-3">
+                    <SelectInput
+                      label="Destino del contacto"
+                      name="destiny"
+                      defaultText="Seleccione un destino del contacto"
+                      options={destinyOptions}
+                      isInvalid={!!errors.destiny && touched.destiny}
+                    />
+                  </FormBt.Group>
                   <Modal.Footer>
                     <Button
                       variant="contained"
@@ -137,7 +156,9 @@ export const ModalEditContact = ({
                         !values.type ||
                         !!errors.type ||
                         !values.contact ||
-                        !!errors.contact
+                        !!errors.contact ||
+                        !values.destiny ||
+                        !!errors.destiny                      
                           ? {
                               backgroundColor: Colors.PalletePrimaryLight,
                             }
@@ -147,7 +168,9 @@ export const ModalEditContact = ({
                         !values.type ||
                         !!errors.type ||
                         !values.contact ||
-                        !!errors.contact
+                        !!errors.contact ||
+                        !values.destiny ||
+                        !!errors.destiny
                       }
                       className="mt-3"
                     >

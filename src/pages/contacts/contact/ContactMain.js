@@ -139,7 +139,9 @@ function ContactsMain() {
                   ) : contact.type === "linkedin" ? (
                     <BsLinkedin size={50} color={Colors.PalleteLinkedin} />
                   ) : null}
+                  <Card.Subtitle className="mt-2" style={{textTransform:'uppercase', color:'gray'}}>{contact.destiny}</Card.Subtitle>
                   <Card.Title className="mt-3">{contact.contact}</Card.Title>
+                  
                   <Card.Footer style={{ backgroundColor: Colors.PalleteWhite }}>
                     <Button
                       size="small"

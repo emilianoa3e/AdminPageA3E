@@ -8,7 +8,7 @@ export const createContact = async (values) => {
   try {
     const response = await axios.post(
       instance.defaults.baseURL + "/contact/create-contact",
-      { type: values.type, contact: values.contact }
+      { type: values.type, contact: values.contact, destiny: values.destiny }
     );
 
     if (response.data.msg === "Contact saved") {
@@ -57,7 +57,7 @@ export const updateContact = async (id, values) => {
   try {
     const response = await axios.put(
       instance.defaults.baseURL + `/contact/updateById-contact/${id}`,
-      { type: values.type, contact: values.contact }
+      { type: values.type, contact: values.contact, destiny: values.destiny }
     );
 
     if (response.data.msg === "Contact updated") {

@@ -1,0 +1,9 @@
+.carousel-btn{
+    background-color: #00743b;
+    text-decoration: none ;
+    border-radius: 0px 30px 30px 30px;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 1.5rem;
+}

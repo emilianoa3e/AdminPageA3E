@@ -24,6 +24,7 @@ export const ModalCreateContact = ({
         "El contacto no puede contener caracteres especiales"
       )
       .required("El contacto es requerido"),
+      destiny: Yup.string().required("El destino de contacto es requerido"),
   });
 
   const options = [
@@ -33,6 +34,12 @@ export const ModalCreateContact = ({
     { value: "facebook", label: "Facebook" },
     { value: "linkedin", label: "Linkedin" },
   ];
+
+  const destinyOptions =[
+    { value: "general", label: "General" },
+    { value: "reclutamiento", label: "Reclutamiento" },
+    { value: "ventas", label: "Ventas" },
+  ]
 
   const handleSubmit = (values) => {
     showConfirmDialog(
@@ -66,6 +73,7 @@ export const ModalCreateContact = ({
         initialValues={{
           type: "",
           contact: "",
+          destiny: "",
         }}
         validationSchema={objectSchema}
         onSubmit={(values) => handleSubmit(values)}
@@ -98,6 +106,15 @@ export const ModalCreateContact = ({
                   Telefono o Whatsapp: 7771234567 | Email: ejemplo@dominio.com |
                   Facebook | Linkedin
                 </p>
+              </FormBt.Group>
+              <FormBt.Group className="mb-3">
+                <SelectInput
+                  label="Destino del contacto"
+                  name="destiny"
+                  defaultText="Seleccione un destino del contacto"
+                  options={destinyOptions}
+                  isInvalid={!!errors.destiny && touched.destiny}
+                />
               </FormBt.Group>
               <Modal.Footer>
                 <Button
