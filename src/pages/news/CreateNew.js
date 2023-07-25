@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Col, Container, Modal, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { Form, Formik } from "formik";
 import {
   showConfirmDialog,
@@ -8,7 +8,6 @@ import {
 } from "../../shared/plugins/alert";
 import { saveNew } from "../../utils/newsFunctions";
 import { SpeedDial } from "primereact/speeddial";
-import { Tooltip } from "primereact/tooltip";
 import {
   MdCheckCircleOutline,
   MdCancel,
@@ -18,7 +17,8 @@ import {
   MdHelpOutline,
 } from "react-icons/md";
 import { ModalHelp } from "../../components/shared/ModalHelp";
-import { stepsCreateNew } from "../../components/stepsTutorial/stepsCreateNew";
+import { stepsNew } from "../../components/stepsTutorial/stepsNew";
+import SpeedDialButton from "../../components/shared/SpeedDialButton";
 import Galery from "../../components/shared/Galery";
 import * as yup from "yup";
 import NoticeForm from "./NoticeForm";
@@ -132,59 +132,44 @@ function CreateNew() {
           >
             {({ errors, values, touched, isValid, dirty }) => (
               <Form>
-                <Row className="mb-2">
-                  <Col
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <SpeedDial
-                      style={{ position: "fixed", left: 15, bottom: 15 }}
-                      type="quarter-circle"
-                      showIcon={<MdPhotoAlbum size={30} />}
-                      onClick={toggleDrawer("left", true)}
-                    />
-                    <Tooltip
-                      target=".speeddial-bottom-right .p-speeddial-action"
-                      position="top"
-                    />
-                    <SpeedDial
-                      model={[
-                        {
-                          label: "Guardar",
-                          icon: <MdCheckCircleOutline size={22} />,
-                          command: () => {
-                            handleSubmit(values, content);
-                          },
-                          disabled: !isValid || !dirty || !content,
-                        },
-                        {
-                          label: "Regresar",
-                          style: { background: Colors.PalleteDanger },
-                          icon: <MdArrowBackIosNew size={22} />,
-                          command: () => {
-                            handleBack();
-                          },
-                        },
-                        {
-                          label: "¿Como funciona?",
-                          icon: <MdHelpOutline size={22} />,
-                          command: () => {
-                            handleShowHelp();
-                          },
-                        },
-                      ]}
-                      direction="left"
-                      transitionDelay={80}
-                      style={{ position: "fixed", right: 15, bottom: 15 }}
-                      className="speeddial-bottom-right"
-                      buttonClassName="p-button-secondary"
-                      showIcon={<MdMenu size={30} />}
-                      hideIcon={<MdCancel size={30} />}
-                    />
-                  </Col>
-                </Row>
+                <SpeedDial
+                  style={{ position: "fixed", left: 10, bottom: 10 }}
+                  type="quarter-circle"
+                  showIcon={<MdPhotoAlbum size={30} />}
+                  onClick={toggleDrawer("left", true)}
+                />
+                <SpeedDialButton
+                  positionTooltip="top"
+                  speedDialItems={[
+                    {
+                      label: "Guardar",
+                      icon: <MdCheckCircleOutline size={22} />,
+                      command: () => {
+                        handleSubmit(values, content);
+                      },
+                      disabled: !isValid || !dirty || !content,
+                    },
+                    {
+                      label: "Regresar",
+                      style: { background: Colors.PalleteDanger },
+                      icon: <MdArrowBackIosNew size={22} />,
+                      command: () => {
+                        handleBack();
+                      },
+                    },
+                    {
+                      label: "¿Como funciona?",
+                      icon: <MdHelpOutline size={22} />,
+                      command: () => {
+                        handleShowHelp();
+                      },
+                    },
+                  ]}
+                  directionSD="left"
+                  buttonClassname="p-button-secondary"
+                  showIcon={<MdMenu size={30} />}
+                  hideIcon={<MdCancel size={30} />}
+                />
                 <NoticeForm
                   errors={errors}
                   values={values}
@@ -201,7 +186,7 @@ function CreateNew() {
       <ModalHelp
         show={showHelp}
         handleClose={handleCloseHelp}
-        stepsTutorial={stepsCreateNew}
+        stepsTutorial={stepsNew}
       />
     </Container>
   );

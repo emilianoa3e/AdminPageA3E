@@ -8,15 +8,18 @@ import {
   showConfirmDialogAutoSave,
 } from "../../shared/plugins/alert";
 import { SpeedDial } from "primereact/speeddial";
-import { Tooltip } from "primereact/tooltip";
 import {
   MdCheckCircleOutline,
   MdHighlightOff,
   MdPhotoAlbum,
   MdMenu,
   MdCancel,
+  MdHelpOutline,
 } from "react-icons/md";
+import { ModalHelp } from "../../components/shared/ModalHelp";
+import { stepsService } from "../../components/stepsTutorial/stepsService";
 import Galery from "../../components/shared/Galery";
+import SpeedDialButton from "../../components/shared/SpeedDialButton";
 import SplashScreen from "../utils/SplashScreen";
 import ServiceForm from "../../components/services/ServiceForm";
 import * as yup from "yup";
@@ -25,6 +28,7 @@ import "../../assets/css/pages/CreateEditService.css";
 function EditService() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [showHelp, setShowHelp] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [content, setContent] = useState("");
   const [initialContent, setInitialContent] = useState("");
@@ -35,6 +39,9 @@ function EditService() {
     bottom: false,
     right: false,
   });
+
+  const handleShowHelp = () => setShowHelp(true);
+  const handleCloseHelp = () => setShowHelp(false);
 
   useEffect(() => {
     const showAutosaveDialog = () => {
@@ -145,53 +152,43 @@ function EditService() {
           >
             {({ errors, values, touched, isValid }) => (
               <Form>
-                <Row className="mb-3">
-                  <Col
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <SpeedDial
-                      style={{ position: "fixed", left: 15, bottom: 15 }}
-                      type="quarter-circle"
-                      showIcon={<MdPhotoAlbum size={30} />}
-                      onClick={toggleDrawer("left", true)}
-                    />
-                    <Tooltip
-                      target=".speeddial-bottom-right .p-speeddial-action"
-                      position="left"
-                    />
-                    <SpeedDial
-                      model={[
-                        {
-                          label: "Guardar",
-                          icon: <MdCheckCircleOutline size={22} />,
-                          command: () => {
-                            handleSubmit(values, content);
-                          },
-                          disabled: !isValid || !content,
-                        },
-                        {
-                          label: "Cancelar",
-                          icon: <MdHighlightOff size={22} />,
-                          command: () => {
-                            handleBack();
-                          },
-                        },
-                      ]}
-                      type="quarter-circle"
-                      direction="up-left"
-                      radius={65}
-                      transitionDelay={80}
-                      style={{ position: "fixed", right: 15, bottom: 15 }}
-                      className="speeddial-bottom-right"
-                      buttonClassName="p-button-secondary"
-                      showIcon={<MdMenu size={30} />}
-                      hideIcon={<MdCancel size={30} />}
-                    />
-                  </Col>
-                </Row>
+                <SpeedDial
+                  style={{ position: "fixed", left: 15, bottom: 15 }}
+                  type="quarter-circle"
+                  showIcon={<MdPhotoAlbum size={30} />}
+                  onClick={toggleDrawer("left", true)}
+                />
+                <SpeedDialButton
+                  positionTooltip="top"
+                  speedDialItems={[
+                    {
+                      label: "Guardar",
+                      icon: <MdCheckCircleOutline size={22} />,
+                      command: () => {
+                        handleSubmit(values, content);
+                      },
+                      disabled: !isValid || !content,
+                    },
+                    {
+                      label: "Cancelar",
+                      icon: <MdHighlightOff size={22} />,
+                      command: () => {
+                        handleBack();
+                      },
+                    },
+                    {
+                      label: "¿Como funciona?",
+                      icon: <MdHelpOutline size={22} />,
+                      command: () => {
+                        handleShowHelp();
+                      },
+                    },
+                  ]}
+                  directionSD="left"
+                  buttonClassname="p-button-secondary"
+                  showIcon={<MdMenu size={30} />}
+                  hideIcon={<MdCancel size={30} />}
+                />
                 <ServiceForm
                   errors={errors}
                   values={values}
@@ -207,6 +204,11 @@ function EditService() {
           </Formik>
         </Col>
       </Row>
+      <ModalHelp
+        show={showHelp}
+        handleClose={handleCloseHelp}
+        stepsTutorial={stepsService}
+      />
     </Container>
   );
 }
