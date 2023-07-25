@@ -154,7 +154,6 @@ function EditService() {
               <Form>
                 <SpeedDial
                   style={{ position: "fixed", left: 15, bottom: 15 }}
-                  type="quarter-circle"
                   showIcon={<MdPhotoAlbum size={30} />}
                   onClick={toggleDrawer("left", true)}
                 />
@@ -187,7 +186,6 @@ function EditService() {
                   directionSD="left"
                   buttonClassname="p-button-secondary"
                   showIcon={<MdMenu size={30} />}
-                  hideIcon={<MdCancel size={30} />}
                 />
                 <ServiceForm
                   errors={errors}

@@ -14,6 +14,7 @@ import {
   MdPhotoAlbum,
   MdMenu,
   MdHelpOutline,
+  MdCancel,
 } from "react-icons/md";
 import { ModalHelp } from "../../components/shared/ModalHelp";
 import { stepsService } from "../../components/stepsTutorial/stepsService";
@@ -134,7 +135,6 @@ function CreateService() {
               <Form>
                 <SpeedDial
                   style={{ position: "fixed", left: 15, bottom: 15 }}
-                  type="quarter-circle"
                   showIcon={<MdPhotoAlbum size={30} />}
                   onClick={toggleDrawer("left", true)}
                 />
@@ -168,7 +168,6 @@ function CreateService() {
                   directionSD="left"
                   buttonClassname="p-button-secondary"
                   showIcon={<MdMenu size={30} />}
-                  hideIcon={<MdArrowBackIosNew size={30} />}
                 />
                 <ServiceForm
                   errors={errors}
