@@ -7,9 +7,12 @@ import {
   deleteBanner,
 } from "../../utils/bannersFunctions";
 import { showConfirmDialog, showError400 } from "../../shared/plugins/alert";
-import { MdAdd, MdArrowBackIosNew } from "react-icons/md";
+import { MdAdd, MdArrowBackIosNew, MdHelpOutline } from "react-icons/md";
 import { Button } from "@mui/material";
 import { columnsBanner } from "../../components/columnsTables/columnsBanner";
+import { SpeedDial } from "primereact/speeddial";
+import { ModalHelp } from "../../components/shared/ModalHelp";
+import { stepsBannerMain } from "../../components/stepsTutorial/stepsBannerMain";
 import Colors from "../../utils/Colors";
 import SplashScreen from "../utils/SplashScreen";
 import DynamicTable from "../../components/shared/DynamicTable";
@@ -17,9 +20,13 @@ import "../../assets/css/pages/BannersMain.css";
 
 function BannerMain() {
   const navigate = useNavigate();
+  const [showHelp, setShowHelp] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [bannerList, setBannerList] = useState([]);
   const [error, setError] = useState(false);
+
+  const handleShowHelp = () => setShowHelp(true);
+  const handleCloseHelp = () => setShowHelp(false);
 
   const getBanners = async () => {
     setIsLoading(true);
@@ -78,6 +85,18 @@ function BannerMain() {
 
   return (
     <Container fluid>
+      <SpeedDial
+        style={{ position: "fixed", left: 10, bottom: 10 }}
+        showIcon={<MdHelpOutline size={30} />}
+        title="¿Como funciona?"
+        buttonStyle={{
+          backgroundColor: Colors.PalleteGreenA3E,
+          opacity: 0.85,
+          color: "white",
+        }}
+        buttonClassName="p-button-secondary"
+        onClick={handleShowHelp}
+      />
       <Row className="mb-4">
         <Col className="banner-main-buttons-top">
           <Button
@@ -116,6 +135,11 @@ function BannerMain() {
           />
         </Col>
       </Row>
+      <ModalHelp
+        show={showHelp}
+        handleClose={handleCloseHelp}
+        stepsTutorial={stepsBannerMain}
+      />
     </Container>
   );
 }

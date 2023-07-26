@@ -134,7 +134,6 @@ function CreateNew() {
               <Form>
                 <SpeedDial
                   style={{ position: "fixed", left: 10, bottom: 10 }}
-                  type="quarter-circle"
                   showIcon={<MdPhotoAlbum size={30} />}
                   onClick={toggleDrawer("left", true)}
                 />
@@ -168,7 +167,6 @@ function CreateNew() {
                   directionSD="left"
                   buttonClassname="p-button-secondary"
                   showIcon={<MdMenu size={30} />}
-                  hideIcon={<MdCancel size={30} />}
                 />
                 <NoticeForm
                   errors={errors}
