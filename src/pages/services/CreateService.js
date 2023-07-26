@@ -14,7 +14,6 @@ import {
   MdPhotoAlbum,
   MdMenu,
   MdHelpOutline,
-  MdCancel,
 } from "react-icons/md";
 import { ModalHelp } from "../../components/shared/ModalHelp";
 import { stepsService } from "../../components/stepsTutorial/stepsService";

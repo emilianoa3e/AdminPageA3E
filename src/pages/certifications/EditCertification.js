@@ -13,7 +13,6 @@ import Colors from "../../utils/Colors";
 import FileDropzone from "../../components/shared/Dropzone";
 import { TextInput } from "../../components/shared/TextInput";
 import BannerPreview from "../utils/BannerPreview";
-import "../../assets/css/pages/CreateEditBanner.css";
 import SplashScreen from "../utils/SplashScreen";
 import {
   getCertificationById,
@@ -84,21 +83,21 @@ function EditCertification() {
           >
             {({ errors, values, touched }) => (
               <Form>
-                <Row className="text-end">
-                  <Col className="buttons-top">
+                <Row className="mb-3">
+                  <Col className="d-flex justify-content-between">
                     <Button
                       variant="contained"
-                      size="medium"
+                      size="large"
                       startIcon={<MdArrowBackIosNew />}
                       style={{ backgroundColor: Colors.PalleteGrey }}
                       onClick={() => navigate(window.history.back())}
-                      className="me-2"
+                      className="me-1"
                     >
                       Regresar
                     </Button>
                     <Button
                       variant="contained"
-                      size="medium"
+                      size="large"
                       endIcon={<MdCheckCircleOutline />}
                       style={
                         !values.title || !!errors.title || !!errors.link
@@ -114,9 +113,9 @@ function EditCertification() {
                     </Button>
                   </Col>
                 </Row>
-                <Row className="form">
-                  <Col lg={4} className="form-dropzone">
-                    <FormBt.Group className="mb-3">
+                <Row>
+                  <Col lg={4} className="pt-5">
+                    <FormBt.Group className="mt-3">
                       <FileDropzone
                         uploadedFile={uploadedFile}
                         setUploadedFile={setUploadedFile}
@@ -137,7 +136,7 @@ function EditCertification() {
                   </Col>
                   <Col lg={8}>
                     <Row>
-                      <FormBt.Group lassName="mb-3">
+                      <FormBt.Group lassName="mb-2">
                         <TextInput
                           maxLength="60"
                           label="Título"
@@ -149,7 +148,7 @@ function EditCertification() {
                       </FormBt.Group>
                     </Row>
                     <Row>
-                      <FormBt.Group className="mb-3">
+                      <FormBt.Group className="mb-2">
                         <TextInput
                           maxLength="100"
                           as="textarea"
@@ -162,7 +161,7 @@ function EditCertification() {
                       </FormBt.Group>
                     </Row>
                     <Row>
-                      <FormBt.Group className="mb-3">
+                      <FormBt.Group className="mb-2">
                         <TextInput
                           maxLength="80"
                           label="Link"

@@ -10,7 +10,6 @@ import { saveNew } from "../../utils/newsFunctions";
 import { SpeedDial } from "primereact/speeddial";
 import {
   MdCheckCircleOutline,
-  MdCancel,
   MdArrowBackIosNew,
   MdPhotoAlbum,
   MdMenu,

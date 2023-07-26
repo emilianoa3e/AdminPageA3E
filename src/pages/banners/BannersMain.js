@@ -16,7 +16,6 @@ import { stepsBannerMain } from "../../components/stepsTutorial/stepsBannerMain"
 import Colors from "../../utils/Colors";
 import SplashScreen from "../utils/SplashScreen";
 import DynamicTable from "../../components/shared/DynamicTable";
-import "../../assets/css/pages/BannersMain.css";
 
 function BannerMain() {
   const navigate = useNavigate();
@@ -91,21 +90,21 @@ function BannerMain() {
         title="¿Como funciona?"
         buttonStyle={{
           backgroundColor: Colors.PalleteGreenA3E,
-          opacity: 0.85,
+          opacity: 0.65,
           color: "white",
         }}
         buttonClassName="p-button-secondary"
         onClick={handleShowHelp}
       />
-      <Row className="mb-4">
-        <Col className="banner-main-buttons-top">
+      <Row>
+        <Col className="d-flex justify-content-between">
           <Button
             size="large"
             variant="contained"
             startIcon={<MdArrowBackIosNew />}
             style={{ backgroundColor: Colors.PalleteGrey }}
             onClick={() => navigate("/home")}
-            className="me-2"
+            className="me-1"
           >
             Regresar
           </Button>
@@ -122,7 +121,7 @@ function BannerMain() {
           </Button>
         </Col>
       </Row>
-      <Row className="mt-4">
+      <Row className="mt-3">
         <Col lg={12} className="mt-1 p-0 m-0">
           <DynamicTable
             titleTable="Banners"

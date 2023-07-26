@@ -75,7 +75,7 @@ export const ModalHelp = ({ props, show, handleClose, stepsTutorial }) => {
       </Modal.Header>
       <Modal.Body>
         <Box sx={{ width: "auto" }}>
-          <Stepper activeStep={activeStep} orientation="horizontal">
+          <Stepper activeStep={activeStep} orientation="vertical">
             {stepsTutorial.map((step, index) => (
               <Step key={step.label}>
                 <StepLabel
@@ -97,8 +97,7 @@ export const ModalHelp = ({ props, show, handleClose, stepsTutorial }) => {
                             src={step.imgPath}
                             alt={step.label}
                             style={{
-                              maxWidth: "100%",
-                              maxHeight: "220px",
+                              width: "auto",
                               borderRadius: "10px",
                               border: "1px solid #ccc",
                             }}
@@ -107,7 +106,11 @@ export const ModalHelp = ({ props, show, handleClose, stepsTutorial }) => {
                       </Row>
                       <Row>
                         {step.step && (
-                          <Typography variant="body2" color="text.secondary">
+                          <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            align="center"
+                          >
                             {step.step}
                           </Typography>
                         )}
@@ -144,8 +147,7 @@ export const ModalHelp = ({ props, show, handleClose, stepsTutorial }) => {
                                               src={subStep.imgPath}
                                               alt={subStep.label}
                                               style={{
-                                                maxWidth: "100%",
-                                                maxHeight: "220px",
+                                                width: "auto",
                                                 borderRadius: "10px",
                                                 border: "1px solid #ccc",
                                               }}
@@ -157,6 +159,7 @@ export const ModalHelp = ({ props, show, handleClose, stepsTutorial }) => {
                                             <Typography
                                               variant="body2"
                                               color="text.secondary"
+                                              align="center"
                                             >
                                               {subStep.step}
                                             </Typography>
