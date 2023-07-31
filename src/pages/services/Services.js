@@ -141,13 +141,9 @@ function Services() {
                   subheader={service.subtitle}
                 />
                 <CardContent>
-                  <Typography
-                    fontSize={17}
-                    variant="body2"
-                    color="text.secondary"
-                  >
-                    {service.summary}
-                  </Typography>
+                  <div
+                    dangerouslySetInnerHTML={{ __html: service.summary }}
+                  ></div>
                 </CardContent>
                 <CardActions disableSpacing>
                   <Button

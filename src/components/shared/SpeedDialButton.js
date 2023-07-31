@@ -20,7 +20,7 @@ function SpeedDialButton({
         model={speedDialItems}
         direction={directionSD}
         transitionDelay={80}
-        style={{ position: "fixed", right: 10, bottom: 10 }}
+        style={{ position: "fixed", right: 10, bottom: 10, zIndex:999 }}
         className="speeddial-bottom-right"
         buttonClassName={buttonClassname}
         showIcon={showIcon}

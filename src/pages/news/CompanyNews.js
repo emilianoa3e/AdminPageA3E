@@ -139,13 +139,8 @@ function CompanyNews() {
               >
                 <CardHeader title={news.title} subheader={`${news.type} | ${news.author} | ${news.date}`} />
                 <CardContent>
-                  <Typography
-                    fontSize={17}
-                    variant="body2"
-                    color="text.secondary"
-                  >
-                    {news.summary}
-                  </Typography>
+                  <div dangerouslySetInnerHTML={{ __html: news.summary }}></div>
+                  
                 </CardContent>
                 <CardActions disableSpacing>
                   <Button

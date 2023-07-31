@@ -10,7 +10,6 @@ import { saveNew } from "../../utils/newsFunctions";
 import { SpeedDial } from "primereact/speeddial";
 import {
   MdCheckCircleOutline,
-  MdCancel,
   MdArrowBackIosNew,
   MdPhotoAlbum,
   MdMenu,
@@ -27,8 +26,13 @@ import Colors from "../../utils/Colors";
 function CreateNew() {
   const navigate = useNavigate();
   const [showHelp, setShowHelp] = useState(false);
+  //content to data
   const [content, setContent] = useState("");
   const [initialContent, setInitialContent] = useState("");
+  //content to resume
+  const [resumeContent, setResumeContent] = useState("");
+  const [initialResumeContent, setInitialResumeContent] = useState("");
+
   const [state, setState] = useState({
     top: false,
     left: false,
@@ -74,7 +78,8 @@ function CreateNew() {
     setState({ ...state, [anchor]: open });
   };
 
-  const handleSubmit = (values, content) => {
+  const handleSubmit = (values, content, resumeContent) => {
+    console.log(resumeContent);
     showConfirmDialog(
       "¿Estás seguro de crear esta noticia?",
       "Se creará una nueva noticia",
@@ -82,7 +87,7 @@ function CreateNew() {
       "Cancelar",
       () => {
         const date = new Date().toLocaleDateString();
-        saveNew(values, content, navigate, date);
+        saveNew(values, content, resumeContent, navigate, date);
         localStorage.removeItem("tinymce-autosave-create-newdraft");
         localStorage.removeItem("tinymce-autosave-create-newtime");
       }
@@ -111,7 +116,6 @@ function CreateNew() {
   const objectSchema = yup.object().shape({
     title: yup.string().required("El título es requerido"),
     type: yup.string().required("El tipo de noticia es requerido"),
-    summary: yup.string().required("El resumen es requerido"),
     author: yup.string().required("El autor es requerido"),
   });
 
@@ -124,16 +128,20 @@ function CreateNew() {
             initialValues={{
               title: "",
               type: "",
-              summary: "",
               author: "",
             }}
             validationSchema={objectSchema}
-            onSubmit={(values) => handleSubmit(values, content)}
+            onSubmit={(values) => handleSubmit(values, content, resumeContent)}
           >
             {({ errors, values, touched, isValid, dirty }) => (
               <Form>
                 <SpeedDial
-                  style={{ position: "fixed", left: 10, bottom: 10 }}
+                  style={{
+                    position: "fixed",
+                    left: 10,
+                    bottom: 10,
+                    zIndex: 999,
+                  }}
                   showIcon={<MdPhotoAlbum size={30} />}
                   onClick={toggleDrawer("left", true)}
                 />
@@ -144,7 +152,7 @@ function CreateNew() {
                       label: "Guardar",
                       icon: <MdCheckCircleOutline size={22} />,
                       command: () => {
-                        handleSubmit(values, content);
+                        handleSubmit(values, content, resumeContent);
                       },
                       disabled: !isValid || !dirty || !content,
                     },
@@ -174,6 +182,8 @@ function CreateNew() {
                   touched={touched}
                   setContent={setContent}
                   initialContent={initialContent}
+                  setResumeContent={setResumeContent}
+                  initialResumeContent={initialResumeContent}
                   onContext={"create-new"}
                 />
               </Form>

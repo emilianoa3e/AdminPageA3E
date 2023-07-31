@@ -2,13 +2,9 @@ import React from "react";
 import EditorWys from "../../components/shared/EditorWys";
 import { Form as FormBt, Row, Col } from "react-bootstrap";
 import { TextInput } from "../../components/shared/TextInput";
-import {
-  MdTitle,
-  MdOutlineSummarize,
-  MdOutlineFullscreen,
-  MdCoPresent
-} from "react-icons/md";
+import { MdTitle, MdOutlineFullscreen, MdCoPresent } from "react-icons/md";
 import { SelectInput } from "../../components/shared/SelectInput";
+import EditorText from "../../components/shared/EditorText";
 
 function NoticeForm({
   errors,
@@ -16,6 +12,8 @@ function NoticeForm({
   touched,
   setContent,
   initialContent,
+  setResumeContent,
+  initialResumeContent,
   onContext,
 }) {
   return (
@@ -49,31 +47,26 @@ function NoticeForm({
           </FormBt.Group>
         </Col>
       </Row>
-     <Row>
-      <Col>
-      <FormBt.Group className="mb-2">
-        <TextInput
-          maxLength="240"
-          label="Resumen"
-          as="textarea"
-          style={{ resize: "none", height: "70px" }}
-          name="summary"
-          icon={MdOutlineSummarize}
-          placeholder="Resumen"
-          isInvalid={!!errors.summary && touched.summary}
-        />
-      </FormBt.Group>
-      <FormBt.Group className="mb-2">
-        <TextInput
-          label="Autor"
-          name="author"
-          icon={MdCoPresent}
-          placeholder="Autor"
-          isInvalid={!!errors.author && touched.author}
-        />
-      </FormBt.Group>
-      </Col>
-     </Row>
+      <Row>
+        <Col>
+          <FormBt.Group className="mb-2">
+            <label>Resumen</label>
+            <EditorText
+              initialContent={initialResumeContent}
+              setContent={setResumeContent}
+            />
+          </FormBt.Group>
+          <FormBt.Group className="mb-2">
+            <TextInput
+              label="Autor"
+              name="author"
+              icon={MdCoPresent}
+              placeholder="Autor"
+              isInvalid={!!errors.author && touched.author}
+            />
+          </FormBt.Group>
+        </Col>
+      </Row>
       <p
         className="mt-3 text-center align-items-center"
         style={{

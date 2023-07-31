@@ -29,8 +29,12 @@ function EditNew() {
   const navigate = useNavigate();
   const [showHelp, setShowHelp] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  //content to data
   const [content, setContent] = useState("");
   const [initialContent, setInitialContent] = useState("");
+  //content to resume
+  const [resumeContent, setResumeContent] = useState("");
+  const [initialResumeContent, setInitialResumeContent] = useState("");
   const [notice, setNotice] = useState({});
   const [state, setState] = useState({
     top: false,
@@ -91,7 +95,7 @@ function EditNew() {
     getNew();
   }, []);
 
-  const handleSubmit = (values, content) => {
+  const handleSubmit = (values, content, resumeContent) => {
     showConfirmDialog(
       "¿Estás seguro de editar esta noticia?",
       "Se editará una nueva noticis",
@@ -99,7 +103,7 @@ function EditNew() {
       "Cancelar",
       () => {
         const date = new Date().toLocaleDateString();
-        updateNew(id, values, content, navigate, date);
+        updateNew(id, values, content, resumeContent, navigate, date);
         localStorage.removeItem(`tinymce-autosave-edit-new/${id}draft`);
         localStorage.removeItem(`tinymce-autosave-edit-new/${id}time`);
       }
@@ -130,7 +134,6 @@ function EditNew() {
   const objectSchema = yup.object().shape({
     title: yup.string().required("El título es requerido"),
     type: yup.string().required("El tipo es requerido"),
-    summary: yup.string().required("El resumen es requerido"),
     author: yup.string().required("El autor es requerido"),
   });
 
@@ -147,17 +150,21 @@ function EditNew() {
             initialValues={{
               title: notice.title,
               type: notice.type,
-              summary: notice.summary,
               author: notice.author,
             }}
             enableReinitialize={true}
             validationSchema={objectSchema}
-            onSubmit={(values) => handleSubmit(values, content)}
+            onSubmit={(values) => handleSubmit(values, content, resumeContent)}
           >
             {({ errors, values, touched, isValid }) => (
               <Form>
                 <SpeedDial
-                  style={{ position: "fixed", left: 10, bottom: 10 }}
+                  style={{
+                    position: "fixed",
+                    left: 10,
+                    bottom: 10,
+                    zIndex: 999,
+                  }}
                   showIcon={<MdPhotoAlbum size={30} />}
                   onClick={toggleDrawer("left", true)}
                 />
@@ -168,7 +175,7 @@ function EditNew() {
                       label: "Guardar",
                       icon: <MdCheckCircleOutline size={22} />,
                       command: () => {
-                        handleSubmit(values, content);
+                        handleSubmit(values, content, resumeContent);
                       },
                       disabled: !isValid || !content,
                     },
@@ -198,6 +205,10 @@ function EditNew() {
                   setContent={setContent}
                   initialContent={
                     initialContent ? initialContent : notice.content
+                  }
+                  setResumeContent={setResumeContent}
+                  initialResumeContent={
+                    initialResumeContent ? initialResumeContent : notice.summary
                   }
                   onContext={`edit-new/${id}`}
                 />

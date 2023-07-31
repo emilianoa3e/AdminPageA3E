@@ -30,8 +30,12 @@ function EditService() {
   const navigate = useNavigate();
   const [showHelp, setShowHelp] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [content, setContent] = useState("");
-  const [initialContent, setInitialContent] = useState("");
+   //content to data
+   const [content, setContent] = useState("");
+   const [initialContent, setInitialContent] = useState("");
+   //content to resume
+   const [resumeContent, setResumeContent] = useState("");
+   const [initialResumeContent, setInitialResumeContent] = useState("");
   const [service, setService] = useState({});
   const [state, setState] = useState({
     top: false,
@@ -92,14 +96,14 @@ function EditService() {
     getService();
   }, []);
 
-  const handleSubmit = async (values, content) => {
+  const handleSubmit = async (values, content, resumeContent) => {
     showConfirmDialog(
       "¿Estás seguro de editar este servicio?",
       "Se editará el servicio",
       "Guardar cambios",
       "Cancelar",
       () => {
-        updateService(id, values, content, navigate);
+        updateService(id, values, content, resumeContent, navigate);
         localStorage.removeItem(`tinymce-autosave-edit-service/${id}draft`);
         localStorage.removeItem(`tinymce-autosave-edit-service/${id}time`);
       }
@@ -129,7 +133,7 @@ function EditService() {
 
   const objectSchema = yup.object().shape({
     title: yup.string().required("El título es requerido"),
-    summary: yup.string().required("El resumen es requerido"),
+
   });
 
   if (isLoading) {
@@ -144,16 +148,15 @@ function EditService() {
           <Formik
             initialValues={{
               title: service.title,
-              subtitle: service.subtitle,
-              summary: service.summary,
+              subtitle: service.subtitle,              
             }}
             validationSchema={objectSchema}
-            onSubmit={(values) => handleSubmit(values, content)}
+            onSubmit={(values) => handleSubmit(values, content, resumeContent)}
           >
             {({ errors, values, touched, isValid }) => (
               <Form>
                 <SpeedDial
-                  style={{ position: "fixed", left: 15, bottom: 15 }}
+                  style={{ position: "fixed", left: 15, bottom: 15, zIndex:999 }}
                   showIcon={<MdPhotoAlbum size={30} />}
                   onClick={toggleDrawer("left", true)}
                 />
@@ -164,7 +167,7 @@ function EditService() {
                       label: "Guardar",
                       icon: <MdCheckCircleOutline size={22} />,
                       command: () => {
-                        handleSubmit(values, content);
+                        handleSubmit(values, content, resumeContent);
                       },
                       disabled: !isValid || !content,
                     },
@@ -194,6 +197,10 @@ function EditService() {
                   setContent={setContent}
                   initialContent={
                     initialContent ? initialContent : service.content
+                  }
+                  setResumeContent={setResumeContent}
+                  initialResumeContent={
+                    initialResumeContent ? initialResumeContent : service.summary
                   }
                   onContext={`edit-service/${id}`}
                 />

@@ -14,7 +14,6 @@ import {
   MdPhotoAlbum,
   MdMenu,
   MdHelpOutline,
-  MdCancel,
 } from "react-icons/md";
 import { ModalHelp } from "../../components/shared/ModalHelp";
 import { stepsService } from "../../components/stepsTutorial/stepsService";
@@ -28,8 +27,12 @@ import "../../assets/css/pages/CreateEditService.css";
 function CreateService() {
   const navigate = useNavigate();
   const [showHelp, setShowHelp] = useState(false);
+  //content to data
   const [content, setContent] = useState("");
   const [initialContent, setInitialContent] = useState("");
+  //content to resume
+  const [resumeContent, setResumeContent] = useState("");
+  const [initialResumeContent, setInitialResumeContent] = useState("");
   const [state, setState] = useState({
     top: false,
     left: false,
@@ -77,14 +80,14 @@ function CreateService() {
     setState({ ...state, [anchor]: open });
   };
 
-  const handleSubmit = (values, content) => {
+  const handleSubmit = (values, content, resumeContent) => {
     showConfirmDialog(
       "¿Estás seguro de crear este servicio?",
       "Se creará un nuevo servicio",
       "Si, crear servicio",
       "Cancelar",
       () => {
-        saveService(values, content, navigate);
+        saveService(values, content, resumeContent, navigate);
         localStorage.removeItem("tinymce-autosave-create-servicedraft");
         localStorage.removeItem("tinymce-autosave-create-servicetime");
       }
@@ -114,7 +117,6 @@ function CreateService() {
 
   const objectSchema = yup.object().shape({
     title: yup.string().required("El título es requerido"),
-    summary: yup.string().required("El resumen es requerido"),
   });
 
   return (
@@ -126,15 +128,14 @@ function CreateService() {
             initialValues={{
               title: "",
               subtitle: "",
-              summary: "",
             }}
             validationSchema={objectSchema}
-            onSubmit={(values) => handleSubmit(values, content)}
+            onSubmit={(values) => handleSubmit(values, content, resumeContent)}
           >
             {({ errors, values, touched, isValid, dirty }) => (
               <Form>
                 <SpeedDial
-                  style={{ position: "fixed", left: 15, bottom: 15 }}
+                  style={{ position: "fixed", left: 15, bottom: 15, zIndex:999 }}
                   showIcon={<MdPhotoAlbum size={30} />}
                   onClick={toggleDrawer("left", true)}
                 />
@@ -145,7 +146,7 @@ function CreateService() {
                       label: "Guardar",
                       icon: <MdCheckCircleOutline size={22} />,
                       command: () => {
-                        handleSubmit(values, content);
+                        handleSubmit(values, content, resumeContent);
                       },
                       disabled: !isValid || !dirty || !content,
                     },
@@ -175,6 +176,8 @@ function CreateService() {
                   touched={touched}
                   setContent={setContent}
                   initialContent={initialContent}
+                  setResumeContent={setResumeContent}
+                  initialResumeContent={initialResumeContent}
                   onContext={"create-service"}
                 />
               </Form>

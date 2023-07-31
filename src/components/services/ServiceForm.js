@@ -7,6 +7,7 @@ import {
   MdOutlineSummarize,
   MdOutlineFullscreen,
 } from "react-icons/md";
+import EditorText from "../shared/EditorText";
 
 function ServiceForm({
   errors,
@@ -14,6 +15,8 @@ function ServiceForm({
   touched,
   setContent,
   initialContent,
+  setResumeContent,
+  initialResumeContent,
   onContext,
 }) {
   return (
@@ -45,15 +48,10 @@ function ServiceForm({
         </Col>
       </Row>
       <FormBt.Group className="mb-2">
-        <TextInput
-          maxLength="240"
-          label="Resumen"
-          as="textarea"
-          style={{ resize: "none", height: "70px" }}
-          name="summary"
-          icon={MdOutlineSummarize}
-          placeholder="Resumen"
-          isInvalid={!!errors.summary && touched.summary}
+        <label>Resumen</label>
+        <EditorText
+          initialContent={initialResumeContent}
+          setContent={setResumeContent}
         />
       </FormBt.Group>
       <p

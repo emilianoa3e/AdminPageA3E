@@ -1,5 +1,4 @@
 import React from "react";
-import { Col, Container } from "react-bootstrap";
 import "react-quill/dist/quill.snow.css";
 import { Editor } from "@tinymce/tinymce-react";
 
