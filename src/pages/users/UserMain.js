@@ -70,6 +70,8 @@ function UserMain() {
     );
   };
 
+  const filterRole = users.filter((user) => user.role !== "superadmin");
+
   if (isLoading) {
     return <SplashScreen />;
   }
@@ -102,7 +104,7 @@ function UserMain() {
         <DynamicTable
           titleTable="Usuarios"
           columns={columnsUser}
-          data={users}
+          data={filterRole}
           handleDelete={handleDelete}
           handleChangeStatus={handleChangeStatus}
           showFilter={true}

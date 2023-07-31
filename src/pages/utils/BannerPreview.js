@@ -2,6 +2,7 @@ import React from "react";
 import Carousel from "react-bootstrap/Carousel";
 import "../../assets/css/components/BannerPreview.css";
 import { Row, Col } from "react-bootstrap";
+
 function BannerPreview({ title, description, image, link, onContext }) {
   if (onContext === "bannerPreview") {
     if (!image) {
@@ -41,7 +42,9 @@ function BannerPreview({ title, description, image, link, onContext }) {
               >
                 <Row className="w-100 h-100 p-0 m-0 align-items-center justify-content-left">
                   <Col className="text-center ">
-                    <a className="carousel-btn">Ver más</a>
+                    <a href={link} target="_blank" className="carousel-btn">
+                      Ver más
+                    </a>
                   </Col>
                 </Row>
               </Carousel.Caption>

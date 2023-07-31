@@ -4,21 +4,32 @@ import { Col, Container, Row } from "react-bootstrap";
 import { Form, Formik } from "formik";
 import { Form as FormBt } from "react-bootstrap";
 import { TextInput } from "../../components/shared/TextInput";
-import { MdTitle, MdOutlineDescription, MdOutlineLink } from "react-icons/md";
+import {
+  MdTitle,
+  MdOutlineDescription,
+  MdOutlineLink,
+  MdHelpOutline,
+} from "react-icons/md";
 import { saveBanner } from "../../utils/bannersFunctions";
 import { showConfirmDialog } from "../../shared/plugins/alert";
 import { MdCheckCircleOutline, MdArrowBackIosNew } from "react-icons/md";
 import { Button } from "@mui/material";
+import { SpeedDial } from "primereact/speeddial";
+import { ModalHelp } from "../../components/shared/ModalHelp";
+import { stepsBanner } from "../../components/stepsTutorial/stepsBanner";
 import * as yup from "yup";
 import Colors from "../../utils/Colors";
 import FileDropzone from "../../components/shared/Dropzone";
 import BannerPreview from "../utils/BannerPreview";
-import "../../assets/css/pages/CreateEditBanner.css";
 
 function CreateBanner() {
   const navigate = useNavigate();
+  const [showHelp, setShowHelp] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
   const imagePreview = uploadedFile ? URL.createObjectURL(uploadedFile) : null;
+
+  const handleShowHelp = () => setShowHelp(true);
+  const handleCloseHelp = () => setShowHelp(false);
 
   const handleSubmit = (values, uploadedFile) => {
     showConfirmDialog(
@@ -39,6 +50,18 @@ function CreateBanner() {
 
   return (
     <Container fluid className="p-0 m-0">
+      <SpeedDial
+        style={{ position: "fixed", left: 10, bottom: 10 }}
+        showIcon={<MdHelpOutline size={30} />}
+        title="¿Como funciona?"
+        buttonStyle={{
+          backgroundColor: Colors.PalleteGreenA3E,
+          opacity: 0.65,
+          color: "white",
+        }}
+        buttonClassName="p-button-secondary"
+        onClick={handleShowHelp}
+      />
       <Row>
         <Col lg={12}>
           <Formik
@@ -52,21 +75,21 @@ function CreateBanner() {
           >
             {({ errors, values, touched }) => (
               <Form>
-                <Row className="text-end">
-                  <Col className="buttons-top">
+                <Row className="mb-3">
+                  <Col className="d-flex justify-content-between">
                     <Button
                       variant="contained"
-                      size="medium"
+                      size="large"
                       startIcon={<MdArrowBackIosNew />}
                       style={{ backgroundColor: Colors.PalleteGrey }}
                       onClick={() => navigate("/banners")}
-                      className="me-2"
+                      className="me-1"
                     >
                       Regresar
                     </Button>
                     <Button
                       variant="contained"
-                      size="medium"
+                      size="large"
                       endIcon={<MdCheckCircleOutline />}
                       style={
                         !values.title ||
@@ -88,9 +111,9 @@ function CreateBanner() {
                     </Button>
                   </Col>
                 </Row>
-                <Row className="form">
-                  <Col lg={4} className="form-dropzone">
-                    <FormBt.Group className="mb-3">
+                <Row className="ms-3 me-3">
+                  <Col lg={4} className="pt-5">
+                    <FormBt.Group className="mt-3">
                       <FileDropzone
                         uploadedFile={uploadedFile}
                         setUploadedFile={setUploadedFile}
@@ -111,7 +134,7 @@ function CreateBanner() {
                   </Col>
                   <Col lg={8}>
                     <Row>
-                      <FormBt.Group className="mb-3">
+                      <FormBt.Group className="mb-2">
                         <TextInput
                           maxLength="60"
                           label="Título"
@@ -123,7 +146,7 @@ function CreateBanner() {
                       </FormBt.Group>
                     </Row>
                     <Row>
-                      <FormBt.Group className="mb-3">
+                      <FormBt.Group className="mb-2">
                         <TextInput
                           maxLength="100"
                           as="textarea"
@@ -136,7 +159,7 @@ function CreateBanner() {
                       </FormBt.Group>
                     </Row>
                     <Row>
-                      <FormBt.Group className="mb-3">
+                      <FormBt.Group className="mb-2">
                         <TextInput
                           maxLength="80"
                           label="Link"
@@ -166,6 +189,11 @@ function CreateBanner() {
           </Formik>
         </Col>
       </Row>
+      <ModalHelp
+        show={showHelp}
+        handleClose={handleCloseHelp}
+        stepsTutorial={stepsBanner}
+      />
     </Container>
   );
 }
