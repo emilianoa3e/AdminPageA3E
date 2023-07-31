@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth/AuthContext";
 import { Row, Col, Container, Dropdown } from "react-bootstrap";
 import { getUser } from "../../utils/profileFunctions";
@@ -9,7 +8,6 @@ import { showConfirmDialog } from "../../shared/plugins/alert";
 import "../../assets/css/components/layouts/customDropdown.css";
 
 function CustomDropdown() {
-  const navigate = useNavigate();
   const { logout, authState } = useContext(AuthContext);
   const [show, setShow] = useState(false);
   const [isEdit, setIsEdit] = useState(false);

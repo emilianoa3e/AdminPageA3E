@@ -160,6 +160,7 @@ function Galery({ anchor, state, toggleDrawer }) {
                               src={media.multimedia}
                               alt="..."
                               controls
+                              controlsList="nodownload"
                               style={{
                                 width: "100%",
                                 height: "auto",
