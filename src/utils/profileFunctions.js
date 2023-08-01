@@ -95,3 +95,35 @@ export const updatePassword = async (id, values) => {
     }
   }
 };
+
+export const updatePhoto = async (id, photo) => {
+  showLoadingAlert("Actualizando foto...", "Espere un momento por favor.");
+  const formData = new FormData();
+  formData.append("photo", photo);
+
+  try {
+    const response = await axios.patch(
+      instance.defaults.baseURL + `/user/updatePhotoById-user/${id}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    if (response.data.msg === "Photo updated") {
+      Toast.fire({
+        icon: "success",
+        title: "¡Foto actualizada exitosamente! 😄",
+      });
+    }
+  } catch (error) {
+    console.log("error", error);
+
+    Toast.fire({
+      icon: "error",
+      title: "Error del servidor 😞",
+    });
+  }
+};

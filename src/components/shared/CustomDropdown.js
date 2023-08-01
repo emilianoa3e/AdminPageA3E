@@ -5,6 +5,7 @@ import { getUser } from "../../utils/profileFunctions";
 import { MdAccountCircle, MdArrowDropDown, MdLogout } from "react-icons/md";
 import { ModalProfile } from "../profile/ModalProfile";
 import { showConfirmDialog } from "../../shared/plugins/alert";
+import { Avatar, Divider, Chip } from "@mui/material";
 import "../../assets/css/components/layouts/customDropdown.css";
 
 function CustomDropdown() {
@@ -49,13 +50,19 @@ function CustomDropdown() {
           <Col md={12}>
             <Dropdown className="custom-dropdown">
               <Dropdown.Toggle className="d-flex align-items-center dropdown-link text-left">
-                <div className="profile-info">
-                  <MdAccountCircle className="me-1 ms-0" size={25} />
-                  {authState.fullName}
-                </div>
+                <Avatar
+                  alt={userData.name}
+                  src={userData.photo ? userData.photo : "x"}
+                />
                 <MdArrowDropDown color="ccc" size="2em" />
               </Dropdown.Toggle>
               <Dropdown.Menu>
+                <Dropdown.Header style={{ textAlign: "center" }}>
+                  {authState.fullName}
+                </Dropdown.Header>
+                <Divider className="mt-2 mb-2">
+                  <Chip label={authState.role} />
+                </Divider>
                 <Dropdown.Item className="dropdown-item" onClick={handleShow}>
                   <MdAccountCircle className="me-1" size={25} />
                   Mi perfil

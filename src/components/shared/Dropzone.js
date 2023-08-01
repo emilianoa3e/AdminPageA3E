@@ -26,7 +26,12 @@ const FileDropzone = ({
     if (onContext === "multimedia") {
       return ["image/jpeg", "image/png", "image/jpg", "video/mp4"];
     }
-    if (onContext === "banner" || onContext === "client") {
+    if (
+      onContext === "banner" ||
+      onContext === "client" ||
+      onContext === "certification" ||
+      onContext === "profile"
+    ) {
       return ["image/jpeg", "image/png", "image/jpg"];
     }
     return "";
@@ -36,7 +41,12 @@ const FileDropzone = ({
     if (onContext === "multimedia") {
       return "image/*, video/*";
     }
-    if (onContext === "banner" || onContext === "client") {
+    if (
+      onContext === "banner" ||
+      onContext === "client" ||
+      onContext === "certification" ||
+      onContext === "profile"
+    ) {
       return "image/*";
     }
   };
@@ -128,7 +138,12 @@ const FileDropzone = ({
     );
   }
 
-  if (onContext === "banner" || onContext === "client" || onContext==="certification") {
+  if (
+    onContext === "banner" ||
+    onContext === "client" ||
+    onContext === "certification" ||
+    onContext === "profile"
+  ) {
     return (
       <>
         <div className={getDropzoneClass()} {...getRootProps()}>

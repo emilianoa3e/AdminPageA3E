@@ -152,7 +152,6 @@ function CreateService() {
                     },
                     {
                       label: "Regresar",
-                      style: { background: Colors.PalleteDanger },
                       icon: <MdArrowBackIosNew size={22} />,
                       command: () => {
                         handleBack();
