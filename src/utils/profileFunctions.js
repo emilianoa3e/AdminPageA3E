@@ -127,3 +127,27 @@ export const updatePhoto = async (id, photo) => {
     });
   }
 };
+
+export const deletePhoto = async (id) => {
+  showLoadingAlert("Eliminando foto...", "Espere un momento por favor.");
+
+  try {
+    const response = await axios.patch(
+      instance.defaults.baseURL + `/user/deletePhotoById-user/${id}`
+    );
+
+    if (response.data.msg === "Photo deleted") {
+      Toast.fire({
+        icon: "success",
+        title: "¡Foto eliminada exitosamente! 😄",
+      });
+    }
+  } catch (error) {
+    console.log("error", error);
+
+    Toast.fire({
+      icon: "error",
+      title: "Error del servidor 😞",
+    });
+  }
+}

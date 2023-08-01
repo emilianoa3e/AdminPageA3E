@@ -12,6 +12,7 @@ import {
   updateUser,
   updatePassword,
   updatePhoto,
+  deletePhoto,
 } from "../../utils/profileFunctions";
 import * as Yup from "yup";
 import Colors from "../../utils/Colors";
@@ -115,6 +116,22 @@ export const ModalProfile = ({
       "Cancelar",
       () => {
         updatePhoto(userData._id, photo).then(() => {
+          setPhoto(null);
+          handleClosePhoto();
+          getUserProfile();
+        });
+      }
+    );
+  };
+
+  const handleDeletePhoto = () => {
+    showConfirmDialog(
+      "¿Está seguro que desea eliminar su foto de perfil?",
+      "Se eliminará su foto de perfil",
+      "Si, eliminar",
+      "Cancelar",
+      () => {
+        deletePhoto(userData._id).then(() => {
           setPhoto(null);
           handleClosePhoto();
           getUserProfile();
@@ -250,6 +267,8 @@ export const ModalProfile = ({
         photo={photo}
         setPhoto={setPhoto}
         handleSubmitPhoto={handleSubmitPhoto}
+        handleDeletePhoto={handleDeletePhoto}
+        isPhoto={userData.photo ? true : false}
       />
     </>
   );

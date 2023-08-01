@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 import { Avatar, Button } from "@mui/material";
-import { MdCheckCircleOutline } from "react-icons/md";
+import { MdCheckCircleOutline, MdDelete } from "react-icons/md";
 import FileDropzone from "../shared/Dropzone";
 import Colors from "../../utils/Colors";
 
@@ -12,6 +12,8 @@ export const ModalPhoto = ({
   photo,
   setPhoto,
   handleSubmitPhoto,
+  handleDeletePhoto,
+  isPhoto,
 }) => {
   return (
     <Modal
@@ -31,7 +33,7 @@ export const ModalPhoto = ({
           onContext="profile"
         />
         {photo && (
-          <div className="d-flex justify-content-center">
+          <div className="d-flex justify-content-center mt-3">
             <Avatar
               alt="Foto de perfil"
               src={photo ? URL.createObjectURL(photo) : "x"}
@@ -41,6 +43,21 @@ export const ModalPhoto = ({
         )}
       </Modal.Body>
       <Modal.Footer>
+        {isPhoto && (
+          <>
+            {photo ? null : (
+              <Button
+                variant="contained"
+                onClick={handleDeletePhoto}
+                endIcon={<MdDelete />}
+                style={{ backgroundColor: Colors.PalleteDanger }}
+                className="me-2"
+              >
+                Eliminar foto
+              </Button>
+            )}
+          </>
+        )}
         <Button
           variant="contained"
           onClick={handleSubmitPhoto}

@@ -2,7 +2,7 @@ import axios from "axios";
 import instance from "../shared/Axios";
 import { showLoadingAlert, Toast } from "../shared/plugins/alert";
 
-export const saveService = async (values, content,resumeContent, navigate) => {
+export const saveService = async (values, content, resumeContent, navigate) => {
   showLoadingAlert("Creando servicio...", "Espere un momento por favor.");
 
   try {
@@ -63,7 +63,13 @@ export const getServiceById = async (id) => {
   }
 };
 
-export const updateService = async (id, values, content,resumeContent, navigate) => {
+export const updateService = async (
+  id,
+  values,
+  content,
+  resumeContent,
+  navigate
+) => {
   showLoadingAlert("Actualizando servicio...", "Espere un momento por favor.");
 
   try {

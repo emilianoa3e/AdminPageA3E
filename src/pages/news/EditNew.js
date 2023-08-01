@@ -88,6 +88,7 @@ function EditNew() {
       const data = await getNewById(id);
       setNotice(data.dataNew);
       setContent(data.dataNew.content);
+      setResumeContent(data.dataNew.summary);
       setIsLoading(false);
     };
 

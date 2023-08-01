@@ -13,20 +13,26 @@ export const getAllNews = async () => {
   }
 };
 
-export const getNewById = async (id)=>{
-  try{
+export const getNewById = async (id) => {
+  try {
     const response = await axios.get(
       instance.defaults.baseURL + `/new/getById-new/${id}`
     );
     return response.data;
-    
-  }catch(error){
-    console.log("error", error)
+  } catch (error) {
+    console.log("error", error);
   }
-}
+};
 
-export const saveNew = async (values, content,resumeContent, navigate,  date) => {
+export const saveNew = async (
+  values,
+  content,
+  resumeContent,
+  navigate,
+  date
+) => {
   showLoadingAlert("Creando noticia...", "Espere un momento por favor.");
+
   try {
     const response = await axios.post(
       instance.defaults.baseURL + "/new/create-new",
@@ -64,12 +70,19 @@ export const saveNew = async (values, content,resumeContent, navigate,  date) =>
   }
 };
 
-export const updateNew = async (id, values, content, resumeContent, navigate, date) =>{
-  console.log(resumeContent);
+export const updateNew = async (
+  id,
+  values,
+  content,
+  resumeContent,
+  navigate,
+  date
+) => {
   showLoadingAlert("Actualizando noticia...", "Espere un momento por favor.");
-  try{  
+
+  try {
     const response = await axios.put(
-      instance.defaults.baseURL + `/new/updateById-new/${id}` ,
+      instance.defaults.baseURL + `/new/updateById-new/${id}`,
       {
         title: values.title,
         type: values.type,
@@ -88,8 +101,8 @@ export const updateNew = async (id, values, content, resumeContent, navigate, da
 
       navigate("/news");
     }
-  }catch(error){
-    console.log("error", error)
+  } catch (error) {
+    console.log("error", error);
     if (error.response.data.msg === "New already exists") {
       Toast.fire({
         icon: "error",
@@ -102,10 +115,10 @@ export const updateNew = async (id, values, content, resumeContent, navigate, da
       });
     }
   }
-}
+};
 
-export const deleteNew = async (id)=>{
-  try{
+export const deleteNew = async (id) => {
+  try {
     const response = await axios.delete(
       instance.defaults.baseURL + `/new/deleteById-new/${id}`
     );
@@ -116,11 +129,11 @@ export const deleteNew = async (id)=>{
         title: "¡Noticia eliminado exitosamente! 😄",
       });
     }
-  }catch(error){
-    console.log("error", error)
+  } catch (error) {
+    console.log("error", error);
     Toast.fire({
       icon: "error",
       title: "Error al eliminar la noticia 😞",
     });
   }
-}
+};

@@ -53,6 +53,7 @@ function CustomDropdown() {
                 <Avatar
                   alt={userData.name}
                   src={userData.photo ? userData.photo : "x"}
+                  sx={{ width: 50, height: 50, fontSize: 25 }}
                 />
                 <MdArrowDropDown color="ccc" size="2em" />
               </Dropdown.Toggle>

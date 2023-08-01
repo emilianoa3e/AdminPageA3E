@@ -29,12 +29,12 @@ function EditService() {
   const navigate = useNavigate();
   const [showHelp, setShowHelp] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-   //content to data
-   const [content, setContent] = useState("");
-   const [initialContent, setInitialContent] = useState("");
-   //content to resume
-   const [resumeContent, setResumeContent] = useState("");
-   const [initialResumeContent, setInitialResumeContent] = useState("");
+  //content to data
+  const [content, setContent] = useState("");
+  const [initialContent, setInitialContent] = useState("");
+  //content to resume
+  const [resumeContent, setResumeContent] = useState("");
+  const [initialResumeContent, setInitialResumeContent] = useState("");
   const [service, setService] = useState({});
   const [state, setState] = useState({
     top: false,
@@ -89,6 +89,7 @@ function EditService() {
       const data = await getServiceById(id);
       setService(data.service);
       setContent(data.service.content);
+      setResumeContent(data.service.summary);
       setIsLoading(false);
     };
 
@@ -132,7 +133,6 @@ function EditService() {
 
   const objectSchema = yup.object().shape({
     title: yup.string().required("El título es requerido"),
-
   });
 
   if (isLoading) {
@@ -147,7 +147,7 @@ function EditService() {
           <Formik
             initialValues={{
               title: service.title,
-              subtitle: service.subtitle,              
+              subtitle: service.subtitle,
             }}
             validationSchema={objectSchema}
             onSubmit={(values) => handleSubmit(values, content, resumeContent)}
@@ -155,7 +155,12 @@ function EditService() {
             {({ errors, values, touched, isValid }) => (
               <Form>
                 <SpeedDial
-                  style={{ position: "fixed", left: 15, bottom: 15, zIndex:999 }}
+                  style={{
+                    position: "fixed",
+                    left: 15,
+                    bottom: 15,
+                    zIndex: 999,
+                  }}
                   showIcon={<MdPhotoAlbum size={30} />}
                   onClick={toggleDrawer("left", true)}
                 />
@@ -199,7 +204,9 @@ function EditService() {
                   }
                   setResumeContent={setResumeContent}
                   initialResumeContent={
-                    initialResumeContent ? initialResumeContent : service.summary
+                    initialResumeContent
+                      ? initialResumeContent
+                      : service.summary
                   }
                   onContext={`edit-service/${id}`}
                 />
