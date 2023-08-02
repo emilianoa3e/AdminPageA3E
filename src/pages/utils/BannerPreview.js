@@ -1,6 +1,6 @@
 import React from "react";
 import Carousel from "react-bootstrap/Carousel";
-import "../../assets/css/components/BannerPreview.css";
+import "../../assets/css/components/BannerPreview.css"
 import { Row, Col } from "react-bootstrap";
 
 function BannerPreview({ title, description, image, link, onContext }) {
@@ -42,7 +42,7 @@ function BannerPreview({ title, description, image, link, onContext }) {
               >
                 <Row className="w-100 h-100 p-0 m-0 align-items-center justify-content-left">
                   <Col className="text-center ">
-                    <a href={link} target="_blank" className="carousel-btn">
+                    <a href={link} target="_blank" className="linkButton">
                       Ver más
                     </a>
                   </Col>
@@ -77,7 +77,7 @@ function BannerPreview({ title, description, image, link, onContext }) {
         <Carousel
           controls={false}
           style={{ margin: 0, padding: 0 }}
-          className="carousel"
+          className="certification"
         >
           <Carousel.Item>
             <img
@@ -86,62 +86,36 @@ function BannerPreview({ title, description, image, link, onContext }) {
               alt={title}
               style={{ objectFit: "cover" }}
             />
-            <Carousel.Caption
-              className="text-start w-100 h-50"
-              style={{ position: "absolute", left: 0 }}
+            <Carousel.Caption              
+              style={{ top: 0, right: 0 }}
             >
-              {link ? (
-                <a
-                  href={link}
-                  target="_blank"
-                  className="carousel-btn btn"
-                  style={{
-                    position: "relative",
-                    top: 10,
-                    left: 50,
-                    backgroundColor: "#00743B",
-                    color: "white",
-                    padding: "0.6% 4% 0.6% 4%",
-                    borderRadius: "0px 20px 20px 20px",
-                  }}
-                >
-                  VER MÁS
-                </a>
-              ) : (
-                ""
-              )}
+              <div
+                className="contentCaption h-100"
+                style={{ position: "absolute", right: 0 }}
+              >
+                <Row className="justify-content-center ">
+                  <Col className="col-12">
+                    <h1>{title}</h1>
+                  </Col>
+                  <Col className="col-12">
+                    <p>{description}</p>
+                  </Col>
+                  {link ? (
+                    <Col className="col-12 text-center ">
+                      <a href={link} className="linkButton">
+                        Ver más
+                      </a>
+                    </Col>
+                  ) : (
+                    ""
+                  )}
+                </Row>
+              </div>
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
       );
     }
-  }
-
-  if (onContext === "bannersMain") {
-    return (
-      <Carousel controls={false} style={{ margin: 0, padding: 0 }}>
-        <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src={image}
-            alt={title}
-            height={"200px"}
-            style={{ objectFit: "cover" }}
-          />
-          <Carousel.Caption>
-            <h3>{title}</h3>
-            <p>{description}</p>
-            {link ? (
-              <a href={link} target="_blank" className="btn btn-success">
-                Ver más
-              </a>
-            ) : (
-              ""
-            )}
-          </Carousel.Caption>
-        </Carousel.Item>
-      </Carousel>
-    );
   }
 }
 

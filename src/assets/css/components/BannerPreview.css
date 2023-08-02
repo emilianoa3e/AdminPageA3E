@@ -1,9 +1,73 @@
-.carousel-btn{
-    background-color: #00743b;
-    text-decoration: none ;
-    border-radius: 0px 30px 30px 30px;
-    padding: 10px;
-    color: white;
+.certification .contentCaption {
+    text-align: center;
+    margin: 30px 0px 30px 60px;
+    padding: 0;
+}
+
+.certification .contentCaption h1 {
+    padding-top: 30px;
+    font-size: 2rem;
     font-weight: bold;
-    font-size: 1.5rem;
+}
+
+.certification .contentCaption p {
+    font-size: 1rem;
+}
+
+.certification .contentCaption a {
+    font-size: 1rem;
+}
+
+.linkButton{
+    background-color: #00743B;
+    color: white;
+    padding:0.6% 4% 0.6% 4%;
+    border-radius: 0px 20px 20px 20px;
+    text-decoration: none;
+}
+
+@media (min-width: 1200px) {
+    .certification .contentCaption p {
+        font-size: 1.5rem;
+    }
+
+    .certification .contentCaption a {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 700px) {
+    .certification .contentCaption {
+        margin: 20px 10px 20px 80px;
+        padding: 0;
+    }
+    .certification .contentCaption h1 {
+        padding-top: 0px !important;
+        font-size: 0.9rem;
+    }
+    .certification .contentCaption p {
+        font-size: 0.7rem !important;
+    }
+
+    .certification .contentCaption a {
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 350px) {
+    .certification .contentCaption {
+        margin: 15px 10px 15px 70px;
+        padding: 0;
+    }
+    .certification .contentCaption h1 {
+        padding-top: 0px !important;
+        font-size: 0.8rem;
+    }
+    .certification .contentCaption p {
+        font-size: 0.6rem !important;
+    }
+
+    .certification .contentCaption a {
+        font-size: 0.6rem;
+    }
 }
