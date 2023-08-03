@@ -2,11 +2,7 @@ import React from "react";
 import EditorWys from "../../components/shared/EditorWys";
 import { Form as FormBt, Row, Col } from "react-bootstrap";
 import { TextInput } from "../../components/shared/TextInput";
-import {
-  MdTitle,
-  MdOutlineSummarize,
-  MdOutlineFullscreen,
-} from "react-icons/md";
+import { MdTitle, MdOutlineFullscreen, MdArrowDownward } from "react-icons/md";
 import EditorText from "../shared/EditorText";
 
 function ServiceForm({
@@ -18,12 +14,16 @@ function ServiceForm({
   setResumeContent,
   initialResumeContent,
   onContext,
+  refStepTitle,
+  refStepSubtitle,
+  refStepResume,
+  refStepContent,
 }) {
   return (
     <>
       <Row>
         <Col>
-          <FormBt.Group className="mb-2">
+          <FormBt.Group className="mb-2" ref={refStepTitle}>
             <TextInput
               maxLength="80"
               label="Título"
@@ -35,7 +35,7 @@ function ServiceForm({
           </FormBt.Group>
         </Col>
         <Col>
-          <FormBt.Group className="mb-2">
+          <FormBt.Group className="mb-2" ref={refStepSubtitle}>
             <TextInput
               maxLength="100"
               label="Subtítulo"
@@ -47,7 +47,7 @@ function ServiceForm({
           </FormBt.Group>
         </Col>
       </Row>
-      <FormBt.Group className="mb-2">
+      <FormBt.Group className="mb-2" ref={refStepResume}>
         <label>Resumen</label>
         <EditorText
           initialContent={initialResumeContent}
@@ -62,10 +62,12 @@ function ServiceForm({
           fontStyle: "italic",
         }}
       >
+        <MdArrowDownward size={23} className="me-1" />
         Para una mejor experiencia del editor trabaje en pantalla completa
         <MdOutlineFullscreen size={23} className="ms-1" />
+        <MdArrowDownward size={23} className="ms-1" />
       </p>
-      <FormBt.Group className="mb-2">
+      <FormBt.Group className="mb-2" ref={refStepContent}>
         <EditorWys
           setContent={setContent}
           initialContent={initialContent}

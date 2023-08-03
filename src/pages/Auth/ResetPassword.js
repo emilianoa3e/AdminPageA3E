@@ -25,6 +25,8 @@ function ResetPassword() {
 
   useEffect(() => {
     verifyToken();
+    
+    document.title = "A3E P.A. | Reestablecer contraseña";
   }, []);
 
   const toggleShowPassword = () => setShowPassword(!showPassword);

@@ -27,6 +27,7 @@ export const ModalProfile = ({
   setIsEdit,
   userData,
   getUserProfile,
+  phrase,
 }) => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [showChangePassword, setShowChangePassword] = useState(false);
@@ -151,7 +152,10 @@ export const ModalProfile = ({
         dialogClassName="modal-lg"
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">Perfil</Modal.Title>
+          <Modal.Title id="contained-modal-title-vcenter">
+            {/* Mostrar una frase aleatoria */}
+            Hola <strong>{userData.name}</strong>, {phrase}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Formik

@@ -3,7 +3,6 @@ import { AuthContext } from "../../context/auth/AuthContext";
 import { NavLink } from "react-router-dom";
 import { Container, Nav, Navbar as NavbarBt } from "react-bootstrap";
 import {
-  MdAssignmentTurnedIn,
   MdHome,
   MdHomeRepairService,
   MdSupervisedUserCircle,
@@ -17,11 +16,12 @@ import "../../assets/css/components/layouts/navbar.css";
 function CustomNavbar() {
   const { state } = useContext(AuthContext);
   const { role } = state;
+
   return (
     <NavbarBt variant="dark" className="custom-navbar" expand="lg" sticky="top">
       <Container>
         <NavbarBt.Brand href="/">
-          <img src={logo} alt="Logo" width={110} />
+          <img src={logo} alt="Logo" width={100} />
         </NavbarBt.Brand>
         <NavbarBt.Toggle aria-controls="basic-navbar-nav" />
         <NavbarBt.Collapse id="basic-navbar-nav">

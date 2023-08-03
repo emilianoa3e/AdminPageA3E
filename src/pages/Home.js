@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import BannerToNavigate from "../components/shared/BannerToNavigate";
 
 function Home() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = "A3E P.A. | Inicio";
+  }, []);
+
   return (
     <Container>
       <Col lg={12}>

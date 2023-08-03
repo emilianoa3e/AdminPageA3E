@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import styles from "../../assets/css/pages/Login.module.css";
 import { Form, Formik } from "formik";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
@@ -27,6 +27,10 @@ function Login() {
   const handleOnSubmit = (values, resetForm) => {
     login(values.email, values.password);
   };
+
+  useEffect(() => {
+    document.title = "A3E P.A. | Iniciar sesión";
+  }, []);
 
   const objectSchema = yup.object({
     email: yup

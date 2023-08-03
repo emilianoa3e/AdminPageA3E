@@ -11,6 +11,7 @@ const FileDropzone = ({
   uploadedFile,
   setUploadedFile,
   onContext,
+  refStep,
 }) => {
   const onDrop = useCallback(
     (acceptedFiles) => {
@@ -87,7 +88,7 @@ const FileDropzone = ({
   if (onContext === "multimedia") {
     return (
       <>
-        <div className={getDropzoneClass()} {...getRootProps()}>
+        <div className={getDropzoneClass()} {...getRootProps()} ref={refStep}>
           {!uploadedFile && (
             <MdCloudUpload size={50} color={Colors.PalletePrimary} />
           )}
@@ -146,7 +147,7 @@ const FileDropzone = ({
   ) {
     return (
       <>
-        <div className={getDropzoneClass()} {...getRootProps()}>
+        <div className={getDropzoneClass()} {...getRootProps()} ref={refStep}>
           {!uploadedFile && (
             <MdCloudUpload size={50} color={Colors.PalletePrimary} />
           )}

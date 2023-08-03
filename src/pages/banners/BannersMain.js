@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row } from "react-bootstrap";
 import {
@@ -11,21 +11,38 @@ import { MdAdd, MdArrowBackIosNew, MdHelpOutline } from "react-icons/md";
 import { Button } from "@mui/material";
 import { columnsBanner } from "../../components/columnsTables/columnsBanner";
 import { SpeedDial } from "primereact/speeddial";
-import { ModalHelp } from "../../components/shared/ModalHelp";
-import { stepsBannerMain } from "../../components/stepsTutorial/stepsBannerMain";
 import Colors from "../../utils/Colors";
 import SplashScreen from "../utils/SplashScreen";
 import DynamicTable from "../../components/shared/DynamicTable";
 
 function BannerMain() {
   const navigate = useNavigate();
-  const [showHelp, setShowHelp] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [bannerList, setBannerList] = useState([]);
   const [error, setError] = useState(false);
+  const [open, setOpen] = useState(false);
+  const refStep1 = useRef(null);
+  const refStep2 = useRef(null);
 
-  const handleShowHelp = () => setShowHelp(true);
-  const handleCloseHelp = () => setShowHelp(false);
+  const steps = [
+    {
+      title: "Tabla de datos",
+      description:
+        "En esta página se muestran todos los banners que se han creado. " +
+        "Puede cambiar el status, eliminar, crear o editar un banner.",
+      target: () => refStep1.current,
+      nextButtonProps: { children: "Siguiente" },
+    },
+    {
+      title: "Filtro de status",
+      description:
+        "El filtro de status permite filtrar los banners por status. Los que estan activos o inactivos.",
+      placement: "left",
+      target: () => refStep2.current,
+      prevButtonProps: { children: "Anterior" },
+      nextButtonProps: { children: "Finalizar" },
+    },
+  ];
 
   const getBanners = async () => {
     setIsLoading(true);
@@ -42,6 +59,8 @@ function BannerMain() {
 
   useEffect(() => {
     getBanners();
+
+    document.title = "A3E P.A. | Banners";
   }, []);
 
   const handleChangeStatus = (id) => {
@@ -94,7 +113,7 @@ function BannerMain() {
           color: "white",
         }}
         buttonClassName="p-button-secondary"
-        onClick={handleShowHelp}
+        onClick={() => setOpen(true)}
       />
       <Row>
         <Col className="d-flex justify-content-between">
@@ -131,14 +150,14 @@ function BannerMain() {
             handleDelete={handleDelete}
             showFilter={true}
             navigate={navigate}
+            steps={steps}
+            open={open}
+            setOpen={setOpen}
+            refStep1={refStep1}
+            refStep2={refStep2}
           />
         </Col>
       </Row>
-      <ModalHelp
-        show={showHelp}
-        handleClose={handleCloseHelp}
-        stepsTutorial={stepsBannerMain}
-      />
     </Container>
   );
 }

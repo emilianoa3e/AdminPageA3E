@@ -1,8 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Col, Row, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { getAllServices, deleteService } from "../../utils/serviceFunctions";
-import { MdAdd, MdMode, MdDelete, MdExpandMore } from "react-icons/md";
+import {
+  MdAdd,
+  MdMode,
+  MdDelete,
+  MdExpandMore,
+  MdHelpOutline,
+} from "react-icons/md";
 import { Button } from "@mui/material";
 import { showConfirmDialog, showError400 } from "../../shared/plugins/alert";
 import { styled } from "@mui/material/styles";
@@ -13,8 +19,9 @@ import {
   CardActions,
   Collapse,
   IconButton,
-  Typography,
 } from "@mui/material";
+import { Tour } from "antd";
+import { SpeedDial } from "primereact/speeddial";
 import Pagination from "../../components/shared/Pagination";
 import Colors from "../../utils/Colors";
 import SplashScreen from "../utils/SplashScreen";
@@ -39,6 +46,48 @@ function Services() {
   const [itemOffset, setItemOffset] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [error, setError] = useState(false);
+  const [open, setOpen] = useState(false);
+  const refStepInfo = useRef(null);
+  const refStepActions = useRef(null);
+  const refStepExpand = useRef(null);
+  const refStepPagination = useRef(null);
+
+  const steps = [
+    {
+      title: "Información del servicio",
+      description:
+        "Esta parte muestra la información del servicio. Titulo, subtitulo y descripción",
+      target: () => refStepInfo.current,
+      nextButtonProps: { children: "Siguiente" },
+    },
+    {
+      title: "Acciones",
+      description:
+        "En esta parte se encuentran las acciones que se pueden realizar con el servicio. Editar y eliminar.",
+      placement: "right",
+      target: () => refStepActions.current,
+      prevButtonProps: { children: "Anterior" },
+      nextButtonProps: { children: "Siguiente" },
+    },
+    {
+      title: "Expandir",
+      description:
+        "Al expandir el servicio se muestra la información completa del servicio (Contenido del servicio). ",
+      placement: "left",
+      target: () => refStepExpand.current,
+      prevButtonProps: { children: "Anterior" },
+      nextButtonProps: { children: "Siguiente" },
+    },
+    {
+      title: "Paginación",
+      description:
+        "Esta parte muestra la paginación de los servicios. Puedes navegar entre los servicios con los botones de paginación.",
+      placement: "top",
+      target: () => refStepPagination.current,
+      prevButtonProps: { children: "Anterior" },
+      nextButtonProps: { children: "Finalizar" },
+    },
+  ];
 
   const getServices = async () => {
     setIsLoading(true);
@@ -63,6 +112,8 @@ function Services() {
 
   useEffect(() => {
     getServices();
+
+    document.title = "A3E P.A. | Servicios";
   }, []);
 
   const servicesPerPage = 1;
@@ -107,6 +158,18 @@ function Services() {
 
   return (
     <Container fluid>
+      <SpeedDial
+        style={{ position: "fixed", left: 10, bottom: 10 }}
+        showIcon={<MdHelpOutline size={30} />}
+        title="¿Como funciona?"
+        buttonStyle={{
+          backgroundColor: Colors.PalleteGreenA3E,
+          opacity: 0.65,
+          color: "white",
+        }}
+        buttonClassName="p-button-secondary"
+        onClick={() => setOpen(true)}
+      />
       <Row className="mb-3">
         <Col>
           <h3 style={{ fontWeight: "bold" }}>Servicios</h3>
@@ -135,6 +198,7 @@ function Services() {
                   backgroundColor: Colors.PalletePrimaryLight,
                 }}
                 key={service._id}
+                ref={index === 0 ? refStepInfo : null}
               >
                 <CardHeader
                   title={service.title}
@@ -146,34 +210,38 @@ function Services() {
                   ></div>
                 </CardContent>
                 <CardActions disableSpacing>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    endIcon={<MdMode />}
-                    style={{ backgroundColor: Colors.PalletePrimary }}
-                    onClick={() =>
-                      navigate(`/services/edit-service/${service._id}`)
-                    }
-                    className="me-1"
-                  >
-                    Editar
-                  </Button>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    endIcon={<MdDelete />}
-                    style={{ backgroundColor: Colors.PalleteDanger }}
-                    onClick={() => handleDelete(service._id)}
-                  >
-                    Eliminar
-                  </Button>
+                  <div ref={index === 0 ? refStepActions : null}>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      endIcon={<MdMode />}
+                      style={{ backgroundColor: Colors.PalletePrimary }}
+                      onClick={() =>
+                        navigate(`/services/edit-service/${service._id}`)
+                      }
+                      className="me-1"
+                    >
+                      Editar
+                    </Button>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      endIcon={<MdDelete />}
+                      style={{ backgroundColor: Colors.PalleteDanger }}
+                      onClick={() => handleDelete(service._id)}
+                    >
+                      Eliminar
+                    </Button>
+                  </div>
                   <ExpandMore
                     expand={service.expanded}
                     onClick={() => handleExpandClick(itemOffset + index)}
                     aria-expanded={service.expanded}
                     aria-label="show more"
                   >
-                    <MdExpandMore size={40} />
+                    <div ref={index === 0 ? refStepExpand : null}>
+                      <MdExpandMore size={40} />
+                    </div>
                   </ExpandMore>
                 </CardActions>
                 <Collapse in={service.expanded} timeout="auto" unmountOnExit>
@@ -186,7 +254,11 @@ function Services() {
                 </Collapse>
               </Card>
             ))}
-          <Pagination handlePageClick={handlePageClick} pageCount={pageCount} />
+          <Pagination
+            handlePageClick={handlePageClick}
+            pageCount={pageCount}
+            refStep={refStepPagination}
+          />
         </Row>
       ) : (
         <NotFound
@@ -195,6 +267,7 @@ function Services() {
           iconSize={150}
         />
       )}
+      <Tour open={open} onClose={() => setOpen(false)} steps={steps} />
     </Container>
   );
 }

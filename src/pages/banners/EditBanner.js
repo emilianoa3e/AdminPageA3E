@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import { Form, Formik } from "formik";
@@ -15,8 +15,7 @@ import { showConfirmDialog } from "../../shared/plugins/alert";
 import { MdCheckCircleOutline, MdHighlightOff } from "react-icons/md";
 import { Button } from "@mui/material";
 import { SpeedDial } from "primereact/speeddial";
-import { ModalHelp } from "../../components/shared/ModalHelp";
-import { stepsBanner } from "../../components/stepsTutorial/stepsBanner";
+import { Tour } from "antd";
 import * as yup from "yup";
 import Colors from "../../utils/Colors";
 import FileDropzone from "../../components/shared/Dropzone";
@@ -37,9 +36,53 @@ function EditBanner() {
   });
   const [uploadedFile, setUploadedFile] = useState(null);
   const imagePreview = uploadedFile ? URL.createObjectURL(uploadedFile) : null;
+  const [open, setOpen] = useState(false);
+  const refStepImg = useRef(null);
+  const refStepPrevImg = useRef(null);
+  const refStepTitle = useRef(null);
+  const refStepDescription = useRef(null);
+  const refStepLink = useRef(null);
 
-  const handleShowHelp = () => setShowHelp(true);
-  const handleCloseHelp = () => setShowHelp(false);
+  const steps = [
+    {
+      title: "Imagen del banner",
+      description:
+        "Sube una imagen para el banner. Puede arrastrar la imagen al recuadro o hacer click para seleccionarla.",
+      target: () => refStepImg.current,
+      nextButtonProps: { children: "Siguiente" },
+    },
+    {
+      title: "Visualización de la imagen",
+      description:
+        "Una vez que suba la imagen, se mostrará en la vista previa. Y conforme vaya editando el banner, se irá actualizando la vista previa.",
+      placement: "top",
+      target: () => refStepPrevImg.current,
+      prevButtonProps: { children: "Anterior" },
+      nextButtonProps: { children: "Siguiente" },
+    },
+    {
+      title: "Título",
+      description: "Ingrese el título del banner. Este campo es obligatorio.",
+      target: () => refStepTitle.current,
+      prevButtonProps: { children: "Anterior" },
+      nextButtonProps: { children: "Siguiente" },
+    },
+    {
+      title: "Descripción",
+      description:
+        "Ingrese una descripción para el banner. Este campo es opcional.",
+      target: () => refStepDescription.current,
+      prevButtonProps: { children: "Anterior" },
+      nextButtonProps: { children: "Siguiente" },
+    },
+    {
+      title: "Enlace",
+      description: "Ingrese un enlace para el banner. Este campo es opcional.",
+      target: () => refStepLink.current,
+      prevButtonProps: { children: "Anterior" },
+      nextButtonProps: { children: "Finalizar" },
+    },
+  ];
 
   useEffect(() => {
     setIsLoading(true);
@@ -50,6 +93,8 @@ function EditBanner() {
     };
 
     getBanner();
+
+    document.title = "A3E P.A | Editar banner";
   }, []);
 
   const handleSubmit = (values, uploadedFile) => {
@@ -85,7 +130,7 @@ function EditBanner() {
           color: "white",
         }}
         buttonClassName="p-button-secondary"
-        onClick={handleShowHelp}
+        onClick={() => setOpen(true)}
       />
       <Row>
         <Col lg={12}>
@@ -138,6 +183,7 @@ function EditBanner() {
                         uploadedFile={uploadedFile}
                         setUploadedFile={setUploadedFile}
                         onContext="banner"
+                        refStep={refStepImg}
                       />
                       <p
                         className="text-center"
@@ -154,7 +200,7 @@ function EditBanner() {
                   </Col>
                   <Col lg={8}>
                     <Row>
-                      <FormBt.Group className="mb-2">
+                      <FormBt.Group className="mb-2" ref={refStepTitle}>
                         <TextInput
                           maxLength="60"
                           label="Título"
@@ -166,7 +212,7 @@ function EditBanner() {
                       </FormBt.Group>
                     </Row>
                     <Row>
-                      <FormBt.Group className="mb-2">
+                      <FormBt.Group className="mb-2" ref={refStepDescription}>
                         <TextInput
                           maxLength="100"
                           as="textarea"
@@ -179,7 +225,7 @@ function EditBanner() {
                       </FormBt.Group>
                     </Row>
                     <Row>
-                      <FormBt.Group className="mb-2">
+                      <FormBt.Group className="mb-2" ref={refStepLink}>
                         <TextInput
                           maxLength="80"
                           label="Link"
@@ -193,7 +239,7 @@ function EditBanner() {
                   </Col>
                 </Row>
                 <Row>
-                  <Container fluid className="p-0 m-0">
+                  <Container fluid className="p-0 m-0" ref={refStepPrevImg}>
                     <p className="text-center">Vista previa</p>
                   </Container>
                   {uploadedFile ? (
@@ -219,11 +265,7 @@ function EditBanner() {
           </Formik>
         </Col>
       </Row>
-      <ModalHelp
-        show={showHelp}
-        handleClose={handleCloseHelp}
-        stepsTutorial={stepsBanner}
-      />
+      <Tour open={open} onClose={() => setOpen(false)} steps={steps} />
     </Container>
   );
 }

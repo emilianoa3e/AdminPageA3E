@@ -9,13 +9,13 @@ function EditorWys({ setContent, initialContent, onContext }) {
         apiKey="mx8xfbfszwym72a4mhwdhb2czmco4whjp4bls89y26ov210t"
         initialValue={initialContent}
         init={{
+          height: 250,
           language: "es",
           menubar: true,
           plugins: [
             "advlist",
             "autolink",
             "autosave",
-            "autoresize",
             "charmap",
             "code",
             "codesample",

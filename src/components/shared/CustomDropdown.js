@@ -13,6 +13,19 @@ function CustomDropdown() {
   const [show, setShow] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [userData, setUserData] = useState({});
+  const [phrase, setPhrase] = useState("");
+
+  const handleTime = () => {
+    const date = new Date();
+    const hour = date.getHours();
+    if (hour >= 0 && hour < 12) {
+      setPhrase("Buenos días");
+    } else if (hour >= 12 && hour < 19) {
+      setPhrase("Buenas tardes");
+    } else {
+      setPhrase("Buenas noches");
+    }
+  };
 
   const handleClose = () => {
     setShow(false);
@@ -29,6 +42,7 @@ function CustomDropdown() {
 
   useEffect(() => {
     getUserProfile();
+    handleTime();
   }, [authState]);
 
   const handleLogout = () => {
@@ -84,6 +98,7 @@ function CustomDropdown() {
           setIsEdit={setIsEdit}
           userData={userData}
           getUserProfile={getUserProfile}
+          phrase={phrase}
         />
       </Container>
     </div>

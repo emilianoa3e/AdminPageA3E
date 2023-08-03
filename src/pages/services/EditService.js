@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Formik, Form } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
@@ -15,8 +15,7 @@ import {
   MdMenu,
   MdHelpOutline,
 } from "react-icons/md";
-import { ModalHelp } from "../../components/shared/ModalHelp";
-import { stepsService } from "../../components/stepsTutorial/stepsService";
+import { Tour } from "antd";
 import Galery from "../../components/shared/Galery";
 import SpeedDialButton from "../../components/shared/SpeedDialButton";
 import SplashScreen from "../utils/SplashScreen";
@@ -42,9 +41,54 @@ function EditService() {
     bottom: false,
     right: false,
   });
+  const [open, setOpen] = useState(false);
+  const refStepTitle = useRef(null);
+  const refStepSubtitle = useRef(null);
+  const refStepResume = useRef(null);
+  const refStepContent = useRef(null);
+  const refStepGalery = useRef(null);
 
-  const handleShowHelp = () => setShowHelp(true);
-  const handleCloseHelp = () => setShowHelp(false);
+  const steps = [
+    {
+      title: "Título",
+      description: "Ingrese el título del servicio. Este campo es obligatorio.",
+      target: () => refStepTitle.current,
+      nextButtonProps: { children: "Siguiente" },
+    },
+    {
+      title: "Subtítulo",
+      description:
+        "Ingrese un subtítulo para el servicio. Este campo es opcional.",
+      target: () => refStepSubtitle.current,
+      prevButtonProps: { children: "Anterior" },
+      nextButtonProps: { children: "Siguiente" },
+    },
+    {
+      title: "Resumen",
+      description:
+        "Ingrese un resumen para el servicio. Este campo es opcional.",
+      target: () => refStepResume.current,
+      prevButtonProps: { children: "Anterior" },
+      nextButtonProps: { children: "Siguiente" },
+    },
+    {
+      title: "Contenido",
+      description:
+        "El contenido del servicio es obligatorio. Puede agregar imágenes, videos, tablas, etc. Todo lo que necesite para crear su servicio.",
+      target: () => refStepContent.current,
+      prevButtonProps: { children: "Anterior" },
+      nextButtonProps: { children: "Siguiente" },
+    },
+    {
+      title: "Galería",
+      description:
+        "Es un banco de imágenes que puede utilizar en el contenido del servicio.",
+      placement: "rightTop",
+      target: () => refStepGalery.current,
+      prevButtonProps: { children: "Anterior" },
+      nextButtonProps: { children: "Finalizar" },
+    },
+  ];
 
   useEffect(() => {
     const showAutosaveDialog = () => {
@@ -69,6 +113,7 @@ function EditService() {
         console.log("no hay autosave");
       }
     };
+
     showAutosaveDialog();
   }, []);
 
@@ -94,6 +139,8 @@ function EditService() {
     };
 
     getService();
+
+    document.title = "A3E P.A. | Editar servicio";
   }, []);
 
   const handleSubmit = async (values, content, resumeContent) => {
@@ -154,16 +201,28 @@ function EditService() {
           >
             {({ errors, values, touched, isValid }) => (
               <Form>
-                <SpeedDial
+                <div
+                  ref={refStepGalery}
                   style={{
                     position: "fixed",
                     left: 15,
                     bottom: 15,
                     zIndex: 999,
+                    width: 65,
+                    height: 65,
                   }}
-                  showIcon={<MdPhotoAlbum size={30} />}
-                  onClick={toggleDrawer("left", true)}
-                />
+                >
+                  <SpeedDial
+                    style={{
+                      position: "fixed",
+                      left: 15,
+                      bottom: 15,
+                      zIndex: 999,
+                    }}
+                    showIcon={<MdPhotoAlbum size={30} />}
+                    onClick={toggleDrawer("left", true)}
+                  />
+                </div>
                 <SpeedDialButton
                   positionTooltip="top"
                   speedDialItems={[
@@ -186,7 +245,7 @@ function EditService() {
                       label: "¿Como funciona?",
                       icon: <MdHelpOutline size={22} />,
                       command: () => {
-                        handleShowHelp();
+                        setOpen(true);
                       },
                     },
                   ]}
@@ -209,17 +268,17 @@ function EditService() {
                       : service.summary
                   }
                   onContext={`edit-service/${id}`}
+                  refStepTitle={refStepTitle}
+                  refStepSubtitle={refStepSubtitle}
+                  refStepResume={refStepResume}
+                  refStepContent={refStepContent}
                 />
               </Form>
             )}
           </Formik>
         </Col>
       </Row>
-      <ModalHelp
-        show={showHelp}
-        handleClose={handleCloseHelp}
-        stepsTutorial={stepsService}
-      />
+      <Tour open={open} onClose={() => setOpen(false)} steps={steps} />
     </Container>
   );
 }

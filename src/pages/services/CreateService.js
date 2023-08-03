@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import { Form, Formik } from "formik";
@@ -15,18 +15,15 @@ import {
   MdMenu,
   MdHelpOutline,
 } from "react-icons/md";
-import { ModalHelp } from "../../components/shared/ModalHelp";
-import { stepsService } from "../../components/stepsTutorial/stepsService";
+import { Tour } from "antd";
 import ServiceForm from "../../components/services/ServiceForm";
 import SpeedDialButton from "../../components/shared/SpeedDialButton";
 import Galery from "../../components/shared/Galery";
-import Colors from "../../utils/Colors";
 import * as yup from "yup";
 import "../../assets/css/pages/CreateEditService.css";
 
 function CreateService() {
   const navigate = useNavigate();
-  const [showHelp, setShowHelp] = useState(false);
   //content to data
   const [content, setContent] = useState("");
   const [initialContent, setInitialContent] = useState("");
@@ -39,9 +36,55 @@ function CreateService() {
     bottom: false,
     right: false,
   });
+  const [open, setOpen] = useState(false);
+  const refStepTitle = useRef(null);
+  const refStepSubtitle = useRef(null);
+  const refStepResume = useRef(null);
+  const refStepContent = useRef(null);
+  const refStepGalery = useRef(null);
 
-  const handleShowHelp = () => setShowHelp(true);
-  const handleCloseHelp = () => setShowHelp(false);
+  const steps = [
+    {
+      title: "Título",
+      description: "Ingrese el título del servicio. Este campo es obligatorio.",
+      target: () => refStepTitle.current,
+      nextButtonProps: { children: "Siguiente" },
+    },
+    {
+      title: "Subtítulo",
+      description:
+        "Ingrese un subtítulo para el servicio. Este campo es opcional.",
+      target: () => refStepSubtitle.current,
+      prevButtonProps: { children: "Anterior" },
+      nextButtonProps: { children: "Siguiente" },
+    },
+    {
+      title: "Resumen",
+      description:
+        "Ingrese un resumen para el servicio. Este campo es opcional.",
+      placement: "bottom",
+      target: () => refStepResume.current,
+      prevButtonProps: { children: "Anterior" },
+      nextButtonProps: { children: "Siguiente" },
+    },
+    {
+      title: "Contenido",
+      description:
+        "El contenido del servicio es obligatorio. Puede agregar imágenes, videos, tablas, etc. Todo lo que necesite para crear su servicio.",
+      target: () => refStepContent.current,
+      prevButtonProps: { children: "Anterior" },
+      nextButtonProps: { children: "Siguiente" },
+    },
+    {
+      title: "Galería",
+      description:
+        "Es un banco de imágenes que puede utilizar en el contenido del servicio.",
+      placement: "rightTop",
+      target: () => refStepGalery.current,
+      prevButtonProps: { children: "Anterior" },
+      nextButtonProps: { children: "Finalizar" },
+    },
+  ];
 
   useEffect(() => {
     const showAutosaveDialog = () => {
@@ -67,6 +110,8 @@ function CreateService() {
       }
     };
     showAutosaveDialog();
+
+    document.title = "A3E P.A. | Crear servicio";
   }, []);
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -134,11 +179,28 @@ function CreateService() {
           >
             {({ errors, values, touched, isValid, dirty }) => (
               <Form>
-                <SpeedDial
-                  style={{ position: "fixed", left: 15, bottom: 15, zIndex:999 }}
-                  showIcon={<MdPhotoAlbum size={30} />}
-                  onClick={toggleDrawer("left", true)}
-                />
+                <div
+                  ref={refStepGalery}
+                  style={{
+                    position: "fixed",
+                    left: 15,
+                    bottom: 15,
+                    zIndex: 999,
+                    width: 65,
+                    height: 65,
+                  }}
+                >
+                  <SpeedDial
+                    style={{
+                      position: "fixed",
+                      left: 15,
+                      bottom: 15,
+                      zIndex: 999,
+                    }}
+                    showIcon={<MdPhotoAlbum size={30} />}
+                    onClick={toggleDrawer("left", true)}
+                  />
+                </div>
                 <SpeedDialButton
                   positionTooltip="top"
                   speedDialItems={[
@@ -161,7 +223,7 @@ function CreateService() {
                       label: "¿Como funciona?",
                       icon: <MdHelpOutline size={22} />,
                       command: () => {
-                        handleShowHelp();
+                        setOpen(true);
                       },
                     },
                   ]}
@@ -178,17 +240,17 @@ function CreateService() {
                   setResumeContent={setResumeContent}
                   initialResumeContent={initialResumeContent}
                   onContext={"create-service"}
+                  refStepTitle={refStepTitle}
+                  refStepSubtitle={refStepSubtitle}
+                  refStepResume={refStepResume}
+                  refStepContent={refStepContent}
                 />
               </Form>
             )}
           </Formik>
         </Col>
       </Row>
-      <ModalHelp
-        show={showHelp}
-        handleClose={handleCloseHelp}
-        stepsTutorial={stepsService}
-      />
+      <Tour open={open} onClose={() => setOpen(false)} steps={steps} />
     </Container>
   );
 }

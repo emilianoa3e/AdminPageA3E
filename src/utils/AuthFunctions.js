@@ -20,6 +20,8 @@ export const loginPost = async (email, password) => {
       dataJson
     );
 
+    console.log("response", response);
+
     if (
       response.data.msg === "User logged" &&
       (response.data.data.role === "superadmin" ||
@@ -28,7 +30,7 @@ export const loginPost = async (email, password) => {
     ) {
       Toast.fire({
         icon: "success",
-        title: "¡Bienvenido de nuevo! 😄",
+        title: `¡Bienvenido de nuevo ${response.data.data.name}! 😄`,
       });
       return response.data.token;
     }
