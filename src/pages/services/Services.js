@@ -198,17 +198,18 @@ function Services() {
                   backgroundColor: Colors.PalletePrimaryLight,
                 }}
                 key={service._id}
-                ref={index === 0 ? refStepInfo : null}
               >
-                <CardHeader
-                  title={service.title}
-                  subheader={service.subtitle}
-                />
-                <CardContent>
-                  <div
-                    dangerouslySetInnerHTML={{ __html: service.summary }}
-                  ></div>
-                </CardContent>
+                <div ref={index === 0 ? refStepInfo : null}>
+                  <CardHeader
+                    title={service.title}
+                    subheader={service.subtitle}
+                  />
+                  <CardContent>
+                    <div
+                      dangerouslySetInnerHTML={{ __html: service.summary }}
+                    ></div>
+                  </CardContent>
+                </div>
                 <CardActions disableSpacing>
                   <div ref={index === 0 ? refStepActions : null}>
                     <Button

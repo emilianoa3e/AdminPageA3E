@@ -48,6 +48,11 @@ export const updateUser = async (id, values, data) => {
         icon: "error",
         title: "El correo ya está registrado 🫤",
       });
+    } else if (error.response.data.msg === "Invalid email domain") {
+      Toast.fire({
+        icon: "error",
+        title: "Solo se permiten correos de dominio @a3e.com.mx 🫤",
+      });
     } else {
       Toast.fire({
         icon: "error",
@@ -150,4 +155,4 @@ export const deletePhoto = async (id) => {
       title: "Error del servidor 😞",
     });
   }
-}
+};

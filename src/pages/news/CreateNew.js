@@ -140,7 +140,7 @@ function CreateNew() {
                     position: "fixed",
                     left: 10,
                     bottom: 10,
-                    zIndex: 999,
+                    zIndex: 3,
                   }}
                   showIcon={<MdPhotoAlbum size={30} />}
                   onClick={toggleDrawer("left", true)}

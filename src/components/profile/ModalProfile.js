@@ -154,7 +154,7 @@ export const ModalProfile = ({
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             {/* Mostrar una frase aleatoria */}
-            Hola <strong>{userData.name}</strong>, {phrase}
+            Hola <strong>{userData.name}</strong>, {phrase}.
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

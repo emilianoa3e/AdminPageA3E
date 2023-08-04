@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row } from "react-bootstrap";
 import {
@@ -7,10 +7,9 @@ import {
   deleteBanner,
 } from "../../utils/bannersFunctions";
 import { showConfirmDialog, showError400 } from "../../shared/plugins/alert";
-import { MdAdd, MdArrowBackIosNew, MdHelpOutline } from "react-icons/md";
+import { MdAdd, MdArrowBackIosNew } from "react-icons/md";
 import { Button } from "@mui/material";
 import { columnsBanner } from "../../components/columnsTables/columnsBanner";
-import { SpeedDial } from "primereact/speeddial";
 import Colors from "../../utils/Colors";
 import SplashScreen from "../utils/SplashScreen";
 import DynamicTable from "../../components/shared/DynamicTable";
@@ -20,29 +19,6 @@ function BannerMain() {
   const [isLoading, setIsLoading] = useState(false);
   const [bannerList, setBannerList] = useState([]);
   const [error, setError] = useState(false);
-  const [open, setOpen] = useState(false);
-  const refStep1 = useRef(null);
-  const refStep2 = useRef(null);
-
-  const steps = [
-    {
-      title: "Tabla de datos",
-      description:
-        "En esta página se muestran todos los banners que se han creado. " +
-        "Puede cambiar el status, eliminar, crear o editar un banner.",
-      target: () => refStep1.current,
-      nextButtonProps: { children: "Siguiente" },
-    },
-    {
-      title: "Filtro de status",
-      description:
-        "El filtro de status permite filtrar los banners por status. Los que estan activos o inactivos.",
-      placement: "left",
-      target: () => refStep2.current,
-      prevButtonProps: { children: "Anterior" },
-      nextButtonProps: { children: "Finalizar" },
-    },
-  ];
 
   const getBanners = async () => {
     setIsLoading(true);
@@ -103,18 +79,6 @@ function BannerMain() {
 
   return (
     <Container fluid>
-      <SpeedDial
-        style={{ position: "fixed", left: 10, bottom: 10 }}
-        showIcon={<MdHelpOutline size={30} />}
-        title="¿Como funciona?"
-        buttonStyle={{
-          backgroundColor: Colors.PalleteGreenA3E,
-          opacity: 0.65,
-          color: "white",
-        }}
-        buttonClassName="p-button-secondary"
-        onClick={() => setOpen(true)}
-      />
       <Row>
         <Col className="d-flex justify-content-between">
           <Button
@@ -150,11 +114,6 @@ function BannerMain() {
             handleDelete={handleDelete}
             showFilter={true}
             navigate={navigate}
-            steps={steps}
-            open={open}
-            setOpen={setOpen}
-            refStep1={refStep1}
-            refStep2={refStep2}
           />
         </Col>
       </Row>

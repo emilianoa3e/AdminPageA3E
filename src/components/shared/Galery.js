@@ -6,7 +6,7 @@ import {
   MdPermMedia,
   MdDeleteForever,
 } from "react-icons/md";
-import { Row, Col, Card } from "react-bootstrap";
+import { Row, Card } from "react-bootstrap";
 import {
   uploadMultimedia,
   getAllMedia,
@@ -22,6 +22,7 @@ import {
   BottomNavigation,
   BottomNavigationAction,
 } from "@mui/material";
+import { Image } from "antd";
 import FileDropzone from "./Dropzone";
 import SplashScreen from "../../pages/utils/SplashScreen";
 import NotFound from "./NotFound";
@@ -93,15 +94,16 @@ function Galery({ anchor, state, toggleDrawer }) {
       anchor={anchor}
       open={state[anchor]}
       onClose={toggleDrawer(anchor, false)}
+      style={{ zIndex: 25 }}
     >
       <Box sx={{ width: 550, padding: "15px" }} role="presentation">
         <Row className="m-1">
-            <FileDropzone
-              onFileUpload={handleFileUpload}
-              uploadedFile={uploadedFile}
-              setUploadedFile={setUploadedFile}
-              onContext="multimedia"
-            />
+          <FileDropzone
+            onFileUpload={handleFileUpload}
+            uploadedFile={uploadedFile}
+            setUploadedFile={setUploadedFile}
+            onContext="multimedia"
+          />
         </Row>
         <Card>
           <Card.Header className="p-0">
@@ -144,14 +146,16 @@ function Galery({ anchor, state, toggleDrawer }) {
                       {filteredMediaList.map((media) => (
                         <ImageListItem key={media._id}>
                           {media.type === "image" ? (
-                            <img
+                            <Image
                               src={media.multimedia}
                               alt="..."
                               style={{
-                                width: "100%",
-                                height: "auto",
                                 borderRadius: 5,
                                 border: "1px solid rgb(180, 180, 180)",
+                                zIndex: 5,
+                              }}
+                              wrapperStyle={{
+                                width: "100%",
                               }}
                               loading="lazy"
                             />

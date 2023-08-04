@@ -207,7 +207,7 @@ function EditService() {
                     position: "fixed",
                     left: 15,
                     bottom: 15,
-                    zIndex: 999,
+                    zIndex: 3,
                     width: 65,
                     height: 65,
                   }}
@@ -217,7 +217,7 @@ function EditService() {
                       position: "fixed",
                       left: 15,
                       bottom: 15,
-                      zIndex: 999,
+                      zIndex: 3,
                     }}
                     showIcon={<MdPhotoAlbum size={30} />}
                     onClick={toggleDrawer("left", true)}
