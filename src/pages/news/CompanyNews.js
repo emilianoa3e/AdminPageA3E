@@ -1,8 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Col, Row, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { MdAdd, MdMode, MdDelete, MdExpandMore } from "react-icons/md";
-import { Button } from "@mui/material";
+import {
+  MdAdd,
+  MdMode,
+  MdDelete,
+  MdExpandMore,
+  MdNewspaper,
+  MdGolfCourse,
+  MdWorkspacesFilled,
+} from "react-icons/md";
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  Button,
+} from "@mui/material";
 import { showConfirmDialog, showError400 } from "../../shared/plugins/alert";
 import { deleteNew, getAllNews } from "../../utils/newsFunctions";
 import { styled } from "@mui/material/styles";
@@ -13,13 +25,11 @@ import {
   CardActions,
   Collapse,
   IconButton,
-  Typography,
 } from "@mui/material";
 import Pagination from "../../components/shared/Pagination";
 import Colors from "../../utils/Colors";
 import SplashScreen from "../utils/SplashScreen";
 import NotFound from "../../components/shared/NotFound";
-import "../../assets/css/pages/CompanyNews.css";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -36,9 +46,11 @@ function CompanyNews() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [newsList, setNewsList] = useState([]);
+  const [filteredNewsList, setFilteredNewsList] = useState([]);
   const [itemOffset, setItemOffset] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [error, setError] = useState(false);
+  const [filter, setFilter] = useState("Novedades");
 
   const getNews = async () => {
     setIsLoading(true);
@@ -54,25 +66,58 @@ function CompanyNews() {
   };
 
   const handleExpandClick = (index) => {
-    setNewsList((prevNewsList) => {
+    setFilteredNewsList((prevNewsList) => {
       const updatedNews = [...prevNewsList];
       updatedNews[index].expanded = !updatedNews[index].expanded;
       return updatedNews;
     });
   };
 
+  const handleFilterChange = (event, newValue) => {
+    setFilter(newValue);
+    setItemOffset(0);
+    setCurrentPage(1);
+  
+    const filteredNews = newsList.filter((news) => {
+      if (newValue === "Novedades" || newValue === "Cursos" || newValue === "Convocatorias") {
+        return news.type === newValue;
+      }
+      return false;
+    });
+  
+    setFilteredNewsList(filteredNews);
+    getNews();
+  };
+
+  const filterNews = () => {
+    const filteredNews = newsList.filter((news) => {
+      if (filter === "Novedades" || filter === "Cursos" || filter === "Convocatorias") {
+        return news.type === filter;
+      }
+      return false;
+    });
+
+    setFilteredNewsList(filteredNews);
+    setItemOffset(0);
+    setCurrentPage(1);
+  };
+
+  useEffect(() => {
+    filterNews();
+  }, [newsList, filter]);
+
   useEffect(() => {
     getNews();
   }, []);
 
   const newsPerPage = 1;
-  const pageCount = Math.ceil(newsList.length / newsPerPage);
+  const pageCount = Math.ceil(filteredNewsList.length / newsPerPage);
 
   useEffect(() => {
-    const maxOffset = Math.max(0, newsList.length - newsPerPage);
+    const maxOffset = Math.max(0, filteredNewsList.length - newsPerPage);
     const newOffset = Math.min(itemOffset, maxOffset);
     setItemOffset(newOffset);
-  }, [newsList]);
+  }, [filteredNewsList]);
 
   const handlePageClick = (e) => {
     const newOffset = e.selected * newsPerPage;
@@ -112,7 +157,30 @@ function CompanyNews() {
         <Col>
           <h3>Noticias</h3>
         </Col>
-        <Col className="d-flex justify-content-end">
+        <Col>
+          <BottomNavigation
+            sx={{ width: "100%" }}
+            value={filter}
+            onChange={handleFilterChange}
+          >
+            <BottomNavigationAction
+              label="Novedades"
+              value="Novedades"
+              icon={<MdNewspaper size={35} />}
+            />
+            <BottomNavigationAction
+              label="Cursos"
+              value="Cursos"
+              icon={<MdGolfCourse size={35} />}
+            />
+            <BottomNavigationAction
+              label="Convocatorias"
+              value="Convocatorias"
+              icon={<MdWorkspacesFilled size={35} />}
+            />
+          </BottomNavigation>
+        </Col>
+        <Col className="d-flex justify-content-end h-75">
           <Button
             size="large"
             variant="contained"
@@ -126,7 +194,7 @@ function CompanyNews() {
       </Row>
       {newsList.length !== 0 ? (
         <Row>
-          {newsList
+          {filteredNewsList
             .slice(itemOffset, itemOffset + newsPerPage)
             .map((news, index) => (
               <Card
@@ -137,10 +205,12 @@ function CompanyNews() {
                 }}
                 key={news._id}
               >
-                <CardHeader title={news.title} subheader={`${news.type} | ${news.author} | ${news.date}`} />
+                <CardHeader
+                  title={news.title}
+                  subheader={`${news.type} | ${news.author} | ${news.date}`}
+                />
                 <CardContent>
                   <div dangerouslySetInnerHTML={{ __html: news.summary }}></div>
-                  
                 </CardContent>
                 <CardActions disableSpacing>
                   <Button
@@ -168,7 +238,7 @@ function CompanyNews() {
                     aria-expanded={news.expanded}
                     aria-label="show more"
                   >
-                    <MdExpandMore size={40}/>
+                    <MdExpandMore size={40} />
                   </ExpandMore>
                 </CardActions>
                 <Collapse in={news.expanded} timeout="auto" unmountOnExit>

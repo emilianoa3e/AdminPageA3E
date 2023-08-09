@@ -292,6 +292,17 @@ function DynamicTable({
                           </TableCell>
                         );
                       }
+                      if (column.id === "description") {
+                        return (
+                          <TableCell
+                            key={column.id}
+                            align={column.align}
+                            dangerouslySetInnerHTML={{
+                              __html: row.description,
+                            }}
+                          ></TableCell>
+                        );
+                      }
                       if (
                         column.id === "actions user" ||
                         column.id === "actions positions"

@@ -1,9 +1,10 @@
 import React from "react";
 import Carousel from "react-bootstrap/Carousel";
-import "../../assets/css/components/BannerPreview.css"
+import "../../assets/css/components/BannerPreview.css";
 import { Row, Col } from "react-bootstrap";
 
 function BannerPreview({ title, description, image, link, onContext }) {
+  
   if (onContext === "bannerPreview") {
     if (!image) {
       return (
@@ -86,29 +87,26 @@ function BannerPreview({ title, description, image, link, onContext }) {
               alt={title}
               style={{ objectFit: "cover" }}
             />
-            <Carousel.Caption              
-              style={{ top: 0, right: 0 }}
+            <Carousel.Caption
+              className="h-100"
+              style={{ position: "absolute", right: 0 }}
             >
-              <div
-                className="contentCaption h-100"
-                style={{ position: "absolute", right: 0 }}
-              >
-                <Row className="justify-content-center ">
+              <div className="container-info">
+                <Row className="justify-content-center w-100 m-0 p-0">
                   <Col className="col-12">
-                    <h1>{title}</h1>
+                    <h2>{title}</h2>
                   </Col>
-                  <Col className="col-12">
-                    <p>{description}</p>
+                  <Col
+                    className="col-12 text-certification"
+                    dangerouslySetInnerHTML={{
+                      __html: description,
+                    }}
+                  ></Col>
+                  <Col className="col-12 text-center">
+                    <a href={link} target="_blank" className="linkButton">
+                      Ver más
+                    </a>
                   </Col>
-                  {link ? (
-                    <Col className="col-12 text-center ">
-                      <a href={link} className="linkButton">
-                        Ver más
-                      </a>
-                    </Col>
-                  ) : (
-                    ""
-                  )}
                 </Row>
               </div>
             </Carousel.Caption>

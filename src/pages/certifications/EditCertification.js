@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { MdTitle, MdOutlineDescription, MdOutlineLink } from "react-icons/md";
+import { MdTitle, MdOutlineLink } from "react-icons/md";
 import { MdCheckCircleOutline, MdArrowBackIosNew } from "react-icons/md";
 
 import { Container, Row, Col } from "react-bootstrap";
@@ -8,12 +8,13 @@ import { Form as FormBt } from "react-bootstrap";
 import { showConfirmDialog } from "../../shared/plugins/alert";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
-import { Button } from "@mui/material";
+import { Button, } from "@mui/material";
 import Colors from "../../utils/Colors";
 import FileDropzone from "../../components/shared/Dropzone";
 import { TextInput } from "../../components/shared/TextInput";
 import BannerPreview from "../utils/BannerPreview";
 import SplashScreen from "../utils/SplashScreen";
+import EditorText from "../../components/shared/EditorText";
 import {
   getCertificationById,
   updateCertification,
@@ -32,12 +33,15 @@ function EditCertification() {
     link: "",
     status: "",
   });
+  const [resumeContent, setResumeContent] = useState("");
+  const [initialResumeContent, setInitialResumeContent] = useState("");
 
   useEffect(() => {
     setIsLoading(true);
     const getCertification = async () => {
       const data = await getCertificationById(id);
       setCertification(data.certification);
+      setInitialResumeContent(data.certification.description)
       setIsLoading(false);
     };
 
@@ -46,14 +50,14 @@ function EditCertification() {
 
   console.log(certification.title);
 
-  const handleSubmit = (values, uploadedFile) => {
+  const handleSubmit = (values, resumeContent, uploadedFile) => {
     showConfirmDialog(
       "¿Estás seguro de actualizar este certificado?",
       "Se actualizará el certificado",
       "Si, actualizar el certificado",
       "Cancelar",
       () => {
-        updateCertification(id, values, uploadedFile, navigate);
+        updateCertification(id, values, resumeContent, uploadedFile, navigate);
       }
     );
   };
@@ -74,12 +78,13 @@ function EditCertification() {
           <Formik
             initialValues={{
               title: certification.title,
-              description: certification.description,
               link: certification.link,
             }}
             enableReinitialize={true}
             validationSchema={objectSchema}
-            onSubmit={(values) => handleSubmit(values, uploadedFile)}
+            onSubmit={(values) =>
+              handleSubmit(values, resumeContent, uploadedFile)
+            }
           >
             {({ errors, values, touched }) => (
               <Form>
@@ -136,7 +141,7 @@ function EditCertification() {
                   </Col>
                   <Col lg={8}>
                     <Row>
-                      <FormBt.Group lassName="mb-2">
+                      <FormBt.Group className="mb-2">
                         <TextInput
                           maxLength="60"
                           label="Título"
@@ -149,14 +154,10 @@ function EditCertification() {
                     </Row>
                     <Row>
                       <FormBt.Group className="mb-2">
-                        <TextInput
-                          maxLength="100"
-                          as="textarea"
-                          label="Descripción"
-                          name="description"
-                          style={{ resize: "none", height: "70px" }}
-                          icon={MdOutlineDescription}
-                          placeholder="Descripción"
+                        <label>Descripción</label>
+                        <EditorText
+                          initialContent={initialResumeContent}
+                          setContent={setResumeContent}
                         />
                       </FormBt.Group>
                     </Row>
@@ -181,7 +182,7 @@ function EditCertification() {
                   {uploadedFile ? (
                     <BannerPreview
                       title={values.title}
-                      description={values.description}
+                      description={resumeContent ? resumeContent : initialResumeContent}
                       image={imagePreview}
                       link={values.link}
                       onContext="certificationPreview"
@@ -189,7 +190,7 @@ function EditCertification() {
                   ) : (
                     <BannerPreview
                       title={values.title}
-                      description={values.description}
+                      description={resumeContent ? resumeContent: initialResumeContent}
                       image={certification.image}
                       link={values.link}
                       onContext="certificationPreview"

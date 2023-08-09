@@ -10,6 +10,9 @@ import {
   MdAdd,
   MdMode,
   MdDelete,
+  MdImportContacts,
+  MdPointOfSale,
+  MdGroup,
 } from "react-icons/md";
 import { BsLinkedin } from "react-icons/bs";
 import {
@@ -23,6 +26,8 @@ import { Button } from "@mui/material";
 import SplashScreen from "../../utils/SplashScreen";
 import NotFound from "../../../components/shared/NotFound";
 import Colors from "../../../utils/Colors";
+import { BottomNavigation } from "@mui/material";
+import { BottomNavigationAction } from "@mui/material";
 
 function ContactsMain() {
   const navigate = useNavigate();
@@ -31,6 +36,7 @@ function ContactsMain() {
   const [isLoading, setIsLoading] = useState(false);
   const [contactsList, setContactsList] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
+  const [filter, setFilter] = useState("general");
   const [error, setError] = useState(false);
 
   const handleCloseCreate = () => setShowCreate(false);
@@ -81,6 +87,14 @@ function ContactsMain() {
     return <SplashScreen />;
   }
 
+  const handleFilterChange = (event, type) => {
+    setFilter(type);
+  };
+
+  const filteredMediaList = contactsList.filter((contact) => {
+    return contact.destiny === filter;
+  });
+
   if (error) {
     showError400(() => {
       navigate("/contacts-screen");
@@ -93,7 +107,31 @@ function ContactsMain() {
         <Col>
           <h3 style={{ fontWeight: "bold" }}>Contactos</h3>
         </Col>
-        <Col className="d-flex justify-content-end">
+        <Col>
+          <BottomNavigation
+            sx={{ width: "100%" }}
+            onChange={handleFilterChange}
+            value={filter}
+          >
+            <BottomNavigationAction
+              label={"General"}
+              value={"general"}
+              icon={<MdImportContacts size={35} />}
+            />
+            <BottomNavigationAction
+              label={"Reclutamiento"}
+              value={"reclutamiento"}
+              icon={<MdGroup size={35} />}
+            />
+            <BottomNavigationAction
+              label={"Ventas"}
+              value={"ventas"}
+              icon={<MdPointOfSale size={35} />}
+            />
+          </BottomNavigation>
+        </Col>
+
+        <Col className="d-flex justify-content-end h-75">
           <Button
             size="medium"
             variant="contained"
@@ -117,7 +155,7 @@ function ContactsMain() {
       </Row>
       {contactsList.length !== 0 ? (
         <Row className="d-flex">
-          {contactsList.map((contact) => (
+          {filteredMediaList.map((contact) => (
             <Col
               key={contact._id}
               xs={12}
@@ -139,9 +177,14 @@ function ContactsMain() {
                   ) : contact.type === "linkedin" ? (
                     <BsLinkedin size={50} color={Colors.PalleteLinkedin} />
                   ) : null}
-                  <Card.Subtitle className="mt-2" style={{textTransform:'uppercase', color:'gray'}}>{contact.destiny}</Card.Subtitle>
+                  <Card.Subtitle
+                    className="mt-2"
+                    style={{ textTransform: "uppercase", color: "gray" }}
+                  >
+                    {contact.destiny}
+                  </Card.Subtitle>
                   <Card.Title className="mt-3">{contact.contact}</Card.Title>
-                  
+
                   <Card.Footer style={{ backgroundColor: Colors.PalleteWhite }}>
                     <Button
                       size="small"

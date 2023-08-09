@@ -13,11 +13,15 @@ import Colors from "../../utils/Colors";
 import FileDropzone from "../../components/shared/Dropzone";
 import * as yup from "yup";
 import BannerPreview from "../utils/BannerPreview";
+import EditorText from "../../components/shared/EditorText";
 
 function CreateCertification() {
   const navigate = useNavigate();
   const [uploadedFile, setUploadedFile] = useState(null);
   const imagePreview = uploadedFile ? URL.createObjectURL(uploadedFile) : null;
+
+  const [resumeContent, setResumeContent] = useState("");
+  const [initialResumeContent, setInitialResumeContent] = useState("");
 
   const handleSubmit = (values, uploadedFile) => {
     showConfirmDialog(
@@ -26,7 +30,7 @@ function CreateCertification() {
       "Si, crear certificado",
       "Cancelar",
       () => {
-        saveCertification(values, uploadedFile, navigate);
+        saveCertification(values, resumeContent, uploadedFile, navigate);
       }
     );
   };
@@ -43,11 +47,12 @@ function CreateCertification() {
           <Formik
             initialValues={{
               title: "",
-              description: "",
               link: "",
             }}
             validationSchema={objectSchema}
-            onSubmit={(values) => handleSubmit(values, uploadedFile)}
+            onSubmit={(values) =>
+              handleSubmit(values, uploadedFile, resumeContent)
+            }
           >
             {({ errors, values, touched }) => (
               <Form>
@@ -123,14 +128,10 @@ function CreateCertification() {
                     </Row>
                     <Row>
                       <FormBt.Group className="mb-2">
-                        <TextInput
-                          maxLength="100"
-                          as="textarea"
-                          label="Descripción"
-                          name="description"
-                          style={{ resize: "none", height: "70px" }}
-                          icon={MdOutlineDescription}
-                          placeholder="Descripción"
+                        <label>Descripción</label>
+                        <EditorText
+                          initialContent={initialResumeContent}
+                          setContent={setResumeContent}
                         />
                       </FormBt.Group>
                     </Row>
@@ -154,7 +155,7 @@ function CreateCertification() {
                   </Container>
                   <BannerPreview
                     title={values.title}
-                    description={values.description}
+                    description={resumeContent}
                     image={imagePreview}
                     link={values.link}
                     onContext="certificationPreview"

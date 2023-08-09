@@ -25,10 +25,10 @@ export const getCertificationById = async (id) => {
   }
 };
 
-export const saveCertification = async (values, file, navigate) => {
+export const saveCertification = async (values, resumeContent, file, navigate) => {
   const formData = new FormData();
   formData.append("title", values.title);
-  formData.append("description", values.description);
+  formData.append("description", resumeContent);
   formData.append("image", file);
   formData.append("link", values.link);
   showLoadingAlert("Creando certificado...", "Espere un momento por favor.");
@@ -67,10 +67,10 @@ export const saveCertification = async (values, file, navigate) => {
   }
 };
 
-export const updateCertification = async(id, values, file, navigate)=>{
+export const updateCertification = async(id, values,resumeContent, file, navigate)=>{
   const formData = new FormData();
   formData.append("title", values.title);
-  formData.append("description", values.description);
+  formData.append("description", resumeContent);
   formData.append("image", file);
   formData.append("link", values.link);
 
