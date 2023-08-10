@@ -18,7 +18,13 @@ function CustomNavbar() {
   const { role } = state;
 
   return (
-    <NavbarBt variant="dark" className="custom-navbar" expand="lg" sticky="top" style={{zIndex: 20}}>
+    <NavbarBt
+      variant="dark"
+      className="custom-navbar"
+      expand="lg"
+      sticky="top"
+      style={{ zIndex: 20 }}
+    >
       <Container>
         <NavbarBt.Brand href="/">
           <img src={logo} alt="Logo" width={100} />

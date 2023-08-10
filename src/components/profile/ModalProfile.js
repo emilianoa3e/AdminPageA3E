@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Col, Modal, Row } from "react-bootstrap";
 import { Form, Formik } from "formik";
-import { Button, Avatar } from "@mui/material";
+import { Button, Avatar, Badge } from "@mui/material";
 import { SpeedDial } from "primereact/speeddial";
 import { MdKey, MdMode, MdQuestionMark } from "react-icons/md";
 import { ModalConfirm } from "./ModalConfirm";
@@ -180,18 +180,27 @@ export const ModalProfile = ({
                 <Row className="mt-2">
                   <Col lg={4}>
                     <div className="d-flex justify-content-center">
-                      <Avatar
-                        alt={userData.name}
-                        src={userData.photo ? userData.photo : "x"}
-                        sx={{ width: 180, height: 180, fontSize: 80 }}
-                      />
-                      <SpeedDial
-                        style={{ position: "absolute", bottom: 60, left: 180 }}
-                        buttonStyle={{ width: 35, height: 35 }}
-                        buttonClassName="p-button-secondary"
-                        showIcon={<MdMode size={22} />}
-                        onClick={handleShowPhoto}
-                      />
+                      <Badge
+                        overlap="circular"
+                        anchorOrigin={{
+                          vertical: "bottom",
+                          horizontal: "right",
+                        }}
+                        badgeContent={
+                          <SpeedDial
+                            buttonStyle={{ width: 35, height: 35 }}
+                            buttonClassName="p-button-primary"
+                            showIcon={<MdMode size={22} />}
+                            onClick={handleShowPhoto}
+                          />
+                        }
+                      >
+                        <Avatar
+                          alt={userData.name}
+                          src={userData.photo ? userData.photo : "x"}
+                          sx={{ width: 180, height: 180, fontSize: 80 }}
+                        />
+                      </Badge>
                     </div>
                   </Col>
                   <Col lg={8} className="mt-2">
