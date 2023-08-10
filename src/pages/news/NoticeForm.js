@@ -2,7 +2,12 @@ import React from "react";
 import EditorWys from "../../components/shared/EditorWys";
 import { Form as FormBt, Row, Col } from "react-bootstrap";
 import { TextInput } from "../../components/shared/TextInput";
-import { MdTitle, MdOutlineFullscreen, MdCoPresent } from "react-icons/md";
+import {
+  MdTitle,
+  MdOutlineFullscreen,
+  MdCoPresent,
+  MdArrowDownward,
+} from "react-icons/md";
 import { SelectInput } from "../../components/shared/SelectInput";
 import EditorText from "../../components/shared/EditorText";
 
@@ -15,12 +20,17 @@ function NoticeForm({
   setResumeContent,
   initialResumeContent,
   onContext,
+  refStepTitle,
+  refStepType,
+  refStepResume,
+  refStepAuthor,
+  refStepContent,
 }) {
   return (
     <>
       <Row>
         <Col md={9} lg={9}>
-          <FormBt.Group className="mb-2">
+          <FormBt.Group className="mb-2" ref={refStepTitle}>
             <TextInput
               maxLength="80"
               label="Título"
@@ -32,7 +42,7 @@ function NoticeForm({
           </FormBt.Group>
         </Col>
         <Col md={3} lg={3}>
-          <FormBt.Group className="mb-2">
+          <FormBt.Group className="mb-2" ref={refStepType}>
             <SelectInput
               label="Tipo de Noticia"
               name="type"
@@ -47,16 +57,18 @@ function NoticeForm({
           </FormBt.Group>
         </Col>
       </Row>
-      <Row>
-        <Col>
-          <FormBt.Group className="mb-2">
+      <Row className="d-flex align-items-center">
+        <Col lg={9}>
+          <FormBt.Group className="mb-2" ref={refStepResume}>
             <label>Resumen</label>
             <EditorText
               initialContent={initialResumeContent}
               setContent={setResumeContent}
             />
           </FormBt.Group>
-          <FormBt.Group className="mb-2">
+        </Col>
+        <Col lg={3}>
+          <FormBt.Group className="mb-2" ref={refStepAuthor}>
             <TextInput
               label="Autor"
               name="author"
@@ -75,10 +87,12 @@ function NoticeForm({
           fontStyle: "italic",
         }}
       >
+        <MdArrowDownward size={23} className="me-1" />
         Para una mejor experiencia del editor trabaje en pantalla completa
         <MdOutlineFullscreen size={23} className="ms-1" />
+        <MdArrowDownward size={23} className="ms-1" />
       </p>
-      <FormBt.Group className="mb-2">
+      <FormBt.Group className="mb-2" ref={refStepContent}>
         <EditorWys
           setContent={setContent}
           initialContent={initialContent}

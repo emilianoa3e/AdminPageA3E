@@ -183,8 +183,8 @@ function CreateService() {
                   ref={refStepGalery}
                   style={{
                     position: "fixed",
-                    left: 15,
-                    bottom: 15,
+                    left: 10,
+                    bottom: 10,
                     zIndex: 3,
                     width: 65,
                     height: 65,
@@ -193,8 +193,8 @@ function CreateService() {
                   <SpeedDial
                     style={{
                       position: "fixed",
-                      left: 15,
-                      bottom: 15,
+                      left: 10,
+                      bottom: 10,
                       zIndex: 3,
                     }}
                     showIcon={<MdPhotoAlbum size={30} />}

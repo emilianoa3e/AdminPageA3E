@@ -9,10 +9,11 @@ import {
   MdOutlineDescription,
   MdOutlineLink,
   MdHelpOutline,
+  MdCheckCircleOutline,
+  MdArrowBackIosNew,
 } from "react-icons/md";
 import { saveBanner } from "../../utils/bannersFunctions";
 import { showConfirmDialog } from "../../shared/plugins/alert";
-import { MdCheckCircleOutline, MdArrowBackIosNew } from "react-icons/md";
 import { Button } from "@mui/material";
 import { SpeedDial } from "primereact/speeddial";
 import { Tour } from "antd";

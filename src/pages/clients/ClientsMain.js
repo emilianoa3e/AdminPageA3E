@@ -52,6 +52,8 @@ function ClientsMain() {
 
   useEffect(() => {
     getClients();
+
+    document.title = "A3E P.A. | Clientes";
   }, []);
 
   if (isLoading) {

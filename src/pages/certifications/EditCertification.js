@@ -1,24 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { MdTitle, MdOutlineLink } from "react-icons/md";
-import { MdCheckCircleOutline, MdArrowBackIosNew } from "react-icons/md";
-
+import {
+  MdTitle,
+  MdOutlineLink,
+  MdCheckCircleOutline,
+  MdArrowBackIosNew,
+  MdHelpOutline,
+} from "react-icons/md";
 import { Container, Row, Col } from "react-bootstrap";
 import { Form as FormBt } from "react-bootstrap";
 import { showConfirmDialog } from "../../shared/plugins/alert";
 import { Form, Formik } from "formik";
-import * as yup from "yup";
-import { Button, } from "@mui/material";
-import Colors from "../../utils/Colors";
-import FileDropzone from "../../components/shared/Dropzone";
 import { TextInput } from "../../components/shared/TextInput";
-import BannerPreview from "../utils/BannerPreview";
-import SplashScreen from "../utils/SplashScreen";
-import EditorText from "../../components/shared/EditorText";
+import { Button } from "@mui/material";
 import {
   getCertificationById,
   updateCertification,
 } from "../../utils/certificationFunctions";
+import { SpeedDial } from "primereact/speeddial";
+import { Tour } from "antd";
+import Colors from "../../utils/Colors";
+import FileDropzone from "../../components/shared/Dropzone";
+import * as yup from "yup";
+import BannerPreview from "../utils/BannerPreview";
+import SplashScreen from "../utils/SplashScreen";
+import EditorText from "../../components/shared/EditorText";
 
 function EditCertification() {
   const navigate = useNavigate();
@@ -35,17 +41,66 @@ function EditCertification() {
   });
   const [resumeContent, setResumeContent] = useState("");
   const [initialResumeContent, setInitialResumeContent] = useState("");
+  const [open, setOpen] = useState(false);
+  const refStepImg = useRef(null);
+  const refStepPrevImg = useRef(null);
+  const refStepTitle = useRef(null);
+  const refStepDescription = useRef(null);
+  const refStepLink = useRef(null);
+
+  const steps = [
+    {
+      title: "Imagen del banner",
+      description:
+        "Sube una imagen para el banner. Puede arrastrar la imagen al recuadro o hacer click para seleccionarla.",
+      target: () => refStepImg.current,
+      nextButtonProps: { children: "Siguiente" },
+    },
+    {
+      title: "Visualización de la imagen",
+      description:
+        "Una vez que suba la imagen, se mostrará en la vista previa. Y conforme vaya editando el banner, se irá actualizando la vista previa.",
+      placement: "top",
+      target: () => refStepPrevImg.current,
+      prevButtonProps: { children: "Anterior" },
+      nextButtonProps: { children: "Siguiente" },
+    },
+    {
+      title: "Título",
+      description: "Ingrese el título del banner. Este campo es obligatorio.",
+      target: () => refStepTitle.current,
+      prevButtonProps: { children: "Anterior" },
+      nextButtonProps: { children: "Siguiente" },
+    },
+    {
+      title: "Descripción",
+      description:
+        "Ingrese una descripción para el banner. Este campo es opcional.",
+      target: () => refStepDescription.current,
+      prevButtonProps: { children: "Anterior" },
+      nextButtonProps: { children: "Siguiente" },
+    },
+    {
+      title: "Enlace",
+      description: "Ingrese un enlace para el banner. Este campo es opcional.",
+      target: () => refStepLink.current,
+      prevButtonProps: { children: "Anterior" },
+      nextButtonProps: { children: "Finalizar" },
+    },
+  ];
 
   useEffect(() => {
     setIsLoading(true);
     const getCertification = async () => {
       const data = await getCertificationById(id);
       setCertification(data.certification);
-      setInitialResumeContent(data.certification.description)
+      setInitialResumeContent(data.certification.description);
       setIsLoading(false);
     };
 
     getCertification();
+
+    document.title = "A3E P.A. | Editar certificado";
   }, []);
 
   console.log(certification.title);
@@ -73,6 +128,18 @@ function EditCertification() {
 
   return (
     <Container fluid className="p-0 m-0">
+      <SpeedDial
+        style={{ position: "fixed", left: 10, bottom: 10 }}
+        showIcon={<MdHelpOutline size={30} />}
+        title="¿Como funciona?"
+        buttonStyle={{
+          backgroundColor: Colors.PalleteGreenA3E,
+          opacity: 0.65,
+          color: "white",
+        }}
+        buttonClassName="p-button-secondary"
+        onClick={() => setOpen(true)}
+      />
       <Row>
         <Col lg={12}>
           <Formik
@@ -120,7 +187,7 @@ function EditCertification() {
                 </Row>
                 <Row>
                   <Col lg={4} className="pt-5">
-                    <FormBt.Group className="mt-3">
+                    <FormBt.Group className="mt-3" ref={refStepImg}>
                       <FileDropzone
                         uploadedFile={uploadedFile}
                         setUploadedFile={setUploadedFile}
@@ -141,7 +208,7 @@ function EditCertification() {
                   </Col>
                   <Col lg={8}>
                     <Row>
-                      <FormBt.Group className="mb-2">
+                      <FormBt.Group className="mb-2" ref={refStepTitle}>
                         <TextInput
                           maxLength="60"
                           label="Título"
@@ -153,7 +220,7 @@ function EditCertification() {
                       </FormBt.Group>
                     </Row>
                     <Row>
-                      <FormBt.Group className="mb-2">
+                      <FormBt.Group className="mb-2" ref={refStepDescription}>
                         <label>Descripción</label>
                         <EditorText
                           initialContent={initialResumeContent}
@@ -162,7 +229,7 @@ function EditCertification() {
                       </FormBt.Group>
                     </Row>
                     <Row>
-                      <FormBt.Group className="mb-2">
+                      <FormBt.Group className="mb-2" ref={refStepLink}>
                         <TextInput
                           maxLength="80"
                           label="Link"
@@ -176,13 +243,15 @@ function EditCertification() {
                   </Col>
                 </Row>
                 <Row>
-                  <Container fluid className="p-0 m-0">
+                  <Container fluid className="p-0 m-0" ref={refStepPrevImg}>
                     <p className="text-center">Vista previa</p>
                   </Container>
                   {uploadedFile ? (
                     <BannerPreview
                       title={values.title}
-                      description={resumeContent ? resumeContent : initialResumeContent}
+                      description={
+                        resumeContent ? resumeContent : initialResumeContent
+                      }
                       image={imagePreview}
                       link={values.link}
                       onContext="certificationPreview"
@@ -190,7 +259,9 @@ function EditCertification() {
                   ) : (
                     <BannerPreview
                       title={values.title}
-                      description={resumeContent ? resumeContent: initialResumeContent}
+                      description={
+                        resumeContent ? resumeContent : initialResumeContent
+                      }
                       image={certification.image}
                       link={values.link}
                       onContext="certificationPreview"
@@ -202,6 +273,7 @@ function EditCertification() {
           </Formik>
         </Col>
       </Row>
+      <Tour open={open} onClose={() => setOpen(false)} steps={steps} />
     </Container>
   );
 }

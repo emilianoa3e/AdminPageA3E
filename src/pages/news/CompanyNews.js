@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Col, Row, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import {
@@ -9,6 +9,7 @@ import {
   MdNewspaper,
   MdGolfCourse,
   MdWorkspacesFilled,
+  MdHelpOutline,
 } from "react-icons/md";
 import {
   BottomNavigation,
@@ -26,6 +27,8 @@ import {
   Collapse,
   IconButton,
 } from "@mui/material";
+import { Tour } from "antd";
+import { SpeedDial } from "primereact/speeddial";
 import Pagination from "../../components/shared/Pagination";
 import Colors from "../../utils/Colors";
 import SplashScreen from "../utils/SplashScreen";
@@ -51,6 +54,58 @@ function CompanyNews() {
   const [currentPage, setCurrentPage] = useState(1);
   const [error, setError] = useState(false);
   const [filter, setFilter] = useState("Novedades");
+  const [open, setOpen] = useState(false);
+  const refStepInfo = useRef(null);
+  const refStepActions = useRef(null);
+  const refStepExpand = useRef(null);
+  const refStepPagination = useRef(null);
+  const refStepFilter = useRef(null);
+
+  const steps = [
+    {
+      title: "Información de la noticia",
+      description:
+        "Esta parte muestra la información de la noticia. Titulo, categoría, resume, autor y contenido.",
+      target: () => refStepInfo.current,
+      nextButtonProps: { children: "Siguiente" },
+    },
+    {
+      title: "Acciones",
+      description:
+        "En esta parte se encuentran las acciones que se pueden realizar con la noticia. Editar y eliminar.",
+      placement: "right",
+      target: () => refStepActions.current,
+      prevButtonProps: { children: "Anterior" },
+      nextButtonProps: { children: "Siguiente" },
+    },
+    {
+      title: "Expandir",
+      description:
+        "Al expandir el servicio se muestra la información completa de la noticia (Contenido de la noticia). ",
+      placement: "left",
+      target: () => refStepExpand.current,
+      prevButtonProps: { children: "Anterior" },
+      nextButtonProps: { children: "Siguiente" },
+    },
+    {
+      title: "Paginación",
+      description:
+        "Esta parte muestra la paginación de las noticias. Puedes navegar entre las noticias con los botones de paginación.",
+      placement: "top",
+      target: () => refStepPagination.current,
+      prevButtonProps: { children: "Anterior" },
+      nextButtonProps: { children: "Siguiente" },
+    },
+    {
+      title: "Filtros de noticias",
+      description:
+        "En esta parte se encuentran los filtros de noticias. Puedes filtrar las noticias por tipo.",
+      placement: "bottom",
+      target: () => refStepFilter.current,
+      prevButtonProps: { children: "Anterior" },
+      nextButtonProps: { children: "Finalizar" },
+    },
+  ];
 
   const getNews = async () => {
     setIsLoading(true);
@@ -77,21 +132,29 @@ function CompanyNews() {
     setFilter(newValue);
     setItemOffset(0);
     setCurrentPage(1);
-  
+
     const filteredNews = newsList.filter((news) => {
-      if (newValue === "Novedades" || newValue === "Cursos" || newValue === "Convocatorias") {
+      if (
+        newValue === "Novedades" ||
+        newValue === "Cursos" ||
+        newValue === "Convocatorias"
+      ) {
         return news.type === newValue;
       }
       return false;
     });
-  
+
     setFilteredNewsList(filteredNews);
     getNews();
   };
 
   const filterNews = () => {
     const filteredNews = newsList.filter((news) => {
-      if (filter === "Novedades" || filter === "Cursos" || filter === "Convocatorias") {
+      if (
+        filter === "Novedades" ||
+        filter === "Cursos" ||
+        filter === "Convocatorias"
+      ) {
         return news.type === filter;
       }
       return false;
@@ -108,6 +171,8 @@ function CompanyNews() {
 
   useEffect(() => {
     getNews();
+
+    document.title = "A3E P.A. | Noticias";
   }, []);
 
   const newsPerPage = 1;
@@ -153,6 +218,18 @@ function CompanyNews() {
 
   return (
     <Container fluid>
+      <SpeedDial
+        style={{ position: "fixed", left: 10, bottom: 10 }}
+        showIcon={<MdHelpOutline size={30} />}
+        title="¿Como funciona?"
+        buttonStyle={{
+          backgroundColor: Colors.PalleteGreenA3E,
+          opacity: 0.65,
+          color: "white",
+        }}
+        buttonClassName="p-button-secondary"
+        onClick={() => setOpen(true)}
+      />
       <Row className="mb-3">
         <Col>
           <h3>Noticias</h3>
@@ -162,6 +239,7 @@ function CompanyNews() {
             sx={{ width: "100%" }}
             value={filter}
             onChange={handleFilterChange}
+            ref={refStepFilter}
           >
             <BottomNavigationAction
               label="Novedades"
@@ -205,40 +283,48 @@ function CompanyNews() {
                 }}
                 key={news._id}
               >
-                <CardHeader
-                  title={news.title}
-                  subheader={`${news.type} | ${news.author} | ${news.date}`}
-                />
-                <CardContent>
-                  <div dangerouslySetInnerHTML={{ __html: news.summary }}></div>
-                </CardContent>
+                <div ref={index === 0 ? refStepInfo : null}>
+                  <CardHeader
+                    title={news.title}
+                    subheader={`${news.type} | ${news.author} | ${news.date}`}
+                  />
+                  <CardContent>
+                    <div
+                      dangerouslySetInnerHTML={{ __html: news.summary }}
+                    ></div>
+                  </CardContent>
+                </div>
                 <CardActions disableSpacing>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    endIcon={<MdMode />}
-                    style={{ backgroundColor: Colors.PalletePrimary }}
-                    onClick={() => navigate(`/news/edit-new/${news._id}`)}
-                    className="me-1"
-                  >
-                    Editar
-                  </Button>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    endIcon={<MdDelete />}
-                    style={{ backgroundColor: Colors.PalleteDanger }}
-                    onClick={() => handleDelete(news._id)}
-                  >
-                    Eliminar
-                  </Button>
+                  <div ref={index === 0 ? refStepActions : null}>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      endIcon={<MdMode />}
+                      style={{ backgroundColor: Colors.PalletePrimary }}
+                      onClick={() => navigate(`/news/edit-new/${news._id}`)}
+                      className="me-1"
+                    >
+                      Editar
+                    </Button>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      endIcon={<MdDelete />}
+                      style={{ backgroundColor: Colors.PalleteDanger }}
+                      onClick={() => handleDelete(news._id)}
+                    >
+                      Eliminar
+                    </Button>
+                  </div>
                   <ExpandMore
                     expand={news.expanded}
                     onClick={() => handleExpandClick(itemOffset + index)}
                     aria-expanded={news.expanded}
                     aria-label="show more"
                   >
-                    <MdExpandMore size={40} />
+                    <div ref={index === 0 ? refStepExpand : null}>
+                      <MdExpandMore size={40} />
+                    </div>
                   </ExpandMore>
                 </CardActions>
                 <Collapse in={news.expanded} timeout="auto" unmountOnExit>
@@ -251,7 +337,11 @@ function CompanyNews() {
                 </Collapse>
               </Card>
             ))}
-          <Pagination pageCount={pageCount} handlePageClick={handlePageClick} />
+          <Pagination
+            pageCount={pageCount}
+            handlePageClick={handlePageClick}
+            refStep={refStepPagination}
+          />
         </Row>
       ) : (
         <NotFound
@@ -260,6 +350,7 @@ function CompanyNews() {
           iconSize={150}
         />
       )}
+      <Tour open={open} onClose={() => setOpen(false)} steps={steps} />
     </Container>
   );
 }

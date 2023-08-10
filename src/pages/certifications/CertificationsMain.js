@@ -35,6 +35,8 @@ function CertificationsMain() {
 
   useEffect(() => {
     getCertifications();
+
+    document.title = "A3E P.A. | Certificaciones";
   }, []);
 
   const handleChangeStatus = (id) => {
@@ -101,7 +103,7 @@ function CertificationsMain() {
             onClick={() => navigate("/certifications/create-certification")}
             style={{ backgroundColor: Colors.PalletePrimary }}
           >
-            Registrar
+            Registrar certificado
           </Button>
         </Col>
       </Row>

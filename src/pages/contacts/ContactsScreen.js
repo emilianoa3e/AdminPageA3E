@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Col, Row, Container } from "react-bootstrap";
 import BannerToNavigate from "../../components/shared/BannerToNavigate";
 
 function ContactsScreen() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = "A3E P.A. | Contactos";
+  }, []);
+
   return (
     <Container fluid>
       <Col className="mt-5">
