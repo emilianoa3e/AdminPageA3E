@@ -33,6 +33,16 @@ export const uploadMultimedia = async (file) => {
         icon: "error",
         title: "Error al subir multimedia 😞",
       });
+    } else if (error.response.data.msg === "Video max 100mb") {
+      Toast.fire({
+        icon: "error",
+        title: "Solo se permiten videos de máximo 100MB 😞",
+      });
+    } else if (error.response.data.msg === "Image max 10mb") {
+      Toast.fire({
+        icon: "error",
+        title: "Solo se permiten imágenes de máximo 10MB 😞",
+      });
     } else {
       Toast.fire({
         icon: "error",

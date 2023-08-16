@@ -38,10 +38,10 @@ function CustomNavbar() {
                   <MdHome className="me-1" size={25} />
                   <span className="nav-link-text">Inicio</span>
                 </NavLink>
-                <NavLink to="/us" className="nav-link">
+                {/* <NavLink to="/us" className="nav-link">
                   <MdSupervisedUserCircle className="me-1" size={25} />
                   <span className="nav-link-text">Nosotros</span>
-                </NavLink>
+                </NavLink> */}
                 <NavLink to="/services" className="nav-link">
                   <MdHomeRepairService className="me-1" size={25} />
                   <span className="nav-link-text">Servicios</span>

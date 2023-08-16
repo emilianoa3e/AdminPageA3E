@@ -105,9 +105,9 @@ const AppRouter = () => {
                     element={<EditService />}
                   />
                 </Route>
-                <Route exact path="/us" element={<PrivateRoute />}>
+                {/* <Route exact path="/us" element={<PrivateRoute />}>
                   <Route exact path="/us" element={<OurCompany />} />
-                </Route>
+                </Route> */}
                 {role === "superadmin" && (
                   <Route exact path="/users" element={<PrivateRoute />}>
                     <Route exact path="/users" element={<UserMain />} />
